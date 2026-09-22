@@ -1,0 +1,140 @@
+{
+  "pricing": {
+    "oneMeatTwoVeg": 10.5,
+    "twoMeatOneVeg": 14.5,
+    "extraMeat": 3.8,
+    "extraVeg": 2.5,
+    "regularCarb": 6.5,
+    "seafoodCarb": 11.5,
+    "wholeChickenLeg": 12,
+    "drumstick": 5
+  },
+  "weeks": [
+    {
+      "week": 1,
+      "days": {
+        "Monday": {
+          "breakfast": [
+            {"id":"W1-MON-B-01","no":"01","type":"meat","zh":"宫保鸡丁","en":"Kung Pao Chicken"},
+            {"id":"W1-MON-B-02","no":"02","type":"meat","zh":"黑椒猪肉","en":"Black Pepper Pork"},
+            {"id":"W1-MON-B-03","no":"03","type":"veg","zh":"蒜炒包菜","en":"Stir-Fried Cabbage"},
+            {"id":"W1-MON-B-04","no":"04","type":"veg","zh":"红烧豆腐","en":"Braised Tofu"}
+          ],
+          "lunch": [
+            {"id":"W1-MON-L-05","no":"05","type":"meat","zh":"咖喱鸡","en":"Curry Chicken"},
+            {"id":"W1-MON-L-06","no":"06","type":"meat","zh":"甜酸鱼片","en":"Sweet & Sour Fish Fillet"},
+            {"id":"W1-MON-L-07","no":"07","type":"veg","zh":"清炒菜心","en":"Stir-Fried Choy Sum"},
+            {"id":"W1-MON-L-08","no":"08","type":"veg","zh":"番茄炒蛋","en":"Tomato Egg"}
+          ]
+        },
+        "Tuesday": {
+          "breakfast": [
+            {"id":"W1-TUE-B-09","no":"09","type":"meat","zh":"酱油鸡","en":"Soy Sauce Chicken"},
+            {"id":"W1-TUE-B-10","no":"10","type":"meat","zh":"姜葱猪肉","en":"Ginger Onion Pork"},
+            {"id":"W1-TUE-B-11","no":"11","type":"veg","zh":"蒜炒长豆","en":"Stir-Fried Long Beans"},
+            {"id":"W1-TUE-B-12","no":"12","type":"veg","zh":"马铃薯焖豆腐","en":"Braised Potato Tofu"}
+          ],
+          "lunch": [
+            {"id":"W1-TUE-L-13","no":"13","type":"meat","zh":"香炸鸡块","en":"Fried Chicken Bites"},
+            {"id":"W1-TUE-L-14","no":"14","type":"meat","zh":"梅菜扣肉","en":"Preserved Vegetable Pork"},
+            {"id":"W1-TUE-L-15","no":"15","type":"veg","zh":"清炒小白菜","en":"Stir-Fried Bok Choy"},
+            {"id":"W1-TUE-L-16","no":"16","type":"veg","zh":"家常豆腐","en":"Home-Style Tofu"}
+          ]
+        },
+        "Wednesday": {
+          "breakfast": [
+            {"id":"W1-WED-B-17","no":"17","type":"meat","zh":"海南鸡","en":"Hainanese Chicken"},
+            {"id":"W1-WED-B-18","no":"18","type":"meat","zh":"卤三层肉","en":"Braised Pork Belly"},
+            {"id":"W1-WED-B-19","no":"19","type":"veg","zh":"清炒油麦菜","en":"Stir-Fried Romaine Lettuce"},
+            {"id":"W1-WED-B-20","no":"20","type":"veg","zh":"杂菜炒蛋","en":"Mixed Vegetables with Egg"}
+          ],
+          "lunch": [
+            {"id":"W1-WED-L-21","no":"21","type":"meat","zh":"咕噜肉","en":"Sweet & Sour Pork"},
+            {"id":"W1-WED-L-22","no":"22","type":"meat","zh":"香煎鱼片","en":"Pan-Fried Fish Fillet"},
+            {"id":"W1-WED-L-23","no":"23","type":"veg","zh":"蒜炒西兰花","en":"Stir-Fried Broccoli"},
+            {"id":"W1-WED-L-24","no":"24","type":"veg","zh":"红萝卜炒蛋","en":"Carrot Egg"}
+          ]
+        },
+        "Thursday": {
+          "breakfast": [
+            {"id":"W1-THU-B-25","no":"25","type":"meat","zh":"南乳炸鸡","en":"Fermented Bean Curd Fried Chicken"},
+            {"id":"W1-THU-B-26","no":"26","type":"meat","zh":"洋葱猪肉片","en":"Onion Pork Slices"},
+            {"id":"W1-THU-B-27","no":"27","type":"veg","zh":"清炒苋菜","en":"Stir-Fried Amaranth"},
+            {"id":"W1-THU-B-28","no":"28","type":"veg","zh":"菜脯煎蛋","en":"Preserved Radish Omelette"}
+          ],
+          "lunch": [
+            {"id":"W1-THU-L-29","no":"29","type":"meat","zh":"参巴鸡","en":"Sambal Chicken"},
+            {"id":"W1-THU-L-30","no":"30","type":"meat","zh":"香菇焖鸡","en":"Braised Mushroom Chicken"},
+            {"id":"W1-THU-L-31","no":"31","type":"veg","zh":"蒜炒生菜","en":"Stir-Fried Lettuce"},
+            {"id":"W1-THU-L-32","no":"32","type":"veg","zh":"长豆炒蛋","en":"Long Bean Egg"}
+          ]
+        },
+        "Friday": {
+          "breakfast": [
+            {"id":"W1-FRI-B-33","no":"33","type":"meat","zh":"蒜香鸡块","en":"Garlic Chicken Bites"},
+            {"id":"W1-FRI-B-34","no":"34","type":"meat","zh":"咖喱猪肉","en":"Curry Pork"},
+            {"id":"W1-FRI-B-35","no":"35","type":"veg","zh":"清炒菠菜","en":"Stir-Fried Spinach"},
+            {"id":"W1-FRI-B-36","no":"36","type":"veg","zh":"豆腐卤蛋","en":"Tofu with Braised Egg"}
+          ],
+          "lunch": [
+            {"id":"W1-FRI-L-37","no":"37","type":"meat","zh":"黑椒鸡扒","en":"Black Pepper Chicken Chop"},
+            {"id":"W1-FRI-L-38","no":"38","type":"meat","zh":"酸甜排骨","en":"Sweet & Sour Pork Ribs"},
+            {"id":"W1-FRI-L-39","no":"39","type":"veg","zh":"蒜炒四季豆","en":"Stir-Fried French Beans"},
+            {"id":"W1-FRI-L-40","no":"40","type":"veg","zh":"香煎茄子","en":"Pan-Fried Eggplant"}
+          ]
+        }
+      }
+    },
+    {
+      "week": 2,
+      "days": {
+        "Monday": {"breakfast":[
+          {"id":"W2-MON-B-01","no":"01","type":"meat","zh":"柠檬鸡","en":"Lemon Chicken"},{"id":"W2-MON-B-02","no":"02","type":"meat","zh":"酱香猪肉","en":"Soy Braised Pork"},{"id":"W2-MON-B-03","no":"03","type":"veg","zh":"清炒豆芽","en":"Stir-Fried Bean Sprouts"},{"id":"W2-MON-B-04","no":"04","type":"veg","zh":"红烧鸡蛋豆腐","en":"Braised Egg Tofu"}],
+          "lunch":[{"id":"W2-MON-L-05","no":"05","type":"meat","zh":"蜜糖鸡","en":"Honey Chicken"},{"id":"W2-MON-L-06","no":"06","type":"meat","zh":"姜黄炸鱼","en":"Turmeric Fried Fish"},{"id":"W2-MON-L-07","no":"07","type":"veg","zh":"清炒大白菜","en":"Stir-Fried Napa Cabbage"},{"id":"W2-MON-L-08","no":"08","type":"veg","zh":"四季豆炒蛋","en":"French Bean Egg"}]},
+        "Tuesday": {"breakfast":[{"id":"W2-TUE-B-09","no":"09","type":"meat","zh":"五香鸡","en":"Five Spice Chicken"},{"id":"W2-TUE-B-10","no":"10","type":"meat","zh":"芋头焖猪肉","en":"Braised Yam Pork"},{"id":"W2-TUE-B-11","no":"11","type":"veg","zh":"清炒菠菜","en":"Stir-Fried Spinach"},{"id":"W2-TUE-B-12","no":"12","type":"veg","zh":"南瓜豆腐","en":"Pumpkin Tofu"}],"lunch":[{"id":"W2-TUE-L-13","no":"13","type":"meat","zh":"甜酸鸡","en":"Sweet & Sour Chicken"},{"id":"W2-TUE-L-14","no":"14","type":"meat","zh":"姜丝鱼片","en":"Ginger Fish Fillet"},{"id":"W2-TUE-L-15","no":"15","type":"veg","zh":"蒜炒芥兰","en":"Stir-Fried Kailan"},{"id":"W2-TUE-L-16","no":"16","type":"veg","zh":"玉米炒蛋","en":"Corn Egg"}]},
+        "Wednesday": {"breakfast":[{"id":"W2-WED-B-17","no":"17","type":"meat","zh":"芝麻鸡","en":"Sesame Chicken"},{"id":"W2-WED-B-18","no":"18","type":"meat","zh":"京酱肉丝","en":"Shredded Pork in Bean Sauce"},{"id":"W2-WED-B-19","no":"19","type":"veg","zh":"蒜蓉豆苗","en":"Stir-Fried Pea Shoots"},{"id":"W2-WED-B-20","no":"20","type":"veg","zh":"蒸水蛋","en":"Steamed Egg"}],"lunch":[{"id":"W2-WED-L-21","no":"21","type":"meat","zh":"豉汁鸡","en":"Black Bean Chicken"},{"id":"W2-WED-L-22","no":"22","type":"meat","zh":"红烧鱼块","en":"Braised Fish Chunks"},{"id":"W2-WED-L-23","no":"23","type":"veg","zh":"清炒上海青","en":"Stir-Fried Shanghai Greens"},{"id":"W2-WED-L-24","no":"24","type":"veg","zh":"番茄豆腐","en":"Tomato Tofu"}]},
+        "Thursday": {"breakfast":[{"id":"W2-THU-B-25","no":"25","type":"meat","zh":"香茅鸡","en":"Lemongrass Chicken"},{"id":"W2-THU-B-26","no":"26","type":"meat","zh":"蒜蓉猪肉","en":"Garlic Pork Slices"},{"id":"W2-THU-B-27","no":"27","type":"veg","zh":"清炒奶白菜","en":"Stir-Fried Baby Napa Cabbage"},{"id":"W2-THU-B-28","no":"28","type":"veg","zh":"豆卜焖菜","en":"Braised Tofu Puffs"}],"lunch":[{"id":"W2-THU-L-29","no":"29","type":"meat","zh":"沙姜鸡","en":"Sand Ginger Chicken"},{"id":"W2-THU-L-30","no":"30","type":"meat","zh":"香煎鲭鱼","en":"Pan-Fried Mackerel"},{"id":"W2-THU-L-31","no":"31","type":"veg","zh":"炒椰菜花","en":"Stir-Fried Cauliflower"},{"id":"W2-THU-L-32","no":"32","type":"veg","zh":"苦瓜炒蛋","en":"Bitter Gourd Egg"}]},
+        "Friday": {"breakfast":[{"id":"W2-FRI-B-33","no":"33","type":"meat","zh":"豆豉肉片","en":"Black Bean Pork Slices"},{"id":"W2-FRI-B-34","no":"34","type":"meat","zh":"蒜香烤鸡","en":"Garlic Roast Chicken"},{"id":"W2-FRI-B-35","no":"35","type":"veg","zh":"清炒芥菜","en":"Stir-Fried Mustard Greens"},{"id":"W2-FRI-B-36","no":"36","type":"veg","zh":"豆腐煎蛋","en":"Tofu Omelette"}],"lunch":[{"id":"W2-FRI-L-37","no":"37","type":"meat","zh":"蒜香排骨","en":"Garlic Pork Ribs"},{"id":"W2-FRI-L-38","no":"38","type":"meat","zh":"香酥鱼柳","en":"Crispy Fish Fillet"},{"id":"W2-FRI-L-39","no":"39","type":"veg","zh":"清炒包心菜","en":"Stir-Fried Round Cabbage"},{"id":"W2-FRI-L-40","no":"40","type":"veg","zh":"马铃薯炒蛋","en":"Potato Egg"}]}
+      }
+    },
+    {
+      "week": 3,
+      "days": {
+        "Monday":{"breakfast":[{"id":"W3-MON-B-01","no":"01","type":"meat","zh":"麻油鸡","en":"Sesame Oil Chicken"},{"id":"W3-MON-B-02","no":"02","type":"meat","zh":"黑椒鱼片","en":"Black Pepper Fish Fillet"},{"id":"W3-MON-B-03","no":"03","type":"veg","zh":"炒油菜","en":"Stir-Fried Yau Choy"},{"id":"W3-MON-B-04","no":"04","type":"veg","zh":"红烧腐竹","en":"Braised Beancurd Skin"}],"lunch":[{"id":"W3-MON-L-05","no":"05","type":"meat","zh":"香辣鸡丁","en":"Spicy Diced Chicken"},{"id":"W3-MON-L-06","no":"06","type":"meat","zh":"炸酱肉片","en":"Savory Pork Slices"},{"id":"W3-MON-L-07","no":"07","type":"veg","zh":"清炒西芹","en":"Stir-Fried Celery"},{"id":"W3-MON-L-08","no":"08","type":"veg","zh":"木耳炒蛋","en":"Black Fungus Egg"}]},
+        "Tuesday":{"breakfast":[{"id":"W3-TUE-B-09","no":"09","type":"meat","zh":"叉烧鸡","en":"Char Siu Chicken"},{"id":"W3-TUE-B-10","no":"10","type":"meat","zh":"红烧肉","en":"Braised Pork Cubes"},{"id":"W3-TUE-B-11","no":"11","type":"veg","zh":"清炒茼蒿","en":"Stir-Fried Garland Chrysanthemum"},{"id":"W3-TUE-B-12","no":"12","type":"veg","zh":"芋头焖豆腐","en":"Taro Tofu"}],"lunch":[{"id":"W3-TUE-L-13","no":"13","type":"meat","zh":"姜蓉蒸鸡","en":"Ginger Steamed Chicken"},{"id":"W3-TUE-L-14","no":"14","type":"meat","zh":"酸梅鱼片","en":"Plum Sauce Fish Fillet"},{"id":"W3-TUE-L-15","no":"15","type":"veg","zh":"蒜炒空心菜","en":"Stir-Fried Water Spinach"},{"id":"W3-TUE-L-16","no":"16","type":"veg","zh":"红椒炒豆腐","en":"Red Pepper Tofu"}]},
+        "Wednesday":{"breakfast":[{"id":"W3-WED-B-17","no":"17","type":"meat","zh":"姜黄鸡","en":"Turmeric Chicken"},{"id":"W3-WED-B-18","no":"18","type":"meat","zh":"洋葱猪肉片","en":"Onion Pork Slices"},{"id":"W3-WED-B-19","no":"19","type":"veg","zh":"清炒油麦菜","en":"Stir-Fried Romaine Lettuce"},{"id":"W3-WED-B-20","no":"20","type":"veg","zh":"红烧鸡蛋豆腐","en":"Braised Egg Tofu"}],"lunch":[{"id":"W3-WED-L-21","no":"21","type":"meat","zh":"黑椒鸡扒","en":"Black Pepper Chicken Chop"},{"id":"W3-WED-L-22","no":"22","type":"meat","zh":"卤三层肉","en":"Braised Pork Belly"},{"id":"W3-WED-L-23","no":"23","type":"veg","zh":"蒜炒西兰花","en":"Stir-Fried Broccoli"},{"id":"W3-WED-L-24","no":"24","type":"veg","zh":"炒四季豆","en":"Stir-Fried French Beans"}]},
+        "Thursday":{"breakfast":[{"id":"W3-THU-B-25","no":"25","type":"meat","zh":"蒜蓉鸡丁","en":"Garlic Chicken Cubes"},{"id":"W3-THU-B-26","no":"26","type":"meat","zh":"参巴猪肉","en":"Sambal Pork"},{"id":"W3-THU-B-27","no":"27","type":"veg","zh":"清炒豆芽","en":"Stir-Fried Bean Sprouts"},{"id":"W3-THU-B-28","no":"28","type":"veg","zh":"蒸水蛋","en":"Steamed Egg"}],"lunch":[{"id":"W3-THU-L-29","no":"29","type":"meat","zh":"咖喱鸡","en":"Curry Chicken"},{"id":"W3-THU-L-30","no":"30","type":"meat","zh":"酱香鱼片","en":"Soya Fish Fillet"},{"id":"W3-THU-L-31","no":"31","type":"veg","zh":"清炒小白菜","en":"Stir-Fried Bok Choy"},{"id":"W3-THU-L-32","no":"32","type":"veg","zh":"苦瓜炒蛋","en":"Bitter Gourd Egg"}]},
+        "Friday":{"breakfast":[{"id":"W3-FRI-B-33","no":"33","type":"meat","zh":"蜜汁鸡","en":"Honey Chicken"},{"id":"W3-FRI-B-34","no":"34","type":"meat","zh":"酱香猪肉","en":"Soy Braised Pork"},{"id":"W3-FRI-B-35","no":"35","type":"veg","zh":"炒包菜","en":"Stir-Fried Cabbage"},{"id":"W3-FRI-B-36","no":"36","type":"veg","zh":"家常豆腐","en":"Home-Style Tofu"}],"lunch":[{"id":"W3-FRI-L-37","no":"37","type":"meat","zh":"咕噜肉","en":"Sweet & Sour Pork"},{"id":"W3-FRI-L-38","no":"38","type":"meat","zh":"香煎鱼","en":"Pan-Fried Fish"},{"id":"W3-FRI-L-39","no":"39","type":"veg","zh":"清炒菠菜","en":"Stir-Fried Spinach"},{"id":"W3-FRI-L-40","no":"40","type":"veg","zh":"杂菜","en":"Mixed Vegetables"}]}
+      }
+    },
+    {
+      "week": 4,
+      "days": {
+        "Monday":{"breakfast":[{"id":"W4-MON-B-01","no":"01","type":"meat","zh":"黑椒鸡","en":"Black Pepper Chicken"},{"id":"W4-MON-B-02","no":"02","type":"meat","zh":"咖喱猪肉","en":"Curry Pork"},{"id":"W4-MON-B-03","no":"03","type":"veg","zh":"清炒长豆","en":"Stir-Fried Long Beans"},{"id":"W4-MON-B-04","no":"04","type":"veg","zh":"家常豆腐","en":"Home-Style Tofu"}],"lunch":[{"id":"W4-MON-L-05","no":"05","type":"meat","zh":"海南鸡","en":"Hainanese Chicken"},{"id":"W4-MON-L-06","no":"06","type":"meat","zh":"甜酸鱼片","en":"Sweet & Sour Fish Fillet"},{"id":"W4-MON-L-07","no":"07","type":"veg","zh":"清炒菜心","en":"Stir-Fried Choy Sum"},{"id":"W4-MON-L-08","no":"08","type":"veg","zh":"番茄炒蛋","en":"Tomato Egg"}]},
+        "Tuesday":{"breakfast":[{"id":"W4-TUE-B-09","no":"09","type":"meat","zh":"酱油鸡","en":"Soy Sauce Chicken"},{"id":"W4-TUE-B-10","no":"10","type":"meat","zh":"卤三层肉","en":"Braised Pork Belly"},{"id":"W4-TUE-B-11","no":"11","type":"veg","zh":"炒包菜","en":"Stir-Fried Cabbage"},{"id":"W4-TUE-B-12","no":"12","type":"veg","zh":"南瓜豆腐","en":"Pumpkin Tofu"}],"lunch":[{"id":"W4-TUE-L-13","no":"13","type":"meat","zh":"蒜香鱼片","en":"Garlic Fish Fillet"},{"id":"W4-TUE-L-14","no":"14","type":"meat","zh":"蜜糖鸡","en":"Honey Chicken"},{"id":"W4-TUE-L-15","no":"15","type":"veg","zh":"蒜炒西兰花","en":"Stir-Fried Broccoli"},{"id":"W4-TUE-L-16","no":"16","type":"veg","zh":"蒸水蛋","en":"Steamed Egg"}]},
+        "Wednesday":{"breakfast":[{"id":"W4-WED-B-17","no":"17","type":"meat","zh":"姜黄鸡","en":"Turmeric Chicken"},{"id":"W4-WED-B-18","no":"18","type":"meat","zh":"洋葱猪肉片","en":"Onion Pork Slices"},{"id":"W4-WED-B-19","no":"19","type":"veg","zh":"清炒油麦菜","en":"Stir-Fried Romaine Lettuce"},{"id":"W4-WED-B-20","no":"20","type":"veg","zh":"香煎茄子","en":"Pan-Fried Eggplant"}],"lunch":[{"id":"W4-WED-L-21","no":"21","type":"meat","zh":"咖喱鱼","en":"Curry Fish"},{"id":"W4-WED-L-22","no":"22","type":"meat","zh":"黑椒猪扒","en":"Black Pepper Pork Chop"},{"id":"W4-WED-L-23","no":"23","type":"veg","zh":"清炒小白菜","en":"Stir-Fried Bok Choy"},{"id":"W4-WED-L-24","no":"24","type":"veg","zh":"红萝卜炒蛋","en":"Carrot Egg"}]},
+        "Thursday":{"breakfast":[{"id":"W4-THU-B-25","no":"25","type":"meat","zh":"香茅鸡","en":"Lemongrass Chicken"},{"id":"W4-THU-B-26","no":"26","type":"meat","zh":"酱香猪肉","en":"Soy Braised Pork"},{"id":"W4-THU-B-27","no":"27","type":"veg","zh":"清炒苋菜","en":"Stir-Fried Amaranth"},{"id":"W4-THU-B-28","no":"28","type":"veg","zh":"红烧鸡蛋豆腐","en":"Braised Egg Tofu"}],"lunch":[{"id":"W4-THU-L-29","no":"29","type":"meat","zh":"参巴鸡","en":"Sambal Chicken"},{"id":"W4-THU-L-30","no":"30","type":"meat","zh":"甜酸猪肉","en":"Sweet & Sour Pork"},{"id":"W4-THU-L-31","no":"31","type":"veg","zh":"蒜炒生菜","en":"Stir-Fried Lettuce"},{"id":"W4-THU-L-32","no":"32","type":"veg","zh":"杂菜","en":"Mixed Vegetables"}]},
+        "Friday":{"breakfast":[{"id":"W4-FRI-B-33","no":"33","type":"meat","zh":"蜜汁鸡","en":"Honey Chicken"},{"id":"W4-FRI-B-34","no":"34","type":"meat","zh":"蒜香猪肉","en":"Garlic Pork"},{"id":"W4-FRI-B-35","no":"35","type":"veg","zh":"清炒豆芽","en":"Stir-Fried Bean Sprouts"},{"id":"W4-FRI-B-36","no":"36","type":"veg","zh":"豆腐煎蛋","en":"Tofu Omelette"}],"lunch":[{"id":"W4-FRI-L-37","no":"37","type":"meat","zh":"香炸鸡块","en":"Fried Chicken Bites"},{"id":"W4-FRI-L-38","no":"38","type":"meat","zh":"红烧鱼片","en":"Braised Fish Fillet"},{"id":"W4-FRI-L-39","no":"39","type":"veg","zh":"清炒菠菜","en":"Stir-Fried Spinach"},{"id":"W4-FRI-L-40","no":"40","type":"veg","zh":"豆角炒蛋","en":"Long Bean Egg"}]}
+      }
+    },
+    {
+      "week": 5,
+      "days": {
+        "Monday":{"breakfast":[{"id":"W5-MON-B-01","no":"01","type":"meat","zh":"酱油鸡","en":"Soy Sauce Chicken"},{"id":"W5-MON-B-02","no":"02","type":"meat","zh":"咖喱猪肉","en":"Curry Pork"},{"id":"W5-MON-B-03","no":"03","type":"veg","zh":"炒包菜","en":"Stir-Fried Cabbage"},{"id":"W5-MON-B-04","no":"04","type":"veg","zh":"红烧鸡蛋豆腐","en":"Braised Egg Tofu"}],"lunch":[{"id":"W5-MON-L-05","no":"05","type":"meat","zh":"蜜汁鸡","en":"Honey Chicken"},{"id":"W5-MON-L-06","no":"06","type":"meat","zh":"甜酸鱼","en":"Sweet & Sour Fish"},{"id":"W5-MON-L-07","no":"07","type":"veg","zh":"清炒菜心","en":"Stir-Fried Choy Sum"},{"id":"W5-MON-L-08","no":"08","type":"veg","zh":"番茄炒蛋","en":"Tomato Egg"}]},
+        "Tuesday":{"breakfast":[{"id":"W5-TUE-B-09","no":"09","type":"meat","zh":"蒜香鸡","en":"Garlic Chicken"},{"id":"W5-TUE-B-10","no":"10","type":"meat","zh":"黑椒猪肉","en":"Black Pepper Pork"},{"id":"W5-TUE-B-11","no":"11","type":"veg","zh":"蒜炒长豆","en":"Stir-Fried Long Beans"},{"id":"W5-TUE-B-12","no":"12","type":"veg","zh":"蒸水蛋","en":"Steamed Egg"}],"lunch":[{"id":"W5-TUE-L-13","no":"13","type":"meat","zh":"姜黄炸鱼","en":"Turmeric Fried Fish"},{"id":"W5-TUE-L-14","no":"14","type":"meat","zh":"卤三层肉","en":"Braised Pork Belly"},{"id":"W5-TUE-L-15","no":"15","type":"veg","zh":"西兰花","en":"Stir-Fried Broccoli"},{"id":"W5-TUE-L-16","no":"16","type":"veg","zh":"杂菜","en":"Mixed Vegetables"}]},
+        "Wednesday":{"breakfast":[{"id":"W5-WED-B-17","no":"17","type":"meat","zh":"海南鸡","en":"Hainanese Chicken"},{"id":"W5-WED-B-18","no":"18","type":"meat","zh":"洋葱猪肉","en":"Onion Pork"},{"id":"W5-WED-B-19","no":"19","type":"veg","zh":"清炒油麦菜","en":"Stir-Fried Romaine Lettuce"},{"id":"W5-WED-B-20","no":"20","type":"veg","zh":"红烧豆腐","en":"Braised Tofu"}],"lunch":[{"id":"W5-WED-L-21","no":"21","type":"meat","zh":"咖喱鸡","en":"Curry Chicken"},{"id":"W5-WED-L-22","no":"22","type":"meat","zh":"香煎鱼片","en":"Pan-Fried Fish Fillet"},{"id":"W5-WED-L-23","no":"23","type":"veg","zh":"清炒小白菜","en":"Stir-Fried Bok Choy"},{"id":"W5-WED-L-24","no":"24","type":"veg","zh":"红萝卜炒蛋","en":"Carrot Egg"}]},
+        "Thursday":{"breakfast":[{"id":"W5-THU-B-25","no":"25","type":"meat","zh":"香茅鸡","en":"Lemongrass Chicken"},{"id":"W5-THU-B-26","no":"26","type":"meat","zh":"芝麻猪肉","en":"Sesame Pork"},{"id":"W5-THU-B-27","no":"27","type":"veg","zh":"清炒豆芽","en":"Stir-Fried Bean Sprouts"},{"id":"W5-THU-B-28","no":"28","type":"veg","zh":"南瓜豆腐","en":"Pumpkin Tofu"}],"lunch":[{"id":"W5-THU-L-29","no":"29","type":"meat","zh":"参巴鸡","en":"Sambal Chicken"},{"id":"W5-THU-L-30","no":"30","type":"meat","zh":"咕噜肉","en":"Sweet & Sour Pork"},{"id":"W5-THU-L-31","no":"31","type":"veg","zh":"蒜炒生菜","en":"Stir-Fried Lettuce"},{"id":"W5-THU-L-32","no":"32","type":"veg","zh":"豆角炒蛋","en":"Long Bean Egg"}]},
+        "Friday":{"breakfast":[{"id":"W5-FRI-B-33","no":"33","type":"meat","zh":"黑椒鸡","en":"Black Pepper Chicken"},{"id":"W5-FRI-B-34","no":"34","type":"meat","zh":"酱香猪肉","en":"Soy Braised Pork"},{"id":"W5-FRI-B-35","no":"35","type":"veg","zh":"清炒菠菜","en":"Stir-Fried Spinach"},{"id":"W5-FRI-B-36","no":"36","type":"veg","zh":"香煎茄子","en":"Pan-Fried Eggplant"}],"lunch":[{"id":"W5-FRI-L-37","no":"37","type":"meat","zh":"香炸鸡块","en":"Fried Chicken Bites"},{"id":"W5-FRI-L-38","no":"38","type":"meat","zh":"蒜香鱼片","en":"Garlic Fish Fillet"},{"id":"W5-FRI-L-39","no":"39","type":"veg","zh":"炒包菜","en":"Stir-Fried Round Cabbage"},{"id":"W5-FRI-L-40","no":"40","type":"veg","zh":"家常豆腐","en":"Home-Style Tofu"}]}
+      }
+    }
+  ],
+  "addons": [
+    {"id":"ADD-RICE","name":"炒饭 / Fried Rice","price":6.5},
+    {"id":"ADD-NOODLES","name":"面 / Noodles","price":6.5},
+    {"id":"ADD-KUEYTEOW","name":"粿条 / Kuey Teow","price":6.5},
+    {"id":"ADD-VERMICELLI","name":"米粉 / Vermicelli","price":6.5},
+    {"id":"ADD-SEAFOOD","name":"海鲜版本 / Seafood Version","price":11.5},
+    {"id":"ADD-WHOLE-LEG","name":"整鸡腿 / Whole Chicken Leg","price":12},
+    {"id":"ADD-DRUMSTICK","name":"鸡腿 / Chicken Drumstick","price":5}
+  ]
+}

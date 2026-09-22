@@ -1,0 +1,5 @@
+Key,Value,Notes
+breakfast_cutoff,08:00,未来可用于自动截单
+lunch_cutoff,10:30,未来可用于自动截单
+delivery_fee,0,可修改配送费
+whatsapp_number,,以后加入客服按钮
