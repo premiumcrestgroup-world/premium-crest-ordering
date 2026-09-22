@@ -8,6 +8,7 @@ const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
 const DAY_ZH = {Monday:"星期一",Tuesday:"星期二",Wednesday:"星期三",Thursday:"星期四",Friday:"星期五"};
 let data, state = {week:1, day:"Monday", meal:"breakfast", selected:new Set(), addons:{}};
 let cart = JSON.parse(localStorage.getItem("pc_cart") || "[]");
+let isSubmitting = false;
 
 const $ = s => document.querySelector(s);
 const money = n => `${CONFIG.currency}${Number(n).toFixed(2)}`;
@@ -62,12 +63,13 @@ function renderSummary(){
 }
 function addCurrentMeal(){
   const items=currentItems().filter(i=>state.selected.has(i.id)), calc=calculateMeal(items); if(!calc.valid)return;
+  resetSubmitButton();
   cart.push({kind:"meal",week:state.week,day:state.day,meal:state.meal,items,calc,price:calc.total});
   state.selected.clear(); persistCart(); renderMeal(); showCart();
 }
 function renderAddons(){
   $("#addonGrid").innerHTML=data.addons.map(a=>`<div class="addon-card"><strong>${a.name}</strong><span class="price">${money(a.price)}</span><div class="qty-row"><button data-a="${a.id}" data-d="-1">−</button><span id="q-${a.id}">0</span><button data-a="${a.id}" data-d="1">＋</button></div></div>`).join("");
-  document.querySelectorAll(".qty-row button").forEach(b=>b.onclick=()=>{const id=b.dataset.a,d=+b.dataset.d,q=Math.max(0,(state.addons[id]||0)+d);state.addons[id]=q;$("#q-"+id).textContent=q;if(d>0){const a=data.addons.find(x=>x.id===id);cart.push({kind:"addon",id:a.id,name:a.name,qty:1,price:a.price});persistCart()}else if(d<0){const idx=cart.findIndex(x=>x.kind==='addon'&&x.id===id);if(idx>=0){cart.splice(idx,1);persistCart()}}});
+  document.querySelectorAll(".qty-row button").forEach(b=>b.onclick=()=>{const id=b.dataset.a,d=+b.dataset.d,q=Math.max(0,(state.addons[id]||0)+d);state.addons[id]=q;$("#q-"+id).textContent=q;if(d>0){resetSubmitButton();const a=data.addons.find(x=>x.id===id);cart.push({kind:"addon",id:a.id,name:a.name,qty:1,price:a.price});persistCart()}else if(d<0){const idx=cart.findIndex(x=>x.kind==='addon'&&x.id===id);if(idx>=0){cart.splice(idx,1);persistCart()}}});
 }
 function persistCart(){localStorage.setItem("pc_cart",JSON.stringify(cart));updateCart()}
 function updateCart(){
@@ -79,17 +81,46 @@ function updateCart(){
 window.removeCart=i=>{cart.splice(i,1);persistCart()};
 function showCart(){updateCart();$("#cartSection").classList.remove("hidden");$("#cartSection").scrollIntoView({behavior:"smooth"})}
 async function placeOrder(e){
-  e.preventDefault(); if(!cart.length){alert("购物车是空的");return}
-  const form=Object.fromEntries(new FormData(e.target).entries()); const order={orderId:createOrderId(),createdAt:new Date().toISOString(),customer:form,items:cart,total:cart.reduce((s,x)=>s+x.price,0)};
+  e.preventDefault();
+  if(isSubmitting) return;
+  if(!cart.length){alert("购物车是空的");return}
+
+  const submitBtn=e.target.querySelector('button[type="submit"]');
+  const originalText=submitBtn.textContent;
+  isSubmitting=true;
+  submitBtn.disabled=true;
+  submitBtn.textContent="提交中… / Submitting…";
+
+  const form=Object.fromEntries(new FormData(e.target).entries());
+  const order={orderId:createOrderId(),createdAt:new Date().toISOString(),customer:form,items:cart,total:cart.reduce((s,x)=>s+x.price,0)};
   try{
     if(CONFIG.appsScriptUrl && !CONFIG.appsScriptUrl.includes("PASTE_GOOGLE_APPS_SCRIPT")){
       // Google Apps Script Web Apps are cross-origin. no-cors reliably sends the order from GitHub Pages.
       await fetch(CONFIG.appsScriptUrl,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(order)});
     }
     else{const demo=JSON.parse(localStorage.getItem("pc_demo_orders")||"[]");demo.push(order);localStorage.setItem("pc_demo_orders",JSON.stringify(demo));}
-    $("#orderResult").classList.remove("hidden");$("#orderResult").innerHTML=`<strong>✅ 下单成功 / Order Confirmed</strong><br>Order No.: <b>${order.orderId}</b><br>Total: <b>${money(order.total)}</b>${(CONFIG.appsScriptUrl && !CONFIG.appsScriptUrl.includes('PASTE_GOOGLE_APPS_SCRIPT'))?'':'<br><small>目前是 Demo 模式：订单已存放在此浏览器。接上 Google Apps Script 后会自动写入 Google Sheets。</small>'}`;
+
+    $("#orderResult").classList.remove("hidden");
+    $("#orderResult").innerHTML=`<strong>✅ 下单成功 / Order Confirmed</strong><br>Order No.: <b>${order.orderId}</b><br>Total: <b>${money(order.total)}</b><br><small>请勿重复点击提交。如需再下单，请重新加入餐点。</small>${(CONFIG.appsScriptUrl && !CONFIG.appsScriptUrl.includes('PASTE_GOOGLE_APPS_SCRIPT'))?'':'<br><small>目前是 Demo 模式：订单已存放在此浏览器。接上 Google Apps Script 后会自动写入 Google Sheets。</small>'}`;
     cart=[];persistCart();e.target.reset();
-  }catch(err){alert("订单提交失败，请检查 Apps Script URL 或网络连接。")}
+    submitBtn.textContent="✅ 已提交 / Order Submitted";
+  }catch(err){
+    isSubmitting=false;
+    submitBtn.disabled=false;
+    submitBtn.textContent=originalText;
+    alert("订单提交失败，请检查 Apps Script URL 或网络连接。");
+  }
+}
+
+function resetSubmitButton(){
+  isSubmitting=false;
+  const submitBtn=document.querySelector('#checkoutForm button[type="submit"]');
+  if(submitBtn){
+    submitBtn.disabled=false;
+    submitBtn.textContent="确认下单 / Place Order";
+  }
+  const result=$("#orderResult");
+  if(result){result.classList.add("hidden");result.innerHTML="";}
 }
 function createOrderId(){const d=new Date();return `PC-${String(d.getFullYear()).slice(2)}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}-${Math.floor(1000+Math.random()*9000)}`}
 init();
