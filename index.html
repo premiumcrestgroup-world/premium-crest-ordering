@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#174f3b" />
   <title>Premium Crest Online Ordering</title>
-  <link rel="stylesheet" href="styles.css?v=1.4.0" />
+  <link rel="stylesheet" href="styles.css?v=1.5.1" />
 </head>
 <body>
   <header class="site-header">
@@ -40,14 +40,49 @@
       </div>
     </section>
 
-    <section class="selector card">
+    <section class="order-mode card" aria-label="Order type">
+      <div class="mode-heading"><p class="eyebrow">ORDER TYPE · 点餐方式</p><h2 data-weekly-i18n="modeHeading">请选择点餐方式</h2></div>
+      <div class="mode-actions">
+        <button type="button" id="singleModeBtn" class="mode-button active" aria-pressed="true" data-weekly-i18n="singleMode">单餐 / 单日</button>
+        <button type="button" id="weeklyModeBtn" class="mode-button" aria-pressed="false" data-weekly-i18n="weeklyMode">整周一起点餐（星期一至五）</button>
+      </div>
+    </section>
+
+    <section id="weeklyPanel" class="weekly-panel card hidden" aria-label="Weekly meal planner">
+      <div class="section-heading weekly-heading">
+        <div><p class="eyebrow">WEEKLY MEAL PLANNER</p><h2 data-weekly-i18n="plannerTitle">一次选择整周早餐和午餐</h2><p class="weekly-lead" data-weekly-i18n="plannerHint">每餐可以独立选择，不想订的餐点取消勾选；全部完成后，只需提交一次。</p></div>
+        <span id="weeklyProgress" class="weekly-progress" aria-live="polite">0 / 10</span>
+      </div>
+      <div class="weekly-controls">
+        <label><span data-weekly-i18n="weeklyMenu">选择菜单</span><select id="weeklyWeekSelect"></select></label>
+        <label><span data-weekly-i18n="startDate">配送周的星期一日期</span><input id="weeklyMonday" type="date" required /></label>
+        <div class="weekly-presets">
+          <button type="button" data-weekly-preset="all" data-weekly-i18n="selectAll">全选 10 餐</button>
+          <button type="button" data-weekly-preset="breakfast" data-weekly-i18n="breakfastOnly">仅订早餐</button>
+          <button type="button" data-weekly-preset="lunch" data-weekly-i18n="lunchOnly">仅订午餐</button>
+          <button type="button" data-weekly-preset="none" data-weekly-i18n="clearWeek">全部取消</button>
+        </div>
+      </div>
+      <div id="weeklyGrid" class="weekly-grid"></div>
+      <div class="weekly-footer">
+        <div><strong id="weeklyStatusText"></strong><p id="weeklySaveHint" data-weekly-i18n="draftSaved">选择会自动保存；提交前可随时修改。</p></div>
+        <div class="weekly-total"><span data-weekly-i18n="weeklySubtotal">本周餐费</span><strong id="weeklySubtotal">RM0.00</strong></div>
+        <button type="button" id="weeklyReview" class="primary" disabled data-weekly-i18n="reviewWeek">查看整周购物车并结账</button>
+      </div>
+    </section>
+
+    <section id="singleSelector" class="selector card">
       <div class="control-group">
         <label for="weekSelect" data-i18n="weekLabel">星期菜单</label>
         <select id="weekSelect"></select>
       </div>
       <div class="control-group">
-        <label for="daySelect" data-i18n="dayLabel">日期</label>
-        <select id="daySelect"></select>
+        <label for="singleDate" data-weekly-i18n="singleDate">实际取餐／送餐日期</label>
+        <input id="singleDate" type="date" required />
+      </div>
+      <div class="control-group">
+        <label for="daySelect" data-i18n="dayLabel">星期</label>
+        <select id="daySelect" disabled title="由实际日期自动选定"></select>
       </div>
       <div class="control-group segmented" aria-label="Meal selector">
         <span data-i18n="mealLabel">餐别</span>
@@ -56,7 +91,7 @@
       </div>
     </section>
 
-    <section class="order-layout">
+    <section id="singleMealArea" class="order-layout">
       <div>
         <div class="section-heading">
           <div>
@@ -143,7 +178,8 @@
   </main>
 
   <footer>Premium Crest Group · Nourishing Potential</footer>
-  <script src="delivery-plan.js?v=1.4.0"></script>
-  <script src="app.js?v=1.4.0"></script>
+  <script src="delivery-plan.js?v=1.5.1"></script>
+  <script src="weekly-plan.js?v=1.5.1"></script>
+  <script src="app.js?v=1.5.1"></script>
 </body>
 </html>
