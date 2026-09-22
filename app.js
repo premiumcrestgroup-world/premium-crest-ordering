@@ -21,9 +21,9 @@ const I18N = {
 };
 
 const DELIVERY_I18N = {
-  zh: {origin:'出餐地点',deliveryInfo:'送餐运费（单程行车距离）',distance:'实际行车距离',tripCount:'配送次数',deliveryFee:'送餐费',subtotal:'餐费',grandTotal:'应付总额',calculate:'计算送餐费',calculating:'正在查询行车距离…',needAddress:'请输入完整送餐地址，再计算运费。',confirmAddress:'请确认系统找到的送餐地点正确',tooFar:'超过 10 km：请联系客服报价，暂时不能线上结账。',quoteFail:'无法查询准确行车距离。请检查地址或联系客服；不会自动收取估算运费。',quoteFirst:'请先计算并确认送餐距离，才可以提交订单。',tripInfo:'早餐和午餐分开配送；每餐算一次运费。',pickupFree:'自取免费',addressChanged:'地址或餐点已更改，请重新计算运费。',pending:'正在确认服务器是否收到订单…',unverified:'订单已送出，但暂时无法确认是否成功。请先检查订单表或联系客服，不要重复提交。'},
-  en: {origin:'Kitchen',deliveryInfo:'Delivery fee (one-way driving distance)',distance:'Driving distance',tripCount:'Delivery trips',deliveryFee:'Delivery fee',subtotal:'Food subtotal',grandTotal:'Grand total',calculate:'Calculate delivery',calculating:'Calculating route…',needAddress:'Please enter the complete delivery address.',confirmAddress:'Please verify this matched address',tooFar:'Over 10 km: contact us for a quote. Online checkout is unavailable.',quoteFail:'Could not determine a reliable driving distance. Check the address or contact us. No estimated fee will be charged.',quoteFirst:'Calculate and confirm the delivery distance before placing an order.',tripInfo:'Breakfast and lunch are separate trips, each charged individually.',pickupFree:'Free pickup',addressChanged:'Address or meals changed. Please recalculate delivery.',pending:'Checking whether the server received your order…',unverified:'Order sent, but receipt could not be verified. Check the order sheet or contact us before trying again.'},
-  ms: {origin:'Dapur',deliveryInfo:'Caj penghantaran (jarak memandu sehala)',distance:'Jarak memandu',tripCount:'Bilangan penghantaran',deliveryFee:'Caj penghantaran',subtotal:'Jumlah makanan',grandTotal:'Jumlah keseluruhan',calculate:'Kira caj penghantaran',calculating:'Mengira laluan…',needAddress:'Masukkan alamat penghantaran yang lengkap.',confirmAddress:'Sila sahkan alamat yang ditemui',tooFar:'Lebih 8 km: hubungi kami untuk sebut harga. Bayaran dalam talian tidak tersedia.',quoteFail:'Jarak memandu tidak dapat ditentukan. Semak alamat atau hubungi kami. Caj anggaran tidak dikenakan.',quoteFirst:'Kira dan sahkan jarak sebelum membuat pesanan.',tripInfo:'Sarapan dan makan tengah hari dihantar berasingan dan dikenakan caj bagi setiap penghantaran.',pickupFree:'Ambil sendiri percuma',addressChanged:'Alamat atau hidangan berubah. Sila kira semula caj penghantaran.',pending:'Menyemak sama ada pelayan menerima pesanan…',unverified:'Pesanan dihantar tetapi pengesahan belum diterima. Semak rekod pesanan atau hubungi kami sebelum mencuba lagi.'}
+  zh: {origin:'出餐地点',deliveryInfo:'送餐运费（单程行车距离）',distance:'实际行车距离',tripCount:'配送次数',deliveryFee:'送餐费',subtotal:'餐费',grandTotal:'应付总额',calculate:'计算送餐费',calculating:'正在查询行车距离…',needAddress:'请输入完整送餐地址，再计算运费。',confirmAddress:'请确认系统找到的送餐地点正确',tooFar:'超过 10 km：请联系客服报价，暂时不能线上结账。',quoteFail:'无法查询准确行车距离。请检查地址或联系客服；不会自动收取估算运费。',quoteFirst:'请先计算并确认送餐距离，才可以提交订单。',tripInfo:'同一天早餐、午餐可选择分别配送或一次送达；按实际配送次数收费。',chooseMode:'请选择配送方式',separate:'分别配送：早餐、午餐各送一次',together:'合并配送：同一天两餐同时送达，运费只收一次',togetherTime:'合并配送的送达时段',morning:'早餐时段一起送达',midday:'午餐时段一起送达',jointWarning:'选合并配送后，两餐将在同一时段送达；不会分别送两次。',noJoint:'购物车里没有同一天的早餐＋午餐；每个订餐日只计一次配送。',dayTrips:'配送明细',addonOnly:'只有单点加购：收一次送餐费',pickupFree:'自取免费',addressChanged:'地址或餐点已更改，请重新计算运费。',pending:'正在确认服务器是否收到订单…',unverified:'订单已送出，但暂时无法确认是否成功。请先检查订单表或联系客服，不要重复提交。'},
+  en: {origin:'Kitchen',deliveryInfo:'Delivery fee (one-way driving distance)',distance:'Driving distance',tripCount:'Delivery trips',deliveryFee:'Delivery fee',subtotal:'Food subtotal',grandTotal:'Grand total',calculate:'Calculate delivery',calculating:'Calculating route…',needAddress:'Please enter the complete delivery address.',confirmAddress:'Please verify this matched address',tooFar:'Over 10 km: contact us for a quote. Online checkout is unavailable.',quoteFail:'Could not determine a reliable driving distance. Check the address or contact us. No estimated fee will be charged.',quoteFirst:'Calculate and confirm the delivery distance before placing an order.',tripInfo:'Choose separate drop-offs or one combined drop-off for breakfast and lunch on the same day.',chooseMode:'Choose your delivery arrangement',separate:'Separate delivery: breakfast and lunch delivered separately',together:'Combined delivery: same-day breakfast and lunch delivered together, one fee',togetherTime:'Combined drop-off time',morning:'Deliver both at breakfast time',midday:'Deliver both at lunch time',jointWarning:'Both meals arrive at the same time; there will not be separate morning and midday drop-offs.',noJoint:'No breakfast-and-lunch pair on the same day. Each ordered day needs only one trip.',dayTrips:'Trip breakdown',addonOnly:'Add-ons only: one delivery trip',pickupFree:'Free pickup',addressChanged:'Address or meals changed. Please recalculate delivery.',pending:'Checking whether the server received your order…',unverified:'Order sent, but receipt could not be verified. Check the order sheet or contact us before trying again.'},
+  ms: {origin:'Dapur',deliveryInfo:'Caj penghantaran (jarak memandu sehala)',distance:'Jarak memandu',tripCount:'Bilangan penghantaran',deliveryFee:'Caj penghantaran',subtotal:'Jumlah makanan',grandTotal:'Jumlah keseluruhan',calculate:'Kira caj penghantaran',calculating:'Mengira laluan…',needAddress:'Masukkan alamat penghantaran yang lengkap.',confirmAddress:'Sila sahkan alamat yang ditemui',tooFar:'Lebih 10 km: hubungi kami untuk sebut harga. Bayaran dalam talian tidak tersedia.',quoteFail:'Jarak memandu tidak dapat ditentukan. Semak alamat atau hubungi kami. Caj anggaran tidak dikenakan.',quoteFirst:'Kira dan sahkan jarak sebelum membuat pesanan.',tripInfo:'Pilih penghantaran berasingan atau sekali hantar untuk sarapan dan makan tengah hari pada hari sama.',chooseMode:'Pilih cara penghantaran',separate:'Asing: sarapan dan makan tengah hari dihantar berasingan',together:'Gabung: kedua-dua hidangan hari sama dihantar sekali, satu caj sahaja',togetherTime:'Masa penghantaran gabungan',morning:'Hantar kedua-duanya waktu sarapan',midday:'Hantar kedua-duanya waktu makan tengah hari',jointWarning:'Kedua-dua hidangan tiba serentak; tiada penghantaran berasingan.',noJoint:'Tiada pasangan sarapan dan makan tengah hari pada hari yang sama. Satu penghantaran setiap hari.',dayTrips:'Butiran penghantaran',addonOnly:'Tambahan sahaja: satu caj penghantaran',pickupFree:'Ambil sendiri percuma',addressChanged:'Alamat atau hidangan berubah. Sila kira semula caj penghantaran.',pending:'Menyemak sama ada pelayan menerima pesanan…',unverified:'Pesanan dihantar tetapi pengesahan belum diterima. Semak rekod pesanan atau hubungi kami sebelum mencuba lagi.'}
 };
 const dt = key => (DELIVERY_I18N[lang] || DELIVERY_I18N.zh)[key] || key;
 let lang = localStorage.getItem("pc_lang") || "zh";
@@ -60,6 +60,8 @@ async function init(){
   const addressField=document.querySelector('[name="address"]');
   addressField.addEventListener('input',invalidateDelivery);
   addressField.addEventListener('blur',()=>{if(isDelivery() && addressField.value.trim().length>=12 && cart.length) calculateDelivery();});
+  document.querySelectorAll('input[name="deliveryMode"]').forEach(el=>el.addEventListener('change',()=>{invalidateDelivery();renderDeliverySection();}));
+  $("#jointTime").addEventListener('change',()=>{invalidateDelivery();renderDeliverySection();});
   $("#calculateDelivery").onclick=calculateDelivery;
   renderDeliverySection();
 }
@@ -147,15 +149,25 @@ window.removeCart=i=>{cart.splice(i,1);persistCart()};
 function showCart(){updateCart();$("#cartSection").classList.remove("hidden");$("#cartSection").scrollIntoView({behavior:"smooth"})}
 function isDelivery(){return $("#fulfilmentSelect").value === "Delivery / 送餐";}
 function foodSubtotal(){return Math.round(cart.reduce((sum,x)=>sum+Number(x.price||0),0)*100)/100;}
-function deliveryTrips(){return Math.max(1,cart.filter(x=>x.kind==='meal').length);}
+function chosenMode(){return document.querySelector('input[name="deliveryMode"]:checked')?.value||'separate';}
+function chosenJointTime(){return $("#jointTime").value||'breakfast';}
+function currentPlan(){return PCDelivery.plan(cart,chosenMode());}
+function deliveryTrips(){return currentPlan().trips;}
+function tripSignature(){return currentPlan().signature;}
 function normalizeAddress(s){return String(s||'').trim().replace(/\s+/g,' ').toLowerCase();}
-function validQuote(){return !!(deliveryQuote && deliveryQuote.ok && deliveryQuote.quoteId && deliveryQuote.fee!==null && deliveryQuote.fee!==undefined && deliveryQuote.addressKey===normalizeAddress(document.querySelector('[name="address"]').value) && deliveryQuote.trips===deliveryTrips() && deliveryQuote.expiresAt>Date.now());}
+function validQuote(){return !!(deliveryQuote && deliveryQuote.ok && deliveryQuote.quoteId && deliveryQuote.fee!==null && deliveryQuote.fee!==undefined && deliveryQuote.addressKey===normalizeAddress(document.querySelector('[name="address"]').value) && deliveryQuote.trips===deliveryTrips() && deliveryQuote.mode===chosenMode() && deliveryQuote.signature===tripSignature() && deliveryQuote.jointTime===(chosenMode()==='together'?chosenJointTime():'none') && deliveryQuote.expiresAt>Date.now());}
 function invalidateDelivery(){deliveryQuote=null;quoteEpoch++;if($("#deliveryMatched"))$("#deliveryMatched").checked=false;renderDeliverySection();}
 function renderDeliverySection(){
   const box=$("#deliverySection");if(!box)return;
   box.classList.toggle('hidden',!isDelivery());
   const address=document.querySelector('[name="address"]');address.required=isDelivery();
+  const deliveryPlan=currentPlan();
   $("#deliveryRule").textContent=dt('tripInfo');
+  document.querySelectorAll('[data-delivery-i18n]').forEach(el=>el.textContent=dt(el.dataset.deliveryI18n));
+  $("#jointTimeRow").classList.toggle('hidden',chosenMode()!=='together'||!deliveryPlan.eligible);
+  $("#jointWarning").classList.toggle('hidden',chosenMode()!=='together'||!deliveryPlan.eligible);
+  const dayText=deliveryPlan.days.map(x=>`${t('week',{n:x.week})} ${dayName(x.day)}: ${x.meals.map(m=>t(m)).join(' + ')} → ${x.trips} ${dt('tripCount')}`);
+  $("#deliveryPlanPreview").textContent=deliveryPlan.days.length?`${dt('dayTrips')}: ${dayText.join(' · ')} · ${dt('tripCount')}: ${deliveryPlan.trips}`:dt('addonOnly');
   $("#kitchenAddress").textContent=CONFIG.kitchenAddress;
   const status=$("#deliveryStatus"), match=$("#deliveryMatchRow");
   if(!isDelivery()){status.textContent=dt('pickupFree');match.classList.add('hidden');}
@@ -170,7 +182,9 @@ function renderDeliverySection(){
   $("#calculateDelivery").disabled=quoteBusy||!cart.length;
   $("#deliveryLine").classList.toggle('hidden',!isDelivery());
   $("#deliveryAmount").textContent=validQuote()?money(deliveryQuote.fee):'—';
-  $("#deliveryGrandTotal").textContent=money(foodSubtotal()+(isDelivery()&&validQuote()?deliveryQuote.fee:0));
+  const fullTotal=foodSubtotal()+(isDelivery()&&validQuote()?deliveryQuote.fee:0);
+  $("#deliveryGrandTotal").textContent=money(fullTotal);
+  $("#cartTotal").textContent=money(fullTotal);
   $("#foodSubtotal").textContent=money(foodSubtotal());
 }
 function requestJsonp(action, params={}){
@@ -194,7 +208,10 @@ async function calculateDelivery(){
   if(address.length<12){alert(dt('needAddress'));return;}
   const epoch=++quoteEpoch;quoteBusy=true;deliveryQuote=null;renderDeliverySection();
   try{
-    const result=await requestJsonp('deliveryQuote',{address,trips:deliveryTrips()});
+    const result=await requestJsonp('deliveryQuote',{
+      address,mode:chosenMode(),jointTime:chosenMode()==='together'?chosenJointTime():'none',
+      plan:JSON.stringify(cart.filter(x=>x.kind==='meal').map(x=>({week:x.week,day:x.day,meal:x.meal}))),
+      trips:deliveryTrips()});
     if(epoch!==quoteEpoch)return;
     if(!result.ok)throw new Error(result.error||'Quote unavailable');
     result.addressKey=normalizeAddress(address);
@@ -210,7 +227,7 @@ async function placeOrder(e){
   const submitBtn=e.target.querySelector('button[type="submit"]');const originalText=submitBtn.textContent;isSubmitting=true;submitBtn.disabled=true;submitBtn.textContent=t('submitting');
   const form=Object.fromEntries(new FormData(e.target).entries());
   const fee=isDelivery()?deliveryQuote.fee:0;
-  const order={orderId:createOrderId(),createdAt:new Date().toISOString(),customer:form,items:cart,subtotal:foodSubtotal(),deliveryFee:fee,total:foodSubtotal()+fee,deliveryQuoteId:isDelivery()?deliveryQuote.quoteId:null,deliveryTrips:isDelivery()?deliveryTrips():0,deliveryDistanceKm:isDelivery()?deliveryQuote.distanceKm:null};
+  const order={orderId:createOrderId(),createdAt:new Date().toISOString(),customer:form,items:cart,subtotal:foodSubtotal(),deliveryFee:fee,total:foodSubtotal()+fee,deliveryMode:isDelivery()?chosenMode():'pickup',jointTime:isDelivery()&&chosenMode()==='together'?chosenJointTime():'none',deliverySignature:isDelivery()?tripSignature():null,deliveryQuoteId:isDelivery()?deliveryQuote.quoteId:null,deliveryTrips:isDelivery()?deliveryTrips():0,deliveryDistanceKm:isDelivery()?deliveryQuote.distanceKm:null};
   try{
     if(!CONFIG.appsScriptUrl)throw new Error('Apps Script URL missing');
     // Apps Script redirects often block CORS for POST. Cross-origin no-cors sends, then JSONP polls the order receipt.

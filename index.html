@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#174f3b" />
   <title>Premium Crest Online Ordering</title>
-  <link rel="stylesheet" href="styles.css?v=1.3.0" />
+  <link rel="stylesheet" href="styles.css?v=1.4.0" />
 </head>
 <body>
   <header class="site-header">
@@ -102,6 +102,19 @@
         </label>
         <label class="wide"><span data-i18n="address">地址</span><textarea name="address" rows="2"></textarea></label>
         <div id="deliverySection" class="delivery-card wide hidden">
+          <fieldset class="delivery-choice">
+            <legend data-delivery-i18n="chooseMode">选择配送方式</legend>
+            <label class="choice-option"><input type="radio" name="deliveryMode" value="separate" checked><span data-delivery-i18n="separate">分别配送：早餐、午餐各送一次</span></label>
+            <label class="choice-option"><input type="radio" name="deliveryMode" value="together"><span data-delivery-i18n="together">合并配送：同一天两餐同时送达，运费只收一次</span></label>
+          </fieldset>
+          <label id="jointTimeRow" class="joint-time-row hidden"><span data-delivery-i18n="togetherTime">合并配送的送达时段</span>
+            <select id="jointTime" name="jointTime">
+              <option value="breakfast" data-delivery-i18n="morning">早餐时段一起送达</option>
+              <option value="lunch" data-delivery-i18n="midday">午餐时段一起送达</option>
+            </select>
+          </label>
+          <p id="jointWarning" class="joint-warning hidden" data-delivery-i18n="jointWarning">选择合并配送后，两餐会在同一时段送达，不会分别送两次。</p>
+          <p id="deliveryPlanPreview" class="delivery-plan-preview" aria-live="polite"></p>
           <p class="delivery-heading">🚚 <span id="deliveryHeading">Delivery fee / 运费 / Caj penghantaran</span></p>
           <p class="delivery-small"><strong>Premium Crest:</strong> <span id="kitchenAddress"></span></p>
           <p class="delivery-small" id="deliveryRule"></p>
@@ -130,6 +143,7 @@
   </main>
 
   <footer>Premium Crest Group · Nourishing Potential</footer>
-  <script src="app.js?v=1.3.0"></script>
+  <script src="delivery-plan.js?v=1.4.0"></script>
+  <script src="app.js?v=1.4.0"></script>
 </body>
 </html>
