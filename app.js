@@ -1,6 +1,7 @@
 const CONFIG = {
   appsScriptUrl: "https://script.google.com/macros/s/AKfycbypZeSwTKE4Br6wCu3d-CHtmyjo0mrwMSh-YV_ASYZ287TP7ksdBe9LjKTgc7fjdj4I/exec",
-  currency: "RM"
+  currency: "RM",
+  kitchenAddress: "1608, Lorong Urat Mata 3, Tabuan Jaya, 93350 Kuching, Sarawak"
 };
 
 const DAYS = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
@@ -19,10 +20,21 @@ const I18N = {
   }
 };
 
+const DELIVERY_I18N = {
+  zh: {origin:'出餐地点',deliveryInfo:'送餐运费（单程行车距离）',distance:'实际行车距离',tripCount:'配送次数',deliveryFee:'送餐费',subtotal:'餐费',grandTotal:'应付总额',calculate:'计算送餐费',calculating:'正在查询行车距离…',needAddress:'请输入完整送餐地址，再计算运费。',confirmAddress:'请确认系统找到的送餐地点正确',tooFar:'超过 8 km：请联系客服报价，暂时不能线上结账。',quoteFail:'无法查询准确行车距离。请检查地址或联系客服；不会自动收取估算运费。',quoteFirst:'请先计算并确认送餐距离，才可以提交订单。',tripInfo:'早餐和午餐分开配送；每餐算一次运费。',pickupFree:'自取免费',addressChanged:'地址或餐点已更改，请重新计算运费。',pending:'正在确认服务器是否收到订单…',unverified:'订单已送出，但暂时无法确认是否成功。请先检查订单表或联系客服，不要重复提交。'},
+  en: {origin:'Kitchen',deliveryInfo:'Delivery fee (one-way driving distance)',distance:'Driving distance',tripCount:'Delivery trips',deliveryFee:'Delivery fee',subtotal:'Food subtotal',grandTotal:'Grand total',calculate:'Calculate delivery',calculating:'Calculating route…',needAddress:'Please enter the complete delivery address.',confirmAddress:'Please verify this matched address',tooFar:'Over 8 km: contact us for a quote. Online checkout is unavailable.',quoteFail:'Could not determine a reliable driving distance. Check the address or contact us. No estimated fee will be charged.',quoteFirst:'Calculate and confirm the delivery distance before placing an order.',tripInfo:'Breakfast and lunch are separate trips, each charged individually.',pickupFree:'Free pickup',addressChanged:'Address or meals changed. Please recalculate delivery.',pending:'Checking whether the server received your order…',unverified:'Order sent, but receipt could not be verified. Check the order sheet or contact us before trying again.'},
+  ms: {origin:'Dapur',deliveryInfo:'Caj penghantaran (jarak memandu sehala)',distance:'Jarak memandu',tripCount:'Bilangan penghantaran',deliveryFee:'Caj penghantaran',subtotal:'Jumlah makanan',grandTotal:'Jumlah keseluruhan',calculate:'Kira caj penghantaran',calculating:'Mengira laluan…',needAddress:'Masukkan alamat penghantaran yang lengkap.',confirmAddress:'Sila sahkan alamat yang ditemui',tooFar:'Lebih 8 km: hubungi kami untuk sebut harga. Bayaran dalam talian tidak tersedia.',quoteFail:'Jarak memandu tidak dapat ditentukan. Semak alamat atau hubungi kami. Caj anggaran tidak dikenakan.',quoteFirst:'Kira dan sahkan jarak sebelum membuat pesanan.',tripInfo:'Sarapan dan makan tengah hari dihantar berasingan dan dikenakan caj bagi setiap penghantaran.',pickupFree:'Ambil sendiri percuma',addressChanged:'Alamat atau hidangan berubah. Sila kira semula caj penghantaran.',pending:'Menyemak sama ada pelayan menerima pesanan…',unverified:'Pesanan dihantar tetapi pengesahan belum diterima. Semak rekod pesanan atau hubungi kami sebelum mencuba lagi.'}
+};
+const dt = key => (DELIVERY_I18N[lang] || DELIVERY_I18N.zh)[key] || key;
 let lang = localStorage.getItem("pc_lang") || "zh";
 let data, state = {week:1, day:"Monday", meal:"breakfast", selected:new Set(), addons:{}};
 let cart = JSON.parse(localStorage.getItem("pc_cart") || "[]");
 let isSubmitting = false;
+let deliveryQuote = null;
+let quoteBusy = false;
+let quoteEpoch = 0;
+const QUOTE_TIMEOUT_MS = 18000;
+
 
 const $ = s => document.querySelector(s);
 const money = n => `${CONFIG.currency}${Number(n).toFixed(2)}`;
@@ -44,6 +56,12 @@ async function init(){
   $("#addMealBtn").onclick=addCurrentMeal;
   $("#cartBtn").onclick=showCart; $("#closeCart").onclick=()=>$("#cartSection").classList.add("hidden");
   $("#checkoutForm").onsubmit=placeOrder;
+  $("#fulfilmentSelect").onchange=() => {invalidateDelivery(); renderDeliverySection();};
+  const addressField=document.querySelector('[name="address"]');
+  addressField.addEventListener('input',invalidateDelivery);
+  addressField.addEventListener('blur',()=>{if(isDelivery() && addressField.value.trim().length>=12 && cart.length) calculateDelivery();});
+  $("#calculateDelivery").onclick=calculateDelivery;
+  renderDeliverySection();
 }
 
 function setLanguage(newLang){
@@ -53,9 +71,14 @@ function applyLanguage(){
   document.documentElement.lang=lang==='zh'?'zh-Hans':lang;
   document.querySelectorAll('[data-i18n]').forEach(el=>el.textContent=t(el.dataset.i18n));
   $("#remarksField").placeholder=t("remarksPlaceholder");
+  const oldFulfilment=$("#fulfilmentSelect").value;
   $("#fulfilmentSelect").innerHTML=`<option value="Self Pickup / 自取">${t('selfPickup')}</option><option value="Delivery / 送餐">${t('delivery')}</option>`;
+  if(oldFulfilment)$("#fulfilmentSelect").value=oldFulfilment;
+  const oldPayment=$("#paymentSelect").value;
   $("#paymentSelect").innerHTML=`<option value="DuitNow QR">${t('duitnow')}</option><option value="Bank Transfer">${t('bank')}</option><option value="Cash">${t('cash')}</option>`;
+  if(oldPayment)$("#paymentSelect").value=oldPayment;
   resetSubmitButton(false);
+  renderDeliverySection();
 }
 function fillSelectors(){
   const wv=state.week,dv=state.day;
@@ -110,26 +133,105 @@ function renderAddons(){
   $("#addonGrid").innerHTML=data.addons.map(a=>`<div class="addon-card"><strong>${addonDisplayName(a)}</strong><span class="price">${money(a.price)}</span><div class="qty-row"><button data-a="${a.id}" data-d="-1">−</button><span id="q-${a.id}">${state.addons[a.id]||0}</span><button data-a="${a.id}" data-d="1">＋</button></div></div>`).join("");
   document.querySelectorAll(".qty-row button").forEach(b=>b.onclick=()=>{const id=b.dataset.a,d=+b.dataset.d,q=Math.max(0,(state.addons[id]||0)+d);state.addons[id]=q;$("#q-"+id).textContent=q;if(d>0){resetSubmitButton();const a=data.addons.find(x=>x.id===id);cart.push({kind:"addon",id:a.id,name:a.name,qty:1,price:a.price});persistCart()}else if(d<0){const idx=cart.findIndex(x=>x.kind==='addon'&&x.id===id);if(idx>=0){cart.splice(idx,1);persistCart()}}});
 }
-function persistCart(){localStorage.setItem("pc_cart",JSON.stringify(cart));updateCart()}
+function persistCart(){invalidateDelivery();localStorage.setItem("pc_cart",JSON.stringify(cart));updateCart()}
 function updateCart(){
   $("#cartCount").textContent=cart.length;const box=$("#cartItems"); if(!box)return;
   box.innerHTML=cart.length?cart.map((x,i)=>x.kind==='meal'?`<div class="cart-item"><div><h4>${t('week',{n:x.week})} · ${dayName(x.day)} ${t(x.meal)}</h4><p>${x.items.map(a=>`#${a.no} ${dishPrimary(a)}`).join(' · ')}</p><p>${calculateMeal(x.items).label}</p></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`:`<div class="cart-item"><div><h4>${t('addonCart')}</h4><p>${addonNameFromCart(x.name)}</p></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`).join(""):`<p class='muted'>${t('emptyCart')}</p>`;
-  $("#cartTotal").textContent=money(cart.reduce((s,x)=>s+x.price,0));
+  const subtotal=foodSubtotal();
+  $("#cartTotal").textContent=money(subtotal+(isDelivery() && validQuote()?deliveryQuote.fee:0));
+  if($("#foodSubtotal")) $("#foodSubtotal").textContent=money(subtotal);
+  renderDeliverySection();
 }
 function addonNameFromCart(name){const parts=name.split('/').map(x=>x.trim());return lang==='zh'?name:(parts[1]||name)}
 window.removeCart=i=>{cart.splice(i,1);persistCart()};
 function showCart(){updateCart();$("#cartSection").classList.remove("hidden");$("#cartSection").scrollIntoView({behavior:"smooth"})}
-async function placeOrder(e){
-  e.preventDefault();if(isSubmitting)return;if(!cart.length){alert(t('cartEmptyAlert'));return}
-  const submitBtn=e.target.querySelector('button[type="submit"]');const originalText=submitBtn.textContent;isSubmitting=true;submitBtn.disabled=true;submitBtn.textContent=t('submitting');
-  const form=Object.fromEntries(new FormData(e.target).entries());const order={orderId:createOrderId(),createdAt:new Date().toISOString(),customer:form,items:cart,total:cart.reduce((s,x)=>s+x.price,0)};
-  try{
-    if(CONFIG.appsScriptUrl && !CONFIG.appsScriptUrl.includes("PASTE_GOOGLE_APPS_SCRIPT")){await fetch(CONFIG.appsScriptUrl,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(order)});}
-    else{const demo=JSON.parse(localStorage.getItem("pc_demo_orders")||"[]");demo.push(order);localStorage.setItem("pc_demo_orders",JSON.stringify(demo));}
-    $("#orderResult").classList.remove("hidden");$("#orderResult").innerHTML=`<strong>${t('success')}</strong><br>Order No.: <b>${order.orderId}</b><br>${t('total')}: <b>${money(order.total)}</b><br><small>${t('doNotRepeat')}</small>${(CONFIG.appsScriptUrl && !CONFIG.appsScriptUrl.includes('PASTE_GOOGLE_APPS_SCRIPT'))?'':`<br><small>${t('demoNote')}</small>`}`;
-    cart=[];persistCart();e.target.reset();applyLanguage();submitBtn.disabled=true;submitBtn.textContent=t('submitted');
-  }catch(err){isSubmitting=false;submitBtn.disabled=false;submitBtn.textContent=originalText;alert(t('submitFail'));}
+function isDelivery(){return $("#fulfilmentSelect").value === "Delivery / 送餐";}
+function foodSubtotal(){return Math.round(cart.reduce((sum,x)=>sum+Number(x.price||0),0)*100)/100;}
+function deliveryTrips(){return Math.max(1,cart.filter(x=>x.kind==='meal').length);}
+function normalizeAddress(s){return String(s||'').trim().replace(/\s+/g,' ').toLowerCase();}
+function validQuote(){return !!(deliveryQuote && deliveryQuote.ok && deliveryQuote.quoteId && deliveryQuote.fee!==null && deliveryQuote.fee!==undefined && deliveryQuote.addressKey===normalizeAddress(document.querySelector('[name="address"]').value) && deliveryQuote.trips===deliveryTrips() && deliveryQuote.expiresAt>Date.now());}
+function invalidateDelivery(){deliveryQuote=null;quoteEpoch++;if($("#deliveryMatched"))$("#deliveryMatched").checked=false;renderDeliverySection();}
+function renderDeliverySection(){
+  const box=$("#deliverySection");if(!box)return;
+  box.classList.toggle('hidden',!isDelivery());
+  const address=document.querySelector('[name="address"]');address.required=isDelivery();
+  $("#deliveryRule").textContent=dt('tripInfo');
+  $("#kitchenAddress").textContent=CONFIG.kitchenAddress;
+  const status=$("#deliveryStatus"), match=$("#deliveryMatchRow");
+  if(!isDelivery()){status.textContent=dt('pickupFree');match.classList.add('hidden');}
+  else if(quoteBusy){status.textContent=dt('calculating');match.classList.add('hidden');}
+  else if(deliveryQuote && deliveryQuote.ok){
+    status.textContent=deliveryQuote.manual?dt('tooFar'):(`${dt('distance')}: ${deliveryQuote.distanceKm.toFixed(2)} km · ${dt('tripCount')}: ${deliveryQuote.trips} · ${dt('deliveryFee')}: ${money(deliveryQuote.fee)}`);
+    match.classList.remove('hidden');
+    $("#matchedAddress").textContent=deliveryQuote.matchedAddress||address.value;
+    $("#confirmMatchedLabel").textContent=dt('confirmAddress');
+  }else{status.textContent=dt('deliveryInfo')+': 0–4 km RM5 · >4–8 km RM7 · >8 km '+dt('tooFar').split(':')[0];match.classList.add('hidden');}
+  $("#calculateDelivery").textContent=quoteBusy?dt('calculating'):dt('calculate');
+  $("#calculateDelivery").disabled=quoteBusy||!cart.length;
+  $("#deliveryLine").classList.toggle('hidden',!isDelivery());
+  $("#deliveryAmount").textContent=validQuote()?money(deliveryQuote.fee):'—';
+  $("#deliveryGrandTotal").textContent=money(foodSubtotal()+(isDelivery()&&validQuote()?deliveryQuote.fee:0));
+  $("#foodSubtotal").textContent=money(foodSubtotal());
 }
+function requestJsonp(action, params={}){
+  return new Promise((resolve,reject)=>{
+    const callback='pcDeliveryCallback_'+Math.random().toString(36).slice(2);
+    const u=new URL(CONFIG.appsScriptUrl);
+    u.searchParams.set('action',action);u.searchParams.set('callback',callback);
+    Object.entries(params).forEach(([k,v])=>u.searchParams.set(k,String(v)));
+    const script=document.createElement('script');
+    let timer;
+    const cleanup=()=>{clearTimeout(timer);delete window[callback];script.remove();};
+    window[callback]=value=>{cleanup();resolve(value);};
+    script.onerror=()=>{cleanup();reject(new Error('Network error'));};
+    timer=setTimeout(()=>{cleanup();reject(new Error('Quote timed out'));},QUOTE_TIMEOUT_MS);
+    script.src=u.href;document.head.appendChild(script);
+  });
+}
+async function calculateDelivery(){
+  if(!isDelivery()||quoteBusy||!cart.length)return;
+  const address=document.querySelector('[name="address"]').value.trim();
+  if(address.length<12){alert(dt('needAddress'));return;}
+  const epoch=++quoteEpoch;quoteBusy=true;deliveryQuote=null;renderDeliverySection();
+  try{
+    const result=await requestJsonp('deliveryQuote',{address,trips:deliveryTrips()});
+    if(epoch!==quoteEpoch)return;
+    if(!result.ok)throw new Error(result.error||'Quote unavailable');
+    result.addressKey=normalizeAddress(address);
+    result.expiresAt=Date.now()+Math.min(15*60000,(Number(result.validForSeconds)||900)*1000);
+    deliveryQuote=result;
+    $("#deliveryMatched").checked=false;
+  }catch(err){if(epoch===quoteEpoch){deliveryQuote=null;alert(dt('quoteFail')+'\n'+err.message);}}
+  finally{quoteBusy=false;renderDeliverySection();}
+}
+async function placeOrder(e){
+  e.preventDefault();if(isSubmitting)return;if(!cart.length){alert(t('cartEmptyAlert'));return;}
+  if(isDelivery() && (!validQuote()||deliveryQuote.manual||!$("#deliveryMatched").checked)){alert(validQuote()&&deliveryQuote.manual?dt('tooFar'):dt('quoteFirst'));return;}
+  const submitBtn=e.target.querySelector('button[type="submit"]');const originalText=submitBtn.textContent;isSubmitting=true;submitBtn.disabled=true;submitBtn.textContent=t('submitting');
+  const form=Object.fromEntries(new FormData(e.target).entries());
+  const fee=isDelivery()?deliveryQuote.fee:0;
+  const order={orderId:createOrderId(),createdAt:new Date().toISOString(),customer:form,items:cart,subtotal:foodSubtotal(),deliveryFee:fee,total:foodSubtotal()+fee,deliveryQuoteId:isDelivery()?deliveryQuote.quoteId:null,deliveryTrips:isDelivery()?deliveryTrips():0,deliveryDistanceKm:isDelivery()?deliveryQuote.distanceKm:null};
+  try{
+    if(!CONFIG.appsScriptUrl)throw new Error('Apps Script URL missing');
+    // Apps Script redirects often block CORS for POST. Cross-origin no-cors sends, then JSONP polls the order receipt.
+    await fetch(CONFIG.appsScriptUrl,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(order)});
+    let receipt;
+    for(let i=0;i<5;i++){
+      await new Promise(r=>setTimeout(r,1600));
+      try{receipt=await requestJsonp('orderStatus',{orderId:order.orderId});if(receipt.ok&&receipt.found)break;}catch(_e){}
+    }
+    if(!receipt||!receipt.found){
+      $("#orderResult").classList.remove('hidden');
+      $("#orderResult").textContent=dt('unverified')+' Order ID: '+order.orderId;
+      submitBtn.disabled=true;submitBtn.textContent=t('submitted');
+      return;
+    }
+    $("#orderResult").classList.remove('hidden');
+    $("#orderResult").textContent=`${t('success')} · ${order.orderId} · ${dt('grandTotal')}: ${money(order.total)}. ${t('doNotRepeat')}`;
+    cart=[];persistCart();e.target.reset();applyLanguage();submitBtn.disabled=true;submitBtn.textContent=t('submitted');
+  }catch(err){isSubmitting=false;submitBtn.disabled=false;submitBtn.textContent=originalText;alert(t('submitFail')+' '+err.message);}
+}
+
 function resetSubmitButton(clearResult=true){
   isSubmitting=false;const submitBtn=document.querySelector('#checkoutForm button[type="submit"]');if(submitBtn){submitBtn.disabled=false;submitBtn.textContent=t('placeOrder')}
   const result=$("#orderResult");if(result&&clearResult){result.classList.add("hidden");result.innerHTML="";}

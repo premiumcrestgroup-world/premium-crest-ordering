@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#174f3b" />
   <title>Premium Crest Online Ordering</title>
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=1.3.0" />
 </head>
 <body>
   <header class="site-header">
@@ -101,6 +101,23 @@
           <select name="fulfilment" id="fulfilmentSelect"></select>
         </label>
         <label class="wide"><span data-i18n="address">地址</span><textarea name="address" rows="2"></textarea></label>
+        <div id="deliverySection" class="delivery-card wide hidden">
+          <p class="delivery-heading">🚚 <span id="deliveryHeading">Delivery fee / 运费 / Caj penghantaran</span></p>
+          <p class="delivery-small"><strong>Premium Crest:</strong> <span id="kitchenAddress"></span></p>
+          <p class="delivery-small" id="deliveryRule"></p>
+          <button id="calculateDelivery" type="button" class="primary">计算送餐费</button>
+          <p id="deliveryStatus" class="delivery-status" role="status" aria-live="polite"></p>
+          <label id="deliveryMatchRow" class="delivery-confirm hidden">
+            <input type="checkbox" id="deliveryMatched"/>
+            <span><strong id="confirmMatchedLabel">请确认送餐地点：</strong><br><span id="matchedAddress"></span></span>
+          </label>
+          <small>Route service: Google Apps Script Maps · Google Maps</small>
+        </div>
+        <div class="delivery-totals wide">
+          <div><span id="foodSubtotalLabel">Food subtotal / 餐费</span><strong id="foodSubtotal">RM0.00</strong></div>
+          <div id="deliveryLine" class="hidden"><span>Delivery fee / 运费</span><strong id="deliveryAmount">—</strong></div>
+          <div class="delivery-grand"><span>Total / 总额</span><strong id="deliveryGrandTotal">RM0.00</strong></div>
+        </div>
         <label><span data-i18n="payment">付款方式</span>
           <select name="payment" id="paymentSelect"></select>
         </label>
@@ -113,6 +130,6 @@
   </main>
 
   <footer>Premium Crest Group · Nourishing Potential</footer>
-  <script src="app.js"></script>
+  <script src="app.js?v=1.3.0"></script>
 </body>
 </html>
