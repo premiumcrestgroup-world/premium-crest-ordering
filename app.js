@@ -10,13 +10,13 @@ const DAY_MS = {Monday:"Isnin",Tuesday:"Selasa",Wednesday:"Rabu",Thursday:"Khami
 
 const I18N = {
   zh:{
-    headerTitle:"在线点餐",headerSubtitle:"自由选餐 · 自动算价 · 早餐午餐 · 可订整周",cart:"购物车",heroTitle:"直接点进去就可以下单 🍱",heroText:"选择 Week、星期、早餐/午餐，然后直接点击食物卡片。系统会自动判断套餐与加菜/加肉价格。",set1:"1肉2菜",set2:"2肉1菜",weekLabel:"星期菜单",dayLabel:"日期",mealLabel:"餐别",breakfast:"早餐",lunch:"午餐",chooseFood:"自由选择食物",clear:"清除选择",mealSummary:"本餐选择",addMeal:"加入购物车",minHint:"提示：至少需要 1肉2菜 或 2肉1菜 才能加入购物车。",addons:"单点加购",addonsHint:"可在结账前随时添加",close:"关闭",total:"总计",customerDetails:"顾客资料",name:"姓名",phone:"电话号码",fulfilment:"取餐方式",address:"地址",payment:"付款方式",paymentRef:"付款参考号",remarks:"备注",placeOrder:"确认下单",noFood:"还没有选择食物",meat:"肉类",veg:"菜类",meatShort:"肉",vegShort:"菜",extraMeat:"加肉",extraVeg:"加菜",mealTotal:"本餐合计",selected:"已选",needSet:"请选择至少 1肉2菜 或 2肉1菜",emptyCart:"购物车目前是空的。",remove:"删除",addonCart:"单点加购",selfPickup:"Self Pickup / 自取",delivery:"Delivery / 送餐",duitnow:"DuitNow QR",bank:"Bank Transfer",cash:"Cash",remarksPlaceholder:"少辣 / 不辣 / 少饭 ...",cartEmptyAlert:"购物车是空的",submitting:"提交中…",submitted:"✅ 已提交",success:"✅ 下单成功",doNotRepeat:"请勿重复点击提交。如需再下单，请重新加入餐点。",submitFail:"订单提交失败，请检查 Apps Script URL 或网络连接。",demoNote:"目前是 Demo 模式：订单已存放在此浏览器。接上 Google Apps Script 后会自动写入 Google Sheets。",week:"第{n}周",set2label:"2肉1菜",set1label:"1肉2菜"
+    headerTitle:"在线点餐",headerSubtitle:"自由选餐 · 自动算价 · 早餐午餐 · 可订整周",cart:"购物车",heroTitle:"直接点进去就可以下单 🍱",heroText:"选好取餐／配送日期，系统自动显示正确的菜单 Week 和星期。选择早餐或午餐，再点选食物即可。",set1:"1肉2菜",set2:"2肉1菜",weekLabel:"星期菜单",dayLabel:"日期",mealLabel:"餐别",breakfast:"早餐",lunch:"午餐",chooseFood:"自由选择食物",clear:"清除选择",mealSummary:"本餐选择",addMeal:"加入购物车",minHint:"提示：至少需要 1肉2菜 或 2肉1菜 才能加入购物车。",addons:"单点加购",addonsHint:"可在结账前随时添加",close:"关闭",total:"总计",customerDetails:"顾客资料",name:"姓名",phone:"电话号码",fulfilment:"取餐方式",address:"地址",payment:"付款方式",paymentRef:"付款参考号",remarks:"备注",placeOrder:"确认下单",noFood:"还没有选择食物",meat:"肉类",veg:"菜类",meatShort:"肉",vegShort:"菜",extraMeat:"加肉",extraVeg:"加菜",mealTotal:"本餐合计",selected:"已选",needSet:"请选择至少 1肉2菜 或 2肉1菜",emptyCart:"购物车目前是空的。",remove:"删除",addonCart:"单点加购",selfPickup:"Self Pickup / 自取",delivery:"Delivery / 送餐",duitnow:"DuitNow QR",bank:"Bank Transfer",cash:"Cash",remarksPlaceholder:"少辣 / 不辣 / 少饭 ...",cartEmptyAlert:"购物车是空的",submitting:"提交中…",submitted:"✅ 已提交",success:"✅ 下单成功",doNotRepeat:"请勿重复点击提交。如需再下单，请重新加入餐点。",submitFail:"订单提交失败，请检查 Apps Script URL 或网络连接。",demoNote:"目前是 Demo 模式：订单已存放在此浏览器。接上 Google Apps Script 后会自动写入 Google Sheets。",week:"第{n}周",set2label:"2肉1菜",set1label:"1肉2菜"
   },
   en:{
-    headerTitle:"Online Ordering",headerSubtitle:"Choose freely · Auto pricing · Breakfast & lunch · Weekly orders",cart:"Cart",heroTitle:"Order directly online 🍱",heroText:"Choose a week, day and meal, then tap the food cards you want. The system calculates the set and extras automatically.",set1:"1 Meat + 2 Vegetables",set2:"2 Meats + 1 Vegetable",weekLabel:"Menu Week",dayLabel:"Day",mealLabel:"Meal",breakfast:"Breakfast",lunch:"Lunch",chooseFood:"Choose Your Food",clear:"Clear Selection",mealSummary:"Meal Summary",addMeal:"Add Meal to Cart",minHint:"Choose at least 1 meat + 2 vegetables or 2 meats + 1 vegetable before adding to cart.",addons:"À La Carte Add-ons",addonsHint:"You can add these any time before checkout",close:"Close",total:"Total",customerDetails:"Customer Details",name:"Name",phone:"Phone",fulfilment:"Fulfilment",address:"Address",payment:"Payment Method",paymentRef:"Payment Reference",remarks:"Remarks",placeOrder:"Place Order",noFood:"No food selected yet",meat:"Meat",veg:"Vegetable",meatShort:"Meat",vegShort:"Veg",extraMeat:"Extra Meat",extraVeg:"Extra Vegetable",mealTotal:"Meal Total",selected:"Selected",needSet:"Choose at least 1 meat + 2 vegetables or 2 meats + 1 vegetable",emptyCart:"Your cart is empty.",remove:"Remove",addonCart:"Add-on",selfPickup:"Self Pickup",delivery:"Delivery",duitnow:"DuitNow QR",bank:"Bank Transfer",cash:"Cash",remarksPlaceholder:"Less spicy / No chili / Less rice ...",cartEmptyAlert:"Your cart is empty",submitting:"Submitting…",submitted:"✅ Order Submitted",success:"✅ Order Confirmed",doNotRepeat:"Please do not submit the same order twice. Add new items if you want to place another order.",submitFail:"Order submission failed. Please check your connection and try again.",demoNote:"Demo mode: this order is stored in this browser only.",week:"Week {n}",set2label:"2 Meats + 1 Vegetable",set1label:"1 Meat + 2 Vegetables"
+    headerTitle:"Online Ordering",headerSubtitle:"Choose freely · Auto pricing · Breakfast & lunch · Weekly orders",cart:"Cart",heroTitle:"Order directly online 🍱",heroText:"Choose a pickup/delivery date. The correct menu week and weekday appear automatically. Pick your meal and food.",set1:"1 Meat + 2 Vegetables",set2:"2 Meats + 1 Vegetable",weekLabel:"Menu Week",dayLabel:"Day",mealLabel:"Meal",breakfast:"Breakfast",lunch:"Lunch",chooseFood:"Choose Your Food",clear:"Clear Selection",mealSummary:"Meal Summary",addMeal:"Add Meal to Cart",minHint:"Choose at least 1 meat + 2 vegetables or 2 meats + 1 vegetable before adding to cart.",addons:"À La Carte Add-ons",addonsHint:"You can add these any time before checkout",close:"Close",total:"Total",customerDetails:"Customer Details",name:"Name",phone:"Phone",fulfilment:"Fulfilment",address:"Address",payment:"Payment Method",paymentRef:"Payment Reference",remarks:"Remarks",placeOrder:"Place Order",noFood:"No food selected yet",meat:"Meat",veg:"Vegetable",meatShort:"Meat",vegShort:"Veg",extraMeat:"Extra Meat",extraVeg:"Extra Vegetable",mealTotal:"Meal Total",selected:"Selected",needSet:"Choose at least 1 meat + 2 vegetables or 2 meats + 1 vegetable",emptyCart:"Your cart is empty.",remove:"Remove",addonCart:"Add-on",selfPickup:"Self Pickup",delivery:"Delivery",duitnow:"DuitNow QR",bank:"Bank Transfer",cash:"Cash",remarksPlaceholder:"Less spicy / No chili / Less rice ...",cartEmptyAlert:"Your cart is empty",submitting:"Submitting…",submitted:"✅ Order Submitted",success:"✅ Order Confirmed",doNotRepeat:"Please do not submit the same order twice. Add new items if you want to place another order.",submitFail:"Order submission failed. Please check your connection and try again.",demoNote:"Demo mode: this order is stored in this browser only.",week:"Week {n}",set2label:"2 Meats + 1 Vegetable",set1label:"1 Meat + 2 Vegetables"
   },
   ms:{
-    headerTitle:"Pesanan Dalam Talian",headerSubtitle:"Pilih bebas · Harga automatik · Sarapan & makan tengah hari · Tempahan mingguan",cart:"Troli",heroTitle:"Terus buat pesanan di sini 🍱",heroText:"Pilih minggu, hari dan waktu makan, kemudian tekan kad makanan yang anda mahu. Sistem akan mengira set dan tambahan secara automatik.",set1:"1 Daging + 2 Sayur",set2:"2 Daging + 1 Sayur",weekLabel:"Minggu Menu",dayLabel:"Hari",mealLabel:"Waktu Makan",breakfast:"Sarapan",lunch:"Makan Tengah Hari",chooseFood:"Pilih Makanan",clear:"Kosongkan Pilihan",mealSummary:"Ringkasan Hidangan",addMeal:"Tambah ke Troli",minHint:"Pilih sekurang-kurangnya 1 daging + 2 sayur atau 2 daging + 1 sayur sebelum tambah ke troli.",addons:"Tambahan À La Carte",addonsHint:"Boleh ditambah bila-bila masa sebelum pembayaran",close:"Tutup",total:"Jumlah",customerDetails:"Maklumat Pelanggan",name:"Nama",phone:"Nombor Telefon",fulfilment:"Kaedah Ambil",address:"Alamat",payment:"Kaedah Bayaran",paymentRef:"Rujukan Bayaran",remarks:"Catatan",placeOrder:"Sahkan Pesanan",noFood:"Belum pilih makanan",meat:"Daging",veg:"Sayur",meatShort:"Daging",vegShort:"Sayur",extraMeat:"Tambah Daging",extraVeg:"Tambah Sayur",mealTotal:"Jumlah Hidangan",selected:"Dipilih",needSet:"Pilih sekurang-kurangnya 1 daging + 2 sayur atau 2 daging + 1 sayur",emptyCart:"Troli anda masih kosong.",remove:"Buang",addonCart:"Tambahan",selfPickup:"Ambil Sendiri",delivery:"Penghantaran",duitnow:"DuitNow QR",bank:"Pindahan Bank",cash:"Tunai",remarksPlaceholder:"Kurang pedas / Tanpa cili / Kurang nasi ...",cartEmptyAlert:"Troli anda kosong",submitting:"Menghantar…",submitted:"✅ Telah Dihantar",success:"✅ Pesanan Disahkan",doNotRepeat:"Jangan hantar pesanan yang sama dua kali. Tambah item baharu jika mahu membuat pesanan lain.",submitFail:"Pesanan gagal dihantar. Sila semak sambungan dan cuba lagi.",demoNote:"Mod demo: pesanan ini hanya disimpan dalam pelayar ini.",week:"Minggu {n}",set2label:"2 Daging + 1 Sayur",set1label:"1 Daging + 2 Sayur"
+    headerTitle:"Pesanan Dalam Talian",headerSubtitle:"Pilih bebas · Harga automatik · Sarapan & makan tengah hari · Tempahan mingguan",cart:"Troli",heroTitle:"Terus buat pesanan di sini 🍱",heroText:"Pilih tarikh ambil atau penghantaran. Minggu menu dan hari dipadankan secara automatik. Kemudian pilih hidangan.",set1:"1 Daging + 2 Sayur",set2:"2 Daging + 1 Sayur",weekLabel:"Minggu Menu",dayLabel:"Hari",mealLabel:"Waktu Makan",breakfast:"Sarapan",lunch:"Makan Tengah Hari",chooseFood:"Pilih Makanan",clear:"Kosongkan Pilihan",mealSummary:"Ringkasan Hidangan",addMeal:"Tambah ke Troli",minHint:"Pilih sekurang-kurangnya 1 daging + 2 sayur atau 2 daging + 1 sayur sebelum tambah ke troli.",addons:"Tambahan À La Carte",addonsHint:"Boleh ditambah bila-bila masa sebelum pembayaran",close:"Tutup",total:"Jumlah",customerDetails:"Maklumat Pelanggan",name:"Nama",phone:"Nombor Telefon",fulfilment:"Kaedah Ambil",address:"Alamat",payment:"Kaedah Bayaran",paymentRef:"Rujukan Bayaran",remarks:"Catatan",placeOrder:"Sahkan Pesanan",noFood:"Belum pilih makanan",meat:"Daging",veg:"Sayur",meatShort:"Daging",vegShort:"Sayur",extraMeat:"Tambah Daging",extraVeg:"Tambah Sayur",mealTotal:"Jumlah Hidangan",selected:"Dipilih",needSet:"Pilih sekurang-kurangnya 1 daging + 2 sayur atau 2 daging + 1 sayur",emptyCart:"Troli anda masih kosong.",remove:"Buang",addonCart:"Tambahan",selfPickup:"Ambil Sendiri",delivery:"Penghantaran",duitnow:"DuitNow QR",bank:"Pindahan Bank",cash:"Tunai",remarksPlaceholder:"Kurang pedas / Tanpa cili / Kurang nasi ...",cartEmptyAlert:"Troli anda kosong",submitting:"Menghantar…",submitted:"✅ Telah Dihantar",success:"✅ Pesanan Disahkan",doNotRepeat:"Jangan hantar pesanan yang sama dua kali. Tambah item baharu jika mahu membuat pesanan lain.",submitFail:"Pesanan gagal dihantar. Sila semak sambungan dan cuba lagi.",demoNote:"Mod demo: pesanan ini hanya disimpan dalam pelayar ini.",week:"Minggu {n}",set2label:"2 Daging + 1 Sayur",set1label:"1 Daging + 2 Sayur"
   }
 };
 
@@ -27,9 +27,9 @@ const DELIVERY_I18N = {
 };
 const dt = key => (DELIVERY_I18N[lang] || DELIVERY_I18N.zh)[key] || key;
 const WEEKLY_I18N={
- zh:{modeHeading:'选择点餐方式',singleMode:'单餐 / 单日',weeklyMode:'整周一起点餐（星期一至五）',plannerTitle:'一次选择整周早餐和午餐',plannerHint:'每天早餐及午餐自由选菜，不需要的餐点可取消勾选；全部选好后，只提交一次订单。',weeklyMenu:'选择菜单 Week 1–5',startDate:'配送周星期一的日期',selectAll:'全选 10 餐',breakfastOnly:'仅订早餐',lunchOnly:'仅订午餐',clearWeek:'全部取消',draftSaved:'每餐选择会自动保存，可在提交前修改。',weeklySubtotal:'本周餐费（不含单点及运费）',reviewWeek:'查看整周购物车并结账',pendingMeal:'尚未选好',doneMeal:'✓ 已完成',skipMeal:'不订此餐',weeklyReady:'已选好 {done}/{active} 餐',weeklyNone:'请至少选择一餐',weeklyIncomplete:'尚有 {n} 餐未选好，请先完成或取消勾选。',weeklyChanged:'切换配送周会从购物车移除上一周的整周餐点，继续吗？',weeklyInvalidDate:'请选择不早于下个星期一的星期一日期。',weeklyOtherCart:'注意：购物车里已有其他餐点或单点商品，结账时会一起计算。',weeklyTotal10:'全周 10 餐',weeklySingleLabel:'本餐',weeklyOtherWarning:'餐点将自动加入购物车；取消勾选即从购物车移除。',singleDate:'实际取餐／送餐日期',singleDateWeekend:'只提供星期一至星期五，请选择工作日。',singleDatePast:'请选择今天或之后的日期。',singleDateDifferentWeek:'购物车中已有其他日期的餐点。为了准确计算运费，请先提交当前订单，或清空购物车。'},
- en:{modeHeading:'How would you like to order?',singleMode:'Single meal / one day',weeklyMode:'Choose an entire week (Mon–Fri)',plannerTitle:'Plan all breakfasts and lunches in one go',plannerHint:'Choose each breakfast and lunch separately. Untick anything you do not need, then place one order for the entire week.',weeklyMenu:'Menu Week 1–5',startDate:'Monday of the delivery week',selectAll:'Select all 10 meals',breakfastOnly:'Breakfast only',lunchOnly:'Lunch only',clearWeek:'Clear all',draftSaved:'Selections are saved automatically until checkout.',weeklySubtotal:'Weekly food total (excl. add-ons/delivery)',reviewWeek:'Review weekly cart and checkout',pendingMeal:'Incomplete',doneMeal:'✓ Ready',skipMeal:'Skip this meal',weeklyReady:'Completed {done}/{active} meals',weeklyNone:'Select at least one meal',weeklyIncomplete:'Please finish or untick the remaining {n} meals.',weeklyChanged:'Switching the delivery week removes the previous weekly meals from your cart. Continue?',weeklyInvalidDate:'Select a Monday on or after next Monday.',weeklyOtherCart:'Other meals and add-ons in your cart are included at checkout.',weeklyTotal10:'10 meals for the week',weeklySingleLabel:'This meal',weeklyOtherWarning:'Finished meals are added to your cart automatically; untick to remove.',singleDate:'Pickup / delivery date',singleDateWeekend:'Select a weekday from Monday to Friday.',singleDatePast:'Please choose today or a future date.',singleDateDifferentWeek:'Your cart contains meals from a different service week. Place that order first or clear your cart for accurate delivery pricing.'},
- ms:{modeHeading:'Pilih cara tempahan',singleMode:'Satu hidangan / satu hari',weeklyMode:'Tempah seminggu terus (Isnin–Jumaat)',plannerTitle:'Pilih semua sarapan dan makan tengah hari sekaligus',plannerHint:'Pilih setiap hidangan secara berasingan. Nyah tanda makanan yang tidak diperlukan, kemudian hantar satu pesanan untuk seminggu.',weeklyMenu:'Menu Minggu 1–5',startDate:'Tarikh Isnin bagi minggu penghantaran',selectAll:'Pilih kesemua 10 hidangan',breakfastOnly:'Sarapan sahaja',lunchOnly:'Makan tengah hari sahaja',clearWeek:'Batalkan semua',draftSaved:'Pilihan disimpan secara automatik sehingga pembayaran.',weeklySubtotal:'Jumlah makanan mingguan (tidak termasuk tambahan/penghantaran)',reviewWeek:'Semak troli mingguan dan bayar',pendingMeal:'Belum lengkap',doneMeal:'✓ Lengkap',skipMeal:'Langkau hidangan',weeklyReady:'Selesai {done}/{active} hidangan',weeklyNone:'Pilih sekurang-kurangnya satu hidangan',weeklyIncomplete:'Sila lengkapkan atau nyah tanda {n} hidangan yang berbaki.',weeklyChanged:'Menukar minggu akan membuang hidangan mingguan lama daripada troli. Teruskan?',weeklyInvalidDate:'Pilih Isnin yang sama atau selepas Isnin depan.',weeklyOtherCart:'Hidangan dan tambahan lain dalam troli turut dikira semasa pembayaran.',weeklyTotal10:'10 hidangan seminggu',weeklySingleLabel:'Hidangan ini',weeklyOtherWarning:'Hidangan yang lengkap masuk troli secara automatik; nyah tanda untuk membuang.',singleDate:'Tarikh ambil / penghantaran',singleDateWeekend:'Sila pilih Isnin hingga Jumaat.',singleDatePast:'Pilih hari ini atau tarikh akan datang.',singleDateDifferentWeek:'Troli mengandungi hidangan daripada minggu lain. Hantar pesanan itu dahulu atau kosongkan troli untuk kiraan penghantaran yang betul.'}
+ zh:{modeHeading:'选择点餐方式',singleMode:'单餐 / 单日',weeklyMode:'整周一起点餐（星期一至五）',plannerTitle:'一次选择整周早餐和午餐',plannerHint:'每天早餐及午餐自由选菜，不需要的餐点可取消勾选；全部选好后，只提交一次订单。',weeklyMenu:'菜单周（按日期自动匹配）',startDate:'配送周星期一的日期',selectAll:'全选 10 餐',breakfastOnly:'仅订早餐',lunchOnly:'仅订午餐',clearWeek:'全部取消',draftSaved:'每餐选择会自动保存，可在提交前修改。',weeklySubtotal:'本周餐费（不含单点及运费）',reviewWeek:'查看整周购物车并结账',pendingMeal:'尚未选好',doneMeal:'✓ 已完成',skipMeal:'不订此餐',weeklyReady:'已选好 {done}/{active} 餐',weeklyNone:'请至少选择一餐',weeklyIncomplete:'尚有 {n} 餐未选好，请先完成或取消勾选。',weeklyChanged:'切换配送周会从购物车移除上一周的整周餐点，继续吗？',weeklyInvalidDate:'请选择本周或之后的星期一；过去的餐点不可订。',weeklyOtherCart:'注意：购物车里已有其他餐点或单点商品，结账时会一起计算。',weeklyTotal10:'全周 10 餐',weeklySingleLabel:'本餐',weeklyOtherWarning:'餐点将自动加入购物车；取消勾选即从购物车移除。',singleDate:'实际取餐／送餐日期',singleDateWeekend:'只提供星期一至星期五，请选择工作日。',singleDatePast:'请选择今天或之后的日期。',singleDateDifferentWeek:'购物车里已有其他配送周的餐点，请先结账或清空购物车。'},
+ en:{modeHeading:'How would you like to order?',singleMode:'Single meal / one day',weeklyMode:'Choose an entire week (Mon–Fri)',plannerTitle:'Plan all breakfasts and lunches in one go',plannerHint:'Choose each breakfast and lunch separately. Untick anything you do not need, then place one order for the entire week.',weeklyMenu:'Menu week (automatic)',startDate:'Monday of the delivery week',selectAll:'Select all 10 meals',breakfastOnly:'Breakfast only',lunchOnly:'Lunch only',clearWeek:'Clear all',draftSaved:'Selections are saved automatically until checkout.',weeklySubtotal:'Weekly food total (excl. add-ons/delivery)',reviewWeek:'Review weekly cart and checkout',pendingMeal:'Incomplete',doneMeal:'✓ Ready',skipMeal:'Skip this meal',weeklyReady:'Completed {done}/{active} meals',weeklyNone:'Select at least one meal',weeklyIncomplete:'Please finish or untick the remaining {n} meals.',weeklyChanged:'Switching the delivery week removes the previous weekly meals from your cart. Continue?',weeklyInvalidDate:'Select this Monday or a future Monday. Past meals cannot be ordered.',weeklyOtherCart:'Other meals and add-ons in your cart are included at checkout.',weeklyTotal10:'10 meals for the week',weeklySingleLabel:'This meal',weeklyOtherWarning:'Finished meals are added to your cart automatically; untick to remove.',singleDate:'Pickup / delivery date',singleDateWeekend:'Select a weekday from Monday to Friday.',singleDatePast:'Please choose today or a future date.',singleDateDifferentWeek:'Your cart contains meals from a different service week. Place that order first or clear your cart for accurate delivery pricing.'},
+ ms:{modeHeading:'Pilih cara tempahan',singleMode:'Satu hidangan / satu hari',weeklyMode:'Tempah seminggu terus (Isnin–Jumaat)',plannerTitle:'Pilih semua sarapan dan makan tengah hari sekaligus',plannerHint:'Pilih setiap hidangan secara berasingan. Nyah tanda makanan yang tidak diperlukan, kemudian hantar satu pesanan untuk seminggu.',weeklyMenu:'Minggu menu (automatik)',startDate:'Tarikh Isnin bagi minggu penghantaran',selectAll:'Pilih kesemua 10 hidangan',breakfastOnly:'Sarapan sahaja',lunchOnly:'Makan tengah hari sahaja',clearWeek:'Batalkan semua',draftSaved:'Pilihan disimpan secara automatik sehingga pembayaran.',weeklySubtotal:'Jumlah makanan mingguan (tidak termasuk tambahan/penghantaran)',reviewWeek:'Semak troli mingguan dan bayar',pendingMeal:'Belum lengkap',doneMeal:'✓ Lengkap',skipMeal:'Langkau hidangan',weeklyReady:'Selesai {done}/{active} hidangan',weeklyNone:'Pilih sekurang-kurangnya satu hidangan',weeklyIncomplete:'Sila lengkapkan atau nyah tanda {n} hidangan yang berbaki.',weeklyChanged:'Menukar minggu akan membuang hidangan mingguan lama daripada troli. Teruskan?',weeklyInvalidDate:'Pilih Isnin minggu ini atau akan datang. Hidangan lalu tidak boleh ditempah.',weeklyOtherCart:'Hidangan dan tambahan lain dalam troli turut dikira semasa pembayaran.',weeklyTotal10:'10 hidangan seminggu',weeklySingleLabel:'Hidangan ini',weeklyOtherWarning:'Hidangan yang lengkap masuk troli secara automatik; nyah tanda untuk membuang.',singleDate:'Tarikh ambil / penghantaran',singleDateWeekend:'Sila pilih Isnin hingga Jumaat.',singleDatePast:'Pilih hari ini atau tarikh akan datang.',singleDateDifferentWeek:'Troli mengandungi hidangan daripada minggu lain. Hantar pesanan itu dahulu atau kosongkan troli untuk kiraan penghantaran yang betul.'}
 };
 const wt=key=>((WEEKLY_I18N[lang]||WEEKLY_I18N.zh)[key]||key);
 
@@ -41,10 +41,11 @@ let deliveryQuote = null;
 let quoteBusy = false;
 let quoteEpoch = 0;
 let weeklyMode = false;
-let weeklyMonday = PCWeekly.nextMonday();
+let weeklyMonday = PCCalendar.initialWeeklyMonday();
 let weeklyDrafts = null;
 let weeklyPlanId = '';
 let singleDateIso='';
+let singleDateManuallyChosen=false;
 const ISO_DATE=/^\d{4}-\d{2}-\d{2}$/;
 function dateLocal(iso){
   if(!ISO_DATE.test(iso))return null;
@@ -52,13 +53,8 @@ function dateLocal(iso){
   return v.getFullYear()===y&&v.getMonth()===m-1&&v.getDate()===d?v:null;
 }
 function isoLocal(date){return [date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-')}
-function nextServiceDate(from=new Date()){
-  const d=new Date(from.getFullYear(),from.getMonth(),from.getDate(),12);
-  d.setDate(d.getDate()+1);
-  while([0,6].includes(d.getDay()))d.setDate(d.getDate()+1);
-  return isoLocal(d);
-}
-function mondayFrom(iso){const d=dateLocal(iso);if(!d)throw new Error('Invalid date');d.setDate(d.getDate()-(d.getDay()+6)%7);return isoLocal(d)}
+function nextServiceDate(from=new Date()){return PCCalendar.initialSingleDate(from);}
+function mondayFrom(iso){return PCCalendar.mondayOf(iso);}
 function orderWeeks(){return new Set(cart.filter(x=>x.kind==='meal'&&x.serviceDate).map(x=>mondayFrom(x.serviceDate)))}
 
 
@@ -78,43 +74,44 @@ async function init(){
   $("#languageSelect").value=lang;
   $("#languageSelect").onchange=e=>setLanguage(e.target.value);
   singleDateIso=nextServiceDate();
-  $('#singleDate').min=isoLocal(new Date());
-  $('#singleDate').max=isoLocal(new Date(Date.now()+90*86400000));
+  $('#singleDate').min=PCCalendar.nowInMalaysia().date;
+  $('#singleDate').max=PCCalendar.addDays(PCCalendar.nowInMalaysia().date,90);
   $('#singleDate').value=singleDateIso;
-  state.day=DAYS[dateLocal(singleDateIso).getDay()-1];
+  state.day=PCCalendar.weekday(singleDateIso);
+  state.week=PCCalendar.menuWeek(singleDateIso);
+  state.meal=PCCalendar.initialMeal(singleDateIso);
+  document.querySelectorAll('.meal-tab').forEach(b=>b.classList.toggle('active',b.dataset.meal===state.meal));
   fillSelectors(); renderAddons(); applyLanguage(); renderMeal(); updateCart();
   $('#singleDate').onchange=e=>{
-    const chosen=dateLocal(e.target.value),today=dateLocal(isoLocal(new Date()));
-    if(!chosen||chosen.getTime()<today.getTime()){
+    const chosen=dateLocal(e.target.value),today=PCCalendar.nowInMalaysia().date;
+    if(!chosen||e.target.value<today){
       alert(wt('singleDatePast'));e.target.value=singleDateIso;return;
     }
     if(chosen.getDay()===0||chosen.getDay()===6){
       alert(wt('singleDateWeekend'));e.target.value=singleDateIso;return;
     }
-    singleDateIso=e.target.value;state.day=DAYS[chosen.getDay()-1];
-    state.selected.clear();fillSelectors();renderMeal();
+    singleDateManuallyChosen=true;
+    singleDateIso=e.target.value;state.day=PCCalendar.weekday(singleDateIso);
+    state.week=PCCalendar.menuWeek(singleDateIso);
+    state.selected.clear();fillSelectors();renderMeal();renderCalendarHints();
   };
   $('#singleModeBtn').onclick=()=>switchOrderMode(false);
   $('#weeklyModeBtn').onclick=()=>switchOrderMode(true);
-  $('#weeklyWeekSelect').onchange=e=>changeWeeklyPlan(Number(e.target.value), weeklyMonday);
-  $('#weeklyMonday').onchange=e=>changeWeeklyPlan(state.week,e.target.value);
+  $('#weeklyMonday').onchange=e=>changeWeeklyPlan(e.target.value);
   document.querySelectorAll('[data-weekly-preset]').forEach(b=>b.onclick=()=>setWeeklyPreset(b.dataset.weeklyPreset));
   $('#weeklyGrid').addEventListener('click',weeklyGridClick);
   $('#weeklyGrid').addEventListener('change',weeklyGridChange);
   $('#weeklyReview').onclick=()=>{if(checkWeeklyReady())showCart();};
   const retained=cart.find(x=>x.kind==='meal'&&x.weeklyPlanId&&/^W[1-5]@\d{4}-\d{2}-\d{2}$/.test(x.weeklyPlanId));
-  if(retained){state.week=retained.week;weeklyMonday=retained.weeklyPlanId.split('@')[1];fillSelectors();}
-  $('#weeklyMonday').min=PCWeekly.nextMonday();
+  if(retained){weeklyMonday=retained.weeklyPlanId.split('@')[1];}
+  $('#weeklyMonday').min=PCCalendar.mondayOf(PCCalendar.nowInMalaysia().date);
   $('#weeklyMonday').value=weeklyMonday;
-  $('#weeklyWeekSelect').innerHTML=data.weeks.map(w=>`<option value="${w.week}">${t('week',{n:w.week})}</option>`).join('');
-  $('#weeklyWeekSelect').value=state.week;
   loadWeeklyDraft();applyWeeklyLanguage();
 
   document.querySelectorAll(".meal-tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".meal-tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");state.meal=b.dataset.meal;state.selected.clear();renderMeal();});
-  $("#weekSelect").onchange=e=>{state.week=+e.target.value;state.selected.clear();renderMeal()};
-  $("#daySelect").onchange=e=>{state.day=e.target.value;state.selected.clear();renderMeal()};
   $("#clearMeal").onclick=()=>{state.selected.clear();renderMeal()};
   $("#addMealBtn").onclick=addCurrentMeal;
+  $("#clearStaleCart").onclick=()=>{cart=cart.filter(x=>!invalidCartMeal(x));persistCart();resetSubmitButton();};
   $("#cartBtn").onclick=showCart; $("#closeCart").onclick=()=>$("#cartSection").classList.add("hidden");
   $("#checkoutForm").onsubmit=placeOrder;
   $("#fulfilmentSelect").onchange=() => {invalidateDelivery(); renderDeliverySection();};
@@ -125,10 +122,13 @@ async function init(){
   $("#jointTime").addEventListener('change',()=>{invalidateDelivery();renderDeliverySection();});
   $("#calculateDelivery").onclick=calculateDelivery;
   renderDeliverySection();
+  renderCalendarHints();
+  document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshCalendarDate();});
+  window.setInterval(refreshCalendarDate,60000);
 }
 
 function setLanguage(newLang){
-  lang=newLang;localStorage.setItem("pc_lang",lang);applyLanguage();fillSelectors();renderMeal();renderAddons();updateCart();applyWeeklyLanguage();renderWeeklyPlanner();
+  lang=newLang;localStorage.setItem("pc_lang",lang);applyLanguage();fillSelectors();renderMeal();renderAddons();updateCart();applyWeeklyLanguage();renderWeeklyPlanner();renderCalendarHints();
 }
 function applyLanguage(){
   document.documentElement.lang=lang==='zh'?'zh-Hans':lang;
@@ -144,16 +144,17 @@ function applyLanguage(){
   renderDeliverySection();
 }
 function fillSelectors(){
-  const wv=state.week,dv=state.day;
-  $("#weekSelect").innerHTML=data.weeks.map(w=>`<option value="${w.week}">${t('week',{n:w.week})}</option>`).join("");
+  $("#weekSelect").value=t('week',{n:PCCalendar.menuWeek(singleDateIso)});
   $("#daySelect").innerHTML=DAYS.map(d=>`<option value="${d}">${dayName(d)}</option>`).join("");
-  $("#weekSelect").value=wv;$("#daySelect").value=dv;
+  $("#daySelect").value=state.day;
 }
 function dayName(d){return lang==='zh'?DAY_ZH[d]:lang==='ms'?DAY_MS[d]:d}
 function currentItems(){return data.weeks.find(w=>w.week===state.week).days[state.day][state.meal]}
 function dishPrimary(item){return lang==='zh'?item.zh:item.en}
 function dishSecondary(item){return lang==='zh'?item.en:item.zh}
 function renderMeal(){
+  state.week=PCCalendar.menuWeek(singleDateIso);
+  state.day=PCCalendar.weekday(singleDateIso);
   $("#mealContext").textContent=`${singleDateIso} · ${t('week',{n:state.week})} · ${dayName(state.day)} · ${t(state.meal)}`;
   $("#menuGrid").innerHTML=currentItems().map(item=>{
     const on=state.selected.has(item.id); const icon=item.type==="meat"?"🍗":"🥬";
@@ -184,6 +185,7 @@ function renderSummary(){
   $("#priceBreakdown").innerHTML=html; $("#addMealBtn").disabled=!calc.valid;
 }
 function addCurrentMeal(){
+  if(!PCCalendar.mealBookable(singleDateIso,state.meal)){alert(calendarText('pastMeal'));return;}
   const items=currentItems().filter(i=>state.selected.has(i.id)), calc=calculateMeal(items); if(!calc.valid)return;
   // Keep a cart within one calendar service week so same menu/weekdays from a different cycle cannot share a delivery quote.
   const requestedMonday=mondayFrom(singleDateIso);
@@ -204,11 +206,12 @@ function renderAddons(){
 function persistCart(){invalidateDelivery();localStorage.setItem("pc_cart",JSON.stringify(cart));updateCart()}
 function updateCart(){
   $("#cartCount").textContent=cart.length;const box=$("#cartItems"); if(!box)return;
-  box.innerHTML=cart.length?cart.map((x,i)=>x.kind==='meal'?`<div class="cart-item"><div><h4>${t('week',{n:x.week})} · ${dayName(x.day)} ${t(x.meal)}</h4><p>${x.items.map(a=>`#${a.no} ${dishPrimary(a)}`).join(' · ')}</p><p>${calculateMeal(x.items).label}</p></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`:`<div class="cart-item"><div><h4>${t('addonCart')}</h4><p>${addonNameFromCart(x.name)}</p></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`).join(""):`<p class='muted'>${t('emptyCart')}</p>`;
+  box.innerHTML=cart.length?cart.map((x,i)=>x.kind==='meal'?`<div class="cart-item"><div><h4>${x.serviceDate||''} · ${t('week',{n:x.week})} · ${dayName(x.day)} ${t(x.meal)}</h4><p>${x.items.map(a=>`#${a.no} ${dishPrimary(a)}`).join(' · ')}</p><p>${calculateMeal(x.items).label}</p></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`:`<div class="cart-item"><div><h4>${t('addonCart')}</h4><p>${addonNameFromCart(x.name)}</p></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`).join(""):`<p class='muted'>${t('emptyCart')}</p>`;
   const subtotal=foodSubtotal();
   $("#cartTotal").textContent=money(subtotal+(isDelivery() && validQuote()?deliveryQuote.fee:0));
   if($("#foodSubtotal")) $("#foodSubtotal").textContent=money(subtotal);
   renderDeliverySection();
+  renderCalendarHints();
 }
 function addonNameFromCart(name){const parts=name.split('/').map(x=>x.trim());return lang==='zh'?name:(parts[1]||name)}
 window.removeCart=i=>{
@@ -295,6 +298,8 @@ async function calculateDelivery(){
 }
 async function placeOrder(e){
   e.preventDefault();if(isSubmitting)return;if(weeklyMode&&!checkWeeklyReady())return;if(!cart.length){alert(t('cartEmptyAlert'));return;}
+  const stale=cart.filter(invalidCartMeal);
+  if(stale.length){alert(calendarText('staleCart'));return;}
   if(isDelivery() && (!validQuote()||deliveryQuote.manual||!$("#deliveryMatched").checked)){alert(validQuote()&&deliveryQuote.manual?dt('tooFar'):dt('quoteFirst'));return;}
   const submitBtn=e.target.querySelector('button[type="submit"]');const originalText=submitBtn.textContent;isSubmitting=true;submitBtn.disabled=true;submitBtn.textContent=t('submitting');
   const form=Object.fromEntries(new FormData(e.target).entries());
@@ -330,26 +335,84 @@ function resetSubmitButton(clearResult=true){
   isSubmitting=false;const submitBtn=document.querySelector('#checkoutForm button[type="submit"]');if(submitBtn){submitBtn.disabled=false;submitBtn.textContent=t('placeOrder')}
   const result=$("#orderResult");if(result&&clearResult){result.classList.add("hidden");result.innerHTML="";}
 }
-function createOrderId(){const d=new Date();return `PC-${String(d.getFullYear()).slice(2)}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}-${Math.floor(1000+Math.random()*9000)}`}
+const CALENDAR_I18N={
+  zh:{single:'送餐日期自动对应菜单周；每月第一段日历周为 Week 1。',weekly:'每一天按实际日期自动对应菜单周；跨月时可能显示不同 Week。',pastMeal:'此餐已过当天订餐时间，请选择下一可订日期。',staleCart:'购物车中有过期日期或菜单周错误的餐点，请移除后重新选择。',clearStale:'移除过期餐点',dateAdvanced:'日期已自动更新，之前未加入购物车的选菜需要重新选择。',changed:'日期已经更新，菜单周同步更新。'},
+  en:{single:'Menu weeks match the delivery date. Week 1 begins with the first calendar row of each month.',weekly:'Each delivery day uses its own menu week. A week crossing months may show two menu weeks.',pastMeal:'The ordering cut-off for this meal has passed. Choose a later date.',staleCart:'Some cart meals have expired dates or incorrect menu weeks. Remove them and select again.',clearStale:'Remove expired items',dateAdvanced:'The date was automatically updated. Select any unsaved dishes again.',changed:'Date updated and menu week synchronized.'},
+  ms:{single:'Minggu menu mengikut tarikh penghantaran. Minggu 1 bermula pada awal setiap bulan.',weekly:'Setiap tarikh menggunakan minggu menu yang betul. Minggu merentasi bulan mungkin ada dua menu.',pastMeal:'Tempoh pesanan hidangan ini telah tamat. Sila pilih tarikh lain.',staleCart:'Ada hidangan dengan tarikh luput atau minggu menu salah. Buang dan pilih semula.',clearStale:'Buang item tamat tempoh',dateAdvanced:'Tarikh dikemas kini secara automatik. Sila pilih semula hidangan yang belum disimpan.',changed:'Tarikh dan minggu menu dikemas kini.'}
+};
+function calendarText(key){return (CALENDAR_I18N[lang]||CALENDAR_I18N.zh)[key]||key;}
+function invalidCartMeal(x){
+  if(x.kind!=='meal')return false;
+  try{return !x.serviceDate||PCCalendar.menuWeek(x.serviceDate)!==Number(x.week)||PCCalendar.weekday(x.serviceDate)!==x.day||!PCCalendar.mealBookable(x.serviceDate,x.meal);}catch(_e){return true;}
+}
+function renderCalendarHints(){
+  if($('#singleCalendarHint'))$('#singleCalendarHint').textContent=calendarText('single');
+  if($('#weeklyCalendarHint'))$('#weeklyCalendarHint').textContent=calendarText('weekly');
+  const banner=$('#calendarWarning');
+  if(banner){const hasInvalid=cart.some(invalidCartMeal);banner.classList.toggle('hidden',!hasInvalid);$('#calendarWarningText').textContent=calendarText('staleCart');$('#clearStaleCart').textContent=calendarText('clearStale');}
+}
+function refreshCalendarDate(){
+  if(!data||!$('#singleDate'))return;
+  const today=PCCalendar.nowInMalaysia().date;
+  const suggested=PCCalendar.initialSingleDate();
+  $('#singleDate').min=today;
+  $('#singleDate').max=PCCalendar.addDays(today,90);
+  $('#weeklyMonday').min=PCCalendar.mondayOf(today);
+  // Refresh after a day rollover or after today's lunch cut-off; preserve manually selected future dates.
+  const expired=singleDateIso<today || (singleDateIso===today&&!PCCalendar.mealBookable(today,'lunch'));
+  if(expired || (!singleDateManuallyChosen && suggested!==singleDateIso && !state.selected.size && !cart.length)){
+    if(state.selected.size)alert(calendarText('dateAdvanced'));
+    singleDateManuallyChosen=false;
+    singleDateIso=suggested;
+    state.week=PCCalendar.menuWeek(singleDateIso);
+    state.day=PCCalendar.weekday(singleDateIso);
+    state.meal=PCCalendar.initialMeal(singleDateIso);
+    state.selected.clear();$('#singleDate').value=singleDateIso;
+    document.querySelectorAll('.meal-tab').forEach(b=>b.classList.toggle('active',b.dataset.meal===state.meal));
+    fillSelectors();renderMeal();
+  } else if(singleDateIso===today && !PCCalendar.mealBookable(today,'breakfast') && state.meal==='breakfast' && !state.selected.size){
+    state.meal='lunch';
+    document.querySelectorAll('.meal-tab').forEach(b=>b.classList.toggle('active',b.dataset.meal===state.meal));
+    renderMeal();
+  }
+  const suggestedMonday=PCCalendar.initialWeeklyMonday();
+  if((weeklyMonday<PCCalendar.mondayOf(today)||(weeklyMonday===PCCalendar.mondayOf(today)&&suggestedMonday!==weeklyMonday))&&!cart.some(x=>x.weeklyPlanId===weeklyPlanId)){
+    weeklyMonday=suggestedMonday;
+    loadWeeklyDraft();applyWeeklyLanguage();renderWeeklyPlanner();
+  }
+  if(weeklyDrafts){
+    let changed=false;
+    for(const {day,meal,key} of PCWeekly.slots()){
+      if(!PCCalendar.mealBookable(PCWeekly.dateFor(weeklyMonday,day),meal)&&weeklyDrafts[key].enabled){weeklyDrafts[key].enabled=false;changed=true;}
+    }
+    if(changed){saveWeeklyDraft();syncEntireWeeklyCart();renderWeeklyPlanner();}
+  }
+  renderCalendarHints();
+}
+function createOrderId(){const date=PCCalendar.nowInMalaysia().date.replaceAll('-','');return `PC-${date.slice(2)}-${Math.floor(1000+Math.random()*9000)}`}
 /* Weekly order: ten meals are selected before one single checkout/POST. */
 const weeklyStorageKey=()=>`pc_weekly_draft_${weeklyPlanId}`;
-function planIdentifier(week=state.week,monday=weeklyMonday){return `W${week}@${monday}`;}
+function planIdentifier(monday=weeklyMonday){return `W${PCCalendar.menuWeek(monday)}@${monday}`;}
 function loadWeeklyDraft(){
   weeklyPlanId=planIdentifier();
   let raw=null;try{raw=JSON.parse(localStorage.getItem(weeklyStorageKey())||'null');}catch(_e){}
-  const menu=data.weeks.find(w=>w.week===state.week);
-  weeklyDrafts=PCWeekly.normalizeDraft(raw,menu);
+  weeklyDrafts=PCWeekly.normalizeDraft(raw,weeklyMenu);
+  // A currently open week may start before today; only future breakfast/lunch slots stay enabled.
+  for(const {key,day,meal} of PCWeekly.slots()){
+    if(!PCCalendar.mealBookable(PCWeekly.dateFor(weeklyMonday,day),meal))weeklyDrafts[key].enabled=false;
+  }
   // Allow an existing same-week cart to populate the planner if the saved draft is absent.
   if(!raw){
     cart.filter(x=>x.kind==='meal'&&x.weeklyPlanId===weeklyPlanId).forEach(x=>{
       const k=PCWeekly.slotKey(x.day,x.meal);
-      weeklyDrafts[k]={enabled:true,selected:x.items.map(item=>item.id)};
+      weeklyDrafts[k]={enabled:PCCalendar.mealBookable(x.serviceDate,x.meal),selected:x.items.map(item=>item.id)};
     });
   }
   syncEntireWeeklyCart();
 }
 function saveWeeklyDraft(){localStorage.setItem(weeklyStorageKey(),JSON.stringify(weeklyDrafts));}
-function weeklyMenu(){return data.weeks.find(w=>w.week===state.week);}
+function weekOfDay(day){return PCCalendar.menuWeek(PCWeekly.dateFor(weeklyMonday,day));}
+function weeklyMenu(day){return data.weeks.find(w=>w.week===weekOfDay(day));}
 function syncEntireWeeklyCart(){
   const before=cart.length;
   const otherWeeks=[...orderWeeks()].filter(m=>m!==weeklyMonday);
@@ -360,7 +423,7 @@ function syncEntireWeeklyCart(){
   }
   cart=cart.filter(x=>x.weeklyPlanId!==weeklyPlanId);
   for(const {day,meal,key} of PCWeekly.slots()){
-    const entry=PCWeekly.buildMeal({week:state.week,monday:weeklyMonday,day,meal,draft:weeklyDrafts[key],menu:weeklyMenu(),calculate:calculateMeal});
+    const entry=PCWeekly.buildMeal({week:weekOfDay,monday:weeklyMonday,day,meal,draft:weeklyDrafts[key],menu:weeklyMenu,calculate:calculateMeal,planId:weeklyPlanId});
     if(entry)cart.push(entry);
   }
   if(before||cart.length)persistCart();else updateCart();
@@ -368,8 +431,8 @@ function syncEntireWeeklyCart(){
 function applyWeeklyLanguage(){
   document.querySelectorAll('[data-weekly-i18n]').forEach(el=>el.textContent=wt(el.dataset.weeklyI18n));
   if(!data)return;
-  $('#weeklyWeekSelect').innerHTML=data.weeks.map(w=>`<option value="${w.week}">${t('week',{n:w.week})}</option>`).join('');
-  $('#weeklyWeekSelect').value=state.week;
+  $('#weeklyWeekSelect').value=PCCalendar.summary(weeklyMonday).map(w=>t('week',{n:w})).join(' → ');
+  renderCalendarHints();
 }
 function switchOrderMode(weekly){
   if(weekly && [...orderWeeks()].some(m=>m!==weeklyMonday)){
@@ -385,21 +448,21 @@ function switchOrderMode(weekly){
   $('#weeklyModeBtn').setAttribute('aria-pressed',String(weekly));
   if(weekly){applyWeeklyLanguage();renderWeeklyPlanner();$('#weeklyPanel').scrollIntoView({behavior:'smooth',block:'start'});}
 }
-function changeWeeklyPlan(week,monday){
+function changeWeeklyPlan(monday){
   let valid=false;
-  try{valid=PCWeekly.isMonday(monday)&&monday>=PCWeekly.nextMonday();}catch(_e){}
-  if(!valid){alert(wt('weeklyInvalidDate'));$('#weeklyMonday').value=weeklyMonday;$('#weeklyWeekSelect').value=state.week;return;}
-  if(week===state.week&&monday===weeklyMonday)return;
-  if([...orderWeeks()].some(m=>m!==monday && !cart.some(x=>x.weeklyPlanId===weeklyPlanId && x.serviceDate && mondayFrom(x.serviceDate)===m))){
-    alert(wt('singleDateDifferentWeek'));$('#weeklyMonday').value=weeklyMonday;$('#weeklyWeekSelect').value=state.week;return;
+  try{valid=PCWeekly.isMonday(monday)&&monday>=PCCalendar.mondayOf(PCCalendar.nowInMalaysia().date);}catch(_e){}
+  if(!valid){alert(wt('weeklyInvalidDate'));$('#weeklyMonday').value=weeklyMonday;return;}
+  if(monday===weeklyMonday)return;
+  if([...orderWeeks()].some(m=>m!==monday && !cart.some(x=>x.weeklyPlanId===weeklyPlanId&&x.serviceDate&&mondayFrom(x.serviceDate)===m))){
+    alert(wt('singleDateDifferentWeek'));$('#weeklyMonday').value=weeklyMonday;return;
   }
   const oldId=weeklyPlanId;
   if(cart.some(x=>x.weeklyPlanId===oldId)&&!confirm(wt('weeklyChanged'))){
-    $('#weeklyMonday').value=weeklyMonday;$('#weeklyWeekSelect').value=state.week;return;
+    $('#weeklyMonday').value=weeklyMonday;return;
   }
   cart=cart.filter(x=>x.weeklyPlanId!==oldId);
   saveWeeklyDraft();
-  state.week=week;weeklyMonday=monday;state.selected.clear();
+  weeklyMonday=monday;state.selected.clear();
   fillSelectors();renderMeal();loadWeeklyDraft();saveWeeklyDraft();
   $('#weeklyMonday').value=weeklyMonday;applyWeeklyLanguage();renderWeeklyPlanner();
   persistCart();
@@ -407,7 +470,9 @@ function changeWeeklyPlan(week,monday){
 function setWeeklyPreset(preset){
   if(!weeklyDrafts)return;
   for(const {key,meal} of PCWeekly.slots()){
-    weeklyDrafts[key].enabled=(preset==='all')||(preset===meal);
+    const [dayNameForSlot,mealForSlot]=key.split(':');
+    const bookable=PCCalendar.mealBookable(PCWeekly.dateFor(weeklyMonday,dayNameForSlot),mealForSlot);
+    weeklyDrafts[key].enabled=bookable&&((preset==='all')||(preset===meal));
     if(preset==='none')weeklyDrafts[key].enabled=false;
   }
   saveWeeklyDraft();syncEntireWeeklyCart();resetSubmitButton();renderWeeklyPlanner();
@@ -423,10 +488,12 @@ function weeklyGridClick(e){
 function weeklyGridChange(e){
   if(!e.target.matches('[data-weekly-enable]'))return;
   const key=PCWeekly.slotKey(e.target.dataset.day,e.target.dataset.meal);
-  weeklyDrafts[key].enabled=e.target.checked;
+  const slotDate=PCWeekly.dateFor(weeklyMonday,e.target.dataset.day);
+  weeklyDrafts[key].enabled=PCCalendar.mealBookable(slotDate,e.target.dataset.meal)&&e.target.checked;
+  if(e.target.checked&&!weeklyDrafts[key].enabled)alert(calendarText('pastMeal'));
   saveWeeklyDraft();syncEntireWeeklyCart();resetSubmitButton();renderWeeklyPlanner();
 }
-function weeklyStatus(){return PCWeekly.status({drafts:weeklyDrafts,menu:weeklyMenu(),calculate:calculateMeal});}
+function weeklyStatus(){return PCWeekly.status({drafts:weeklyDrafts,menu:weeklyMenu,calculate:calculateMeal});}
 function checkWeeklyReady(){
   if(!weeklyMode)return true;
   const s=weeklyStatus();if(s.ready)return true;
@@ -436,16 +503,18 @@ function checkWeeklyReady(){
 }
 function renderWeeklyPlanner(){
   if(!weeklyDrafts||!data)return;
-  const menu=weeklyMenu(), progress=weeklyStatus();
+  const progress=weeklyStatus();
   $('#weeklyProgress').textContent=`${progress.complete} / ${progress.active}`;
   $('#weeklyStatusText').textContent=wt('weeklyReady').replace('{done}',progress.complete).replace('{active}',progress.active);
   $('#weeklySubtotal').textContent=money(progress.total);
   $('#weeklyReview').disabled=!progress.ready;
-  $('#weeklyMonday').value=weeklyMonday;$('#weeklyWeekSelect').value=state.week;
+  $('#weeklyMonday').value=weeklyMonday;
+  $('#weeklyWeekSelect').value=PCCalendar.summary(weeklyMonday).map(w=>t('week',{n:w})).join(' → ');
   $('#weeklyGrid').innerHTML=PCWeekly.DAYS.map(day=>{
-    const dayDate=PCWeekly.dateFor(weeklyMonday,day);
+    const dayDate=PCWeekly.dateFor(weeklyMonday,day), menu=weeklyMenu(day), dayWeek=weekOfDay(day);
     const meals=PCWeekly.MEALS.map(meal=>{
       const key=PCWeekly.slotKey(day,meal), draft=weeklyDrafts[key];
+      const bookable=PCCalendar.mealBookable(dayDate,meal);
       const chosen=menu.days[day][meal].filter(x=>draft.selected.includes(x.id));
       const calc=calculateMeal(chosen);
       const complete=draft.enabled&&calc.valid;
@@ -459,13 +528,14 @@ function renderWeeklyPlanner(){
         </button>`;
       }).join('');
       return `<section class="weekly-meal ${!draft.enabled?'is-disabled':''} ${complete?'is-complete':''}" data-weekly-card="${key}">
-         <label class="weekly-meal-title"><input type="checkbox" data-weekly-enable data-day="${day}" data-meal="${meal}" ${draft.enabled?'checked':''}/><span>${t(meal)}</span><span class="weekly-meal-tag">${label}</span></label>
+         <label class="weekly-meal-title"><input type="checkbox" data-weekly-enable data-day="${day}" data-meal="${meal}" ${draft.enabled?'checked':''} ${!bookable?'disabled':''}/><span>${t(meal)}</span><span class="weekly-meal-tag">${label}</span></label>
          <div class="weekly-dishes">${opts}</div>
          <p class="weekly-meal-price"><span>${draft.enabled?(complete?calc.label:`${chosen.filter(x=>x.type==='meat').length} ${t('meatShort')} + ${chosen.filter(x=>x.type==='veg').length} ${t('vegShort')}`):wt('skipMeal')}</span><strong>${complete?money(calc.total):'—'}</strong></p>
         </section>`;
     }).join('');
-    return `<section class="weekly-day"><header class="weekly-day-header"><h3>${dayName(day)}</h3><small>${dayDate}</small></header><div class="weekly-day-meals">${meals}</div></section>`;
+    return `<section class="weekly-day"><header class="weekly-day-header"><h3>${dayName(day)} <span class="week-pill">${t('week',{n:dayWeek})}</span></h3><small>${dayDate}</small></header><div class="weekly-day-meals">${meals}</div></section>`;
   }).join('');
+  renderCalendarHints();
 }
 
 init();

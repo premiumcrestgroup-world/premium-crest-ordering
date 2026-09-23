@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#174f3b" />
   <title>Premium Crest Online Ordering</title>
-  <link rel="stylesheet" href="styles.css?v=1.5.1" />
+  <link rel="stylesheet" href="styles.css?v=1.6.0" />
 </head>
 <body>
   <header class="site-header">
@@ -40,6 +40,7 @@
       </div>
     </section>
 
+    <div id="calendarWarning" class="calendar-warning hidden" role="alert"><span id="calendarWarningText"></span><button id="clearStaleCart" type="button">移除过期餐点</button></div>
     <section class="order-mode card" aria-label="Order type">
       <div class="mode-heading"><p class="eyebrow">ORDER TYPE · 点餐方式</p><h2 data-weekly-i18n="modeHeading">请选择点餐方式</h2></div>
       <div class="mode-actions">
@@ -54,8 +55,8 @@
         <span id="weeklyProgress" class="weekly-progress" aria-live="polite">0 / 10</span>
       </div>
       <div class="weekly-controls">
-        <label><span data-weekly-i18n="weeklyMenu">选择菜单</span><select id="weeklyWeekSelect"></select></label>
-        <label><span data-weekly-i18n="startDate">配送周的星期一日期</span><input id="weeklyMonday" type="date" required /></label>
+        <label><span data-weekly-i18n="weeklyMenu">自动匹配菜单周</span><input id="weeklyWeekSelect" type="text" readonly aria-live="polite" /></label>
+        <label><span data-weekly-i18n="startDate">配送周的星期一日期</span><input id="weeklyMonday" type="date" required /><small id="weeklyCalendarHint" class="calendar-hint" aria-live="polite"></small></label>
         <div class="weekly-presets">
           <button type="button" data-weekly-preset="all" data-weekly-i18n="selectAll">全选 10 餐</button>
           <button type="button" data-weekly-preset="breakfast" data-weekly-i18n="breakfastOnly">仅订早餐</button>
@@ -74,11 +75,11 @@
     <section id="singleSelector" class="selector card">
       <div class="control-group">
         <label for="weekSelect" data-i18n="weekLabel">星期菜单</label>
-        <select id="weekSelect"></select>
+        <input id="weekSelect" type="text" readonly aria-live="polite" />
       </div>
       <div class="control-group">
         <label for="singleDate" data-weekly-i18n="singleDate">实际取餐／送餐日期</label>
-        <input id="singleDate" type="date" required />
+        <input id="singleDate" type="date" required /><small id="singleCalendarHint" class="calendar-hint" aria-live="polite"></small>
       </div>
       <div class="control-group">
         <label for="daySelect" data-i18n="dayLabel">星期</label>
@@ -178,8 +179,9 @@
   </main>
 
   <footer>Premium Crest Group · Nourishing Potential</footer>
-  <script src="delivery-plan.js?v=1.5.1"></script>
-  <script src="weekly-plan.js?v=1.5.1"></script>
-  <script src="app.js?v=1.5.1"></script>
+  <script src="calendar-sync.js?v=1.6.0"></script>
+  <script src="delivery-plan.js?v=1.6.0"></script>
+  <script src="weekly-plan.js?v=1.6.0"></script>
+  <script src="app.js?v=1.6.0"></script>
 </body>
 </html>

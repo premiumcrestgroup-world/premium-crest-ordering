@@ -35,28 +35,30 @@
   function emptyDraft(enabled=true){
     const result={};for(const {key} of slots())result[key]={enabled,selected:[]};return result;
   }
+  const menuForDay=(menu,day)=>typeof menu==='function'?menu(day):menu;
   function normalizeDraft(raw, menu){
     const result=emptyDraft(true);
     for(const {key,day,meal} of slots()){
       const old=(raw||{})[key];if(!old)continue;
-      const available=new Set(menu.days[day][meal].map(x=>x.id));
+      const available=new Set(menuForDay(menu,day).days[day][meal].map(x=>x.id));
       result[key]={enabled:!!old.enabled, selected:Array.isArray(old.selected)?[...new Set(old.selected.filter(id=>available.has(id)))]:[]};
     }
     return result;
   }
-  function buildMeal({week,monday,day,meal,draft,menu,calculate}){
-    const items=menu.days[day][meal].filter(x=>(draft.selected||[]).includes(x.id));
+  function buildMeal({week,monday,day,meal,draft,menu,calculate,planId}){
+    const items=menuForDay(menu,day).days[day][meal].filter(x=>(draft.selected||[]).includes(x.id));
     const calc=calculate(items);
     if(!draft.enabled||!calc.valid)return null;
-    const weeklyPlanId=`W${week}@${monday}`;
-    return {kind:'meal',week,day,meal,items,calc,price:calc.total,serviceDate:dateFor(monday,day),weeklyPlanId,weeklySlot:slotKey(day,meal)};
+    const actualWeek=typeof week==='function'?week(day):week;
+    const weeklyPlanId=planId||`W${actualWeek}@${monday}`;
+    return {kind:'meal',week:actualWeek,day,meal,items,calc,price:calc.total,serviceDate:dateFor(monday,day),weeklyPlanId,weeklySlot:slotKey(day,meal)};
   }
   function status({drafts,menu,calculate}){
     let active=0,complete=0,total=0;const missing=[];
     for(const {key,day,meal} of slots()){
       const draft=drafts[key];if(!draft||!draft.enabled)continue;
       active++;
-      const chosen=menu.days[day][meal].filter(item=>draft.selected.includes(item.id));
+      const chosen=menuForDay(menu,day).days[day][meal].filter(item=>draft.selected.includes(item.id));
       const calc=calculate(chosen);
       if(calc.valid){complete++;total+=calc.total;}else missing.push({key,day,meal});
     }
