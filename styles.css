@@ -77,3 +77,8 @@
 .payment-link{appearance:none;background:#fff;color:#174f3b;border:1px solid #86b99d;border-radius:9px;padding:11px 14px;font-weight:800;cursor:pointer;text-align:center;text-decoration:none;width:max-content;max-width:100%;}
 .payment-notice{background:#fff7e6;padding:11px 13px;border-radius:9px;color:#795c23;font-size:13px;}
 .payment-info.payment-pending{background:#fff8e8;color:#875521;border-color:#e9c984;}
+
+/* v1.8 bulk order quantity */
+.order-qty,.weekly-qty{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:12px 0;font-weight:600}
+.order-qty input,.weekly-qty input,.cart-qty{width:98px;max-width:100%;border:1px solid #a9b7bc;border-radius:8px;padding:8px 10px;font:inherit;color:inherit;background:var(--card,#fff)}
+.cart-item label{display:flex;align-items:center;gap:8px;margin-top:8px;font-size:.9rem}

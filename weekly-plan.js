@@ -33,7 +33,7 @@
     const d=parseLocalDate(monday);d.setDate(d.getDate()+idx);return isoDate(d);
   }
   function emptyDraft(enabled=true){
-    const result={};for(const {key} of slots())result[key]={enabled,selected:[]};return result;
+    const result={};for(const {key} of slots())result[key]={enabled,selected:[],qty:1};return result;
   }
   const menuForDay=(menu,day)=>typeof menu==='function'?menu(day):menu;
   function normalizeDraft(raw, menu){
@@ -41,7 +41,7 @@
     for(const {key,day,meal} of slots()){
       const old=(raw||{})[key];if(!old)continue;
       const available=new Set(menuForDay(menu,day).days[day][meal].map(x=>x.id));
-      result[key]={enabled:!!old.enabled, selected:Array.isArray(old.selected)?[...new Set(old.selected.filter(id=>available.has(id)))]:[]};
+      result[key]={enabled:!!old.enabled, selected:Array.isArray(old.selected)?[...new Set(old.selected.filter(id=>available.has(id)))]:[], qty:Number.isInteger(Number(old.qty))&&Number(old.qty)>=1&&Number(old.qty)<=500?Number(old.qty):1};
     }
     return result;
   }
@@ -60,7 +60,7 @@
       active++;
       const chosen=menuForDay(menu,day).days[day][meal].filter(item=>draft.selected.includes(item.id));
       const calc=calculate(chosen);
-      if(calc.valid){complete++;total+=calc.total;}else missing.push({key,day,meal});
+      if(calc.valid){complete++;total+=calc.total*(draft.qty||1);}else missing.push({key,day,meal});
     }
     return {active,complete,total:Math.round(total*100)/100,missing,ready:active>0&&active===complete};
   }

@@ -46,6 +46,11 @@ let weeklyDrafts = null;
 let weeklyPlanId = '';
 let singleDateIso='';
 let singleDateManuallyChosen=false;
+const MAX_ORDER_QTY=500;
+const qtyLabel=()=>({zh:"数量（1–500份）",en:"Quantity (1–500)",ms:"Kuantiti (1–500)"}[lang]||"Qty");
+const readQty=v=>{const n=Number(v);return Number.isInteger(n)&&n>=1&&n<=MAX_ORDER_QTY?n:null;};
+function syncQtyLabels(){document.querySelectorAll("[data-qty-label]").forEach(el=>el.textContent=qtyLabel());}
+
 const ISO_DATE=/^\d{4}-\d{2}-\d{2}$/;
 function dateLocal(iso){
   if(!ISO_DATE.test(iso))return null;
@@ -111,6 +116,8 @@ async function init(){
   document.querySelectorAll(".meal-tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".meal-tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");state.meal=b.dataset.meal;state.selected.clear();renderMeal();});
   $("#clearMeal").onclick=()=>{state.selected.clear();renderMeal()};
   $("#addMealBtn").onclick=addCurrentMeal;
+  $("#singleQty").addEventListener("input",()=>renderSummary());
+  $("#weeklyGrid").addEventListener("input",weeklyQtyInput);
   $("#clearStaleCart").onclick=()=>{cart=cart.filter(x=>!invalidCartMeal(x));persistCart();resetSubmitButton();};
   $("#cartBtn").onclick=showCart; $("#closeCart").onclick=()=>$("#cartSection").classList.add("hidden");
   $("#checkoutForm").onsubmit=placeOrder;
@@ -125,12 +132,13 @@ async function init(){
   $("#paymentSelect").addEventListener('change', renderPaymentInfo);
   renderPaymentInfo();
   renderCalendarHints();
+  syncQtyLabels();
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshCalendarDate();});
   window.setInterval(refreshCalendarDate,60000);
 }
 
 function setLanguage(newLang){
-  lang=newLang;localStorage.setItem("pc_lang",lang);applyLanguage();fillSelectors();renderMeal();renderAddons();updateCart();applyWeeklyLanguage();renderWeeklyPlanner();renderCalendarHints();
+  lang=newLang;localStorage.setItem("pc_lang",lang);applyLanguage();fillSelectors();renderMeal();renderAddons();updateCart();applyWeeklyLanguage();renderWeeklyPlanner();renderCalendarHints();syncQtyLabels();
 }
 function applyLanguage(){
   document.documentElement.lang=lang==='zh'?'zh-Hans':lang;
@@ -229,9 +237,10 @@ function renderSummary(){
     html+=`<div class="price-line"><span>${calc.label}</span><strong>${money(calc.base)}</strong></div>`;
     if(calc.extraMeat)html+=`<div class="price-line"><span>${t('extraMeat')} × ${calc.extraMeat}</span><strong>${money(calc.extraMeat*data.pricing.extraMeat)}</strong></div>`;
     if(calc.extraVeg)html+=`<div class="price-line"><span>${t('extraVeg')} × ${calc.extraVeg}</span><strong>${money(calc.extraVeg*data.pricing.extraVeg)}</strong></div>`;
-    html+=`<div class="price-line total"><span>${t('mealTotal')}</span><strong>${money(calc.total)}</strong></div>`;
+    const qty=readQty($("#singleQty").value);
+    html+=`<div class="price-line total"><span>${t('mealTotal')} × ${qty||"?"}</span><strong>${qty?money(calc.total*qty):"—"}</strong></div>`;
   } else html=`<div class="muted">${t('selected')} ${calc.m} ${t('meatShort')} + ${calc.v} ${t('vegShort')}<br>${calc.label}</div>`;
-  $("#priceBreakdown").innerHTML=html; $("#addMealBtn").disabled=!calc.valid;
+  $("#priceBreakdown").innerHTML=html; $("#addMealBtn").disabled=!calc.valid||!readQty($("#singleQty").value);
 }
 function addCurrentMeal(){
   if(!PCCalendar.mealBookable(singleDateIso,state.meal)){alert(calendarText('pastMeal'));return;}
@@ -241,7 +250,8 @@ function addCurrentMeal(){
   if([...orderWeeks()].some(m=>m!==requestedMonday)){
     alert(wt('singleDateDifferentWeek'));return;
   }
-  resetSubmitButton();cart.push({kind:'meal',week:state.week,day:state.day,meal:state.meal,serviceDate:singleDateIso,items,calc,price:calc.total});state.selected.clear();persistCart();renderMeal();showCart();
+  const qty=readQty($("#singleQty").value);if(!qty){alert(qtyLabel());return;}
+  resetSubmitButton();cart.push({kind:'meal',week:state.week,day:state.day,meal:state.meal,serviceDate:singleDateIso,items,calc,qty,price:calc.total*qty});state.selected.clear();persistCart();renderMeal();showCart();
 }
 function addonDisplayName(a){
   const parts=a.name.split('/').map(x=>x.trim());
@@ -250,12 +260,12 @@ function addonDisplayName(a){
 }
 function renderAddons(){
   $("#addonGrid").innerHTML=data.addons.map(a=>`<div class="addon-card"><strong>${addonDisplayName(a)}</strong><span class="price">${money(a.price)}</span><div class="qty-row"><button data-a="${a.id}" data-d="-1">−</button><span id="q-${a.id}">${state.addons[a.id]||0}</span><button data-a="${a.id}" data-d="1">＋</button></div></div>`).join("");
-  document.querySelectorAll(".qty-row button").forEach(b=>b.onclick=()=>{const id=b.dataset.a,d=+b.dataset.d,q=Math.max(0,(state.addons[id]||0)+d);state.addons[id]=q;$("#q-"+id).textContent=q;if(d>0){resetSubmitButton();const a=data.addons.find(x=>x.id===id);cart.push({kind:"addon",id:a.id,name:a.name,qty:1,price:a.price});persistCart()}else if(d<0){const idx=cart.findIndex(x=>x.kind==='addon'&&x.id===id);if(idx>=0){cart.splice(idx,1);persistCart()}}});
+  document.querySelectorAll(".qty-row button").forEach(b=>b.onclick=()=>{const id=b.dataset.a,d=+b.dataset.d,q=Math.max(0,(state.addons[id]||0)+d);state.addons[id]=q;$("#q-"+id).textContent=q;if(d>0){resetSubmitButton();const a=data.addons.find(x=>x.id===id);cart.push({kind:"addon",id:a.id,name:a.name,qty:1,unitPrice:a.price,price:a.price});persistCart()}else if(d<0){const idx=cart.findIndex(x=>x.kind==='addon'&&x.id===id);if(idx>=0){cart.splice(idx,1);persistCart()}}});
 }
 function persistCart(){invalidateDelivery();localStorage.setItem("pc_cart",JSON.stringify(cart));updateCart()}
 function updateCart(){
   $("#cartCount").textContent=cart.length;const box=$("#cartItems"); if(!box)return;
-  box.innerHTML=cart.length?cart.map((x,i)=>x.kind==='meal'?`<div class="cart-item"><div><h4>${x.serviceDate||''} · ${t('week',{n:x.week})} · ${dayName(x.day)} ${t(x.meal)}</h4><p>${x.items.map(a=>`#${a.no} ${dishPrimary(a)}`).join(' · ')}</p><p>${calculateMeal(x.items).label}</p></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`:`<div class="cart-item"><div><h4>${t('addonCart')}</h4><p>${addonNameFromCart(x.name)}</p></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`).join(""):`<p class='muted'>${t('emptyCart')}</p>`;
+  box.innerHTML=cart.length?cart.map((x,i)=>x.kind==='meal'?`<div class="cart-item"><div><h4>${x.serviceDate||''} · ${t('week',{n:x.week})} · ${dayName(x.day)} ${t(x.meal)}</h4><p>${x.items.map(a=>`#${a.no} ${dishPrimary(a)}`).join(' · ')}</p><p>${calculateMeal(x.items).label}</p><label>${qtyLabel()} <input class="cart-qty" type="number" min="1" max="500" step="1" value="${x.qty||1}" onchange="changeCartQty(${i},this.value)"></label></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`:`<div class="cart-item"><div><h4>${t('addonCart')}</h4><p>${addonNameFromCart(x.name)}</p><label>${qtyLabel()} <input class="cart-qty" type="number" min="1" max="500" step="1" value="${x.qty||1}" onchange="changeCartQty(${i},this.value)"></label></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`).join(""):`<p class='muted'>${t('emptyCart')}</p>`;
   const subtotal=foodSubtotal();
   $("#cartTotal").textContent=money(subtotal+(isDelivery() && validQuote()?deliveryQuote.fee:0));
   if($("#foodSubtotal")) $("#foodSubtotal").textContent=money(subtotal);
@@ -263,6 +273,14 @@ function updateCart(){
   renderCalendarHints();
 }
 function addonNameFromCart(name){const parts=name.split('/').map(x=>x.trim());return lang==='zh'?name:(parts[1]||name)}
+window.changeCartQty=(i,raw)=>{
+  const qty=readQty(raw);if(!qty){alert(qtyLabel());updateCart();return;}
+  const x=cart[i];if(!x)return;
+  if(x.kind==='meal'){x.qty=qty;x.price=Math.round(calculateMeal(x.items).total*qty*100)/100;
+    if(x.weeklyPlanId===weeklyPlanId&&weeklyDrafts?.[x.weeklySlot]){weeklyDrafts[x.weeklySlot].qty=qty;saveWeeklyDraft();renderWeeklyPlanner();}
+  }else{x.price=Math.round((x.unitPrice||x.price/(x.qty||1))*qty*100)/100;x.qty=qty;}
+  resetSubmitButton();persistCart();
+};
 window.removeCart=i=>{
   const removed=cart.splice(i,1)[0];
   if(removed?.weeklyPlanId===weeklyPlanId&&weeklyDrafts?.[removed.weeklySlot]){
@@ -393,9 +411,10 @@ async function placeOrder(e){
   const submitBtn=e.target.querySelector('button[type="submit"]');const originalText=submitBtn.textContent;isSubmitting=true;submitBtn.disabled=true;submitBtn.textContent=t('submitting');
   const form=Object.fromEntries(new FormData(e.target).entries());
   const serviceDates=[...new Set(cart.filter(x=>x.kind==='meal').map(x=>x.serviceDate).filter(Boolean))].sort();
-  const mealCount=cart.filter(x=>x.kind==='meal').length;
+  const mealCount=cart.filter(x=>x.kind==='meal').reduce((n,x)=>n+(x.qty||1),0);
   form.orderType=serviceDates.length>1?'Weekly':mealCount>1?'Full Day':'Single Meal';
   form.serviceDate=serviceDates.length>1?`${serviceDates[0]} – ${serviceDates[serviceDates.length-1]}`:(serviceDates[0]||'');
+  if(cart.some(x=>!readQty(x.qty||1))){alert(qtyLabel());return;}
   const fee=isDelivery()?deliveryQuote.fee:0;
   const order={orderId:createOrderId(),createdAt:new Date().toISOString(),customer:form,items:cart,subtotal:foodSubtotal(),deliveryFee:fee,total:foodSubtotal()+fee,deliveryMode:isDelivery()?chosenMode():'pickup',jointTime:isDelivery()&&chosenMode()==='together'?chosenJointTime():'none',deliverySignature:isDelivery()?tripSignature():null,deliveryQuoteId:isDelivery()?deliveryQuote.quoteId:null,deliveryTrips:isDelivery()?deliveryTrips():0,deliveryDistanceKm:isDelivery()?deliveryQuote.distanceKm:null};
   try{
@@ -494,7 +513,7 @@ function loadWeeklyDraft(){
   if(!raw){
     cart.filter(x=>x.kind==='meal'&&x.weeklyPlanId===weeklyPlanId).forEach(x=>{
       const k=PCWeekly.slotKey(x.day,x.meal);
-      weeklyDrafts[k]={enabled:PCCalendar.mealBookable(x.serviceDate,x.meal),selected:x.items.map(item=>item.id)};
+      weeklyDrafts[k]={enabled:PCCalendar.mealBookable(x.serviceDate,x.meal),selected:x.items.map(item=>item.id),qty:x.qty||1};
     });
   }
   syncEntireWeeklyCart();
@@ -513,7 +532,7 @@ function syncEntireWeeklyCart(){
   cart=cart.filter(x=>x.weeklyPlanId!==weeklyPlanId);
   for(const {day,meal,key} of PCWeekly.slots()){
     const entry=PCWeekly.buildMeal({week:weekOfDay,monday:weeklyMonday,day,meal,draft:weeklyDrafts[key],menu:weeklyMenu,calculate:calculateMeal,planId:weeklyPlanId});
-    if(entry)cart.push(entry);
+    if(entry){entry.qty=readQty(weeklyDrafts[key].qty)||1;entry.price=Math.round(entry.price*entry.qty*100)/100;cart.push(entry);}
   }
   if(before||cart.length)persistCart();else updateCart();
 }
@@ -574,6 +593,13 @@ function weeklyGridClick(e){
   if(slot.selected.includes(id))slot.selected=slot.selected.filter(x=>x!==id);else slot.selected.push(id);
   saveWeeklyDraft();syncEntireWeeklyCart();resetSubmitButton();renderWeeklyPlanner();
 }
+function weeklyQtyInput(e){
+  if(!e.target.matches("[data-weekly-qty]"))return;
+  const key=PCWeekly.slotKey(e.target.dataset.day,e.target.dataset.meal);
+  const qty=readQty(e.target.value);if(!qty)return;
+  weeklyDrafts[key].qty=qty;saveWeeklyDraft();syncEntireWeeklyCart();
+  $("#weeklySubtotal").textContent=money(weeklyStatus().total);
+}
 function weeklyGridChange(e){
   if(!e.target.matches('[data-weekly-enable]'))return;
   const key=PCWeekly.slotKey(e.target.dataset.day,e.target.dataset.meal);
@@ -619,7 +645,8 @@ function renderWeeklyPlanner(){
       return `<section class="weekly-meal ${!draft.enabled?'is-disabled':''} ${complete?'is-complete':''}" data-weekly-card="${key}">
          <label class="weekly-meal-title"><input type="checkbox" data-weekly-enable data-day="${day}" data-meal="${meal}" ${draft.enabled?'checked':''} ${!bookable?'disabled':''}/><span>${t(meal)}</span><span class="weekly-meal-tag">${label}</span></label>
          <div class="weekly-dishes">${opts}</div>
-         <p class="weekly-meal-price"><span>${draft.enabled?(complete?calc.label:`${chosen.filter(x=>x.type==='meat').length} ${t('meatShort')} + ${chosen.filter(x=>x.type==='veg').length} ${t('vegShort')}`):wt('skipMeal')}</span><strong>${complete?money(calc.total):'—'}</strong></p>
+         <label class="weekly-qty">${qtyLabel()} <input type="number" min="1" max="500" step="1" data-weekly-qty data-day="${day}" data-meal="${meal}" value="${draft.qty||1}" ${!draft.enabled?"disabled":""}></label>
+         <p class="weekly-meal-price"><span>${draft.enabled?(complete?calc.label:`${chosen.filter(x=>x.type==='meat').length} ${t('meatShort')} + ${chosen.filter(x=>x.type==='veg').length} ${t('vegShort')}`):wt('skipMeal')}</span><strong>${complete?money(calc.total*(draft.qty||1)):'—'}</strong></p>
         </section>`;
     }).join('');
     return `<section class="weekly-day"><header class="weekly-day-header"><h3>${dayName(day)} <span class="week-pill">${t('week',{n:dayWeek})}</span></h3><small>${dayDate}</small></header><div class="weekly-day-meals">${meals}</div></section>`;
