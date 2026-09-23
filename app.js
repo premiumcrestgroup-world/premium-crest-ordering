@@ -52,6 +52,45 @@ const readQty=v=>{const n=Number(v);return Number.isInteger(n)&&n>=1&&n<=MAX_ORD
 function syncQtyLabels(){document.querySelectorAll("[data-qty-label]").forEach(el=>el.textContent=qtyLabel());}
 
 const ISO_DATE=/^\d{4}-\d{2}-\d{2}$/;
+
+// Booking policy: calendar days before service, 14:00 Asia/Kuala_Lumpur.
+// Each meal line has its own quantity; mixed weekly orders check each service day.
+const BOOKING_POLICY=[{min:1,max:49,days:1},{min:50,max:99,days:2},{min:100,max:299,days:3},{min:300,max:500,days:5}];
+const bookingText=key=>({
+ zh:{title:'最迟下单时间（马来西亚时间）',normal:'普通订单 1–49份：前一天下午2点前',fifty:'50–99份：提前2天，下午2点前',hundred:'100–299份：提前3天，下午2点前',threehundred:'300–500份：提前5天，下午2点前',last:'最迟下单：',expired:'已超过最迟下单时间。请更改送餐日期或数量。',invalid:'请选择1–500份。',now:'截止日期已过',notice:'以上为日历天；星期六、日也计入预订天数。',addon:'仅单点加购请在备注写明需要日期，并向商家确认。'},
+ en:{title:'Last order deadlines (Malaysia time)',normal:'Regular 1–49: by 2 pm the previous day',fifty:'50–99: 2 calendar days ahead, by 2 pm',hundred:'100–299: 3 calendar days ahead, by 2 pm',threehundred:'300–500: 5 calendar days ahead, by 2 pm',last:'Last order: ',expired:'Order deadline passed. Change the service date or quantity.',invalid:'Choose 1–500 portions.',now:'Deadline passed',notice:'Calendar days include weekends.',addon:'For add-ons only, specify a service date in notes and confirm with us.'},
+ ms:{title:'Tarikh akhir tempahan (waktu Malaysia)',normal:'Biasa 1–49: sebelum 2 ptg sehari sebelumnya',fifty:'50–99: 2 hari kalendar lebih awal, sebelum 2 ptg',hundred:'100–299: 3 hari lebih awal, sebelum 2 ptg',threehundred:'300–500: 5 hari lebih awal, sebelum 2 ptg',last:'Tempahan akhir: ',expired:'Masa tempahan tamat. Tukar tarikh atau kuantiti.',invalid:'Pilih 1–500 hidangan.',now:'Tarikh akhir telah berlalu',notice:'Hari kalendar termasuk hujung minggu.',addon:'Untuk tambahan sahaja, nyatakan tarikh dalam nota dan sahkan dengan kami.'}
+}[lang]||{})[key]||key;
+function malaysiaNowStamp(now=new Date()){
+ const parts=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Kuala_Lumpur',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(now).filter(x=>x.type!=='literal').map(x=>[x.type,x.value]));
+ return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
+}
+function bookingDeadline(serviceDate,qty){
+ const n=readQty(qty),policy=BOOKING_POLICY.find(p=>n>=p.min&&n<=p.max);
+ if(!policy||!ISO_DATE.test(String(serviceDate)))return null;
+ const time=new Date(`${serviceDate}T12:00:00Z`);
+ if(Number.isNaN(+time)||time.toISOString().slice(0,10)!==serviceDate)return null;
+ time.setUTCDate(time.getUTCDate()-policy.days);
+ return `${time.toISOString().slice(0,10)}T14:00`;
+}
+function bookingValid(serviceDate,qty,now=new Date()){
+ const cutoff=bookingDeadline(serviceDate,qty);
+ return cutoff!==null && malaysiaNowStamp(now)<cutoff;
+}
+function showDeadline(serviceDate,qty){
+ const cutoff=bookingDeadline(serviceDate,qty);if(!cutoff)return bookingText('invalid');
+ const date=cutoff.slice(0,10),isValid=bookingValid(serviceDate,qty);
+ return `${bookingText('last')}${date} 14:00 MYT${isValid?'':' · '+bookingText('now')}`;
+}
+function refreshBookingNotices(){
+ const policy=document.querySelector('#bookingPolicy');
+ if(policy)policy.innerHTML=`<strong>${bookingText('title')}</strong><br>${['normal','fifty','hundred','threehundred'].map(x=>bookingText(x)).join('<br>')}<br><small>${bookingText('notice')}</small>`;
+ const hint=document.querySelector('#singleDeadlineHint');
+ if(hint){const qty=readQty(document.querySelector('#singleQty')?.value);hint.textContent=showDeadline(singleDateIso,qty);hint.classList.toggle('deadline-expired',!!qty&&!bookingValid(singleDateIso,qty));}
+ const addBtn=document.querySelector('#addMealBtn');if(addBtn && data){const qty=readQty(document.querySelector('#singleQty')?.value);if(!qty||!bookingValid(singleDateIso,qty))addBtn.disabled=true;}
+ const checkout=document.querySelector('#checkoutDeadlineHint');if(checkout){const invalid=cart.filter(x=>x.kind==='meal'&&!bookingValid(x.serviceDate,x.qty||1));checkout.textContent=invalid.length?`${bookingText('expired')} ${invalid.map(x=>`${x.serviceDate} × ${x.qty||1}`).join(' · ')}`:'';checkout.classList.toggle('deadline-expired',invalid.length>0);}
+}
+
 function dateLocal(iso){
   if(!ISO_DATE.test(iso))return null;
   const [y,m,d]=iso.split('-').map(Number),v=new Date(y,m-1,d,12);
@@ -98,7 +137,7 @@ async function init(){
     singleDateManuallyChosen=true;
     singleDateIso=e.target.value;state.day=PCCalendar.weekday(singleDateIso);
     state.week=PCCalendar.menuWeek(singleDateIso);
-    state.selected.clear();fillSelectors();renderMeal();renderCalendarHints();
+    state.selected.clear();fillSelectors();renderMeal();renderCalendarHints();refreshBookingNotices();
   };
   $('#singleModeBtn').onclick=()=>switchOrderMode(false);
   $('#weeklyModeBtn').onclick=()=>switchOrderMode(true);
@@ -132,13 +171,13 @@ async function init(){
   $("#paymentSelect").addEventListener('change', renderPaymentInfo);
   renderPaymentInfo();
   renderCalendarHints();
-  syncQtyLabels();
+  syncQtyLabels();refreshBookingNotices();
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshCalendarDate();});
   window.setInterval(refreshCalendarDate,60000);
 }
 
 function setLanguage(newLang){
-  lang=newLang;localStorage.setItem("pc_lang",lang);applyLanguage();fillSelectors();renderMeal();renderAddons();updateCart();applyWeeklyLanguage();renderWeeklyPlanner();renderCalendarHints();syncQtyLabels();
+  lang=newLang;localStorage.setItem("pc_lang",lang);applyLanguage();fillSelectors();renderMeal();renderAddons();updateCart();applyWeeklyLanguage();renderWeeklyPlanner();renderCalendarHints();syncQtyLabels();refreshBookingNotices();
 }
 function applyLanguage(){
   document.documentElement.lang=lang==='zh'?'zh-Hans':lang;
@@ -240,7 +279,8 @@ function renderSummary(){
     const qty=readQty($("#singleQty").value);
     html+=`<div class="price-line total"><span>${t('mealTotal')} × ${qty||"?"}</span><strong>${qty?money(calc.total*qty):"—"}</strong></div>`;
   } else html=`<div class="muted">${t('selected')} ${calc.m} ${t('meatShort')} + ${calc.v} ${t('vegShort')}<br>${calc.label}</div>`;
-  $("#priceBreakdown").innerHTML=html; $("#addMealBtn").disabled=!calc.valid||!readQty($("#singleQty").value);
+  $("#priceBreakdown").innerHTML=html; $("#addMealBtn").disabled=!calc.valid||!readQty($("#singleQty").value)||!bookingValid(singleDateIso,$("#singleQty").value);
+  refreshBookingNotices();
 }
 function addCurrentMeal(){
   if(!PCCalendar.mealBookable(singleDateIso,state.meal)){alert(calendarText('pastMeal'));return;}
@@ -251,6 +291,7 @@ function addCurrentMeal(){
     alert(wt('singleDateDifferentWeek'));return;
   }
   const qty=readQty($("#singleQty").value);if(!qty){alert(qtyLabel());return;}
+  if(!bookingValid(singleDateIso,qty)){alert(bookingText("expired")+"\n"+showDeadline(singleDateIso,qty));return;}
   resetSubmitButton();cart.push({kind:'meal',week:state.week,day:state.day,meal:state.meal,serviceDate:singleDateIso,items,calc,qty,price:calc.total*qty});state.selected.clear();persistCart();renderMeal();showCart();
 }
 function addonDisplayName(a){
@@ -270,7 +311,7 @@ function updateCart(){
   $("#cartTotal").textContent=money(subtotal+(isDelivery() && validQuote()?deliveryQuote.fee:0));
   if($("#foodSubtotal")) $("#foodSubtotal").textContent=money(subtotal);
   renderDeliverySection();
-  renderCalendarHints();
+  renderCalendarHints();refreshBookingNotices();
 }
 function addonNameFromCart(name){const parts=name.split('/').map(x=>x.trim());return lang==='zh'?name:(parts[1]||name)}
 window.changeCartQty=(i,raw)=>{
@@ -279,6 +320,7 @@ window.changeCartQty=(i,raw)=>{
   if(x.kind==='meal'){x.qty=qty;x.price=Math.round(calculateMeal(x.items).total*qty*100)/100;
     if(x.weeklyPlanId===weeklyPlanId&&weeklyDrafts?.[x.weeklySlot]){weeklyDrafts[x.weeklySlot].qty=qty;saveWeeklyDraft();renderWeeklyPlanner();}
   }else{x.price=Math.round((x.unitPrice||x.price/(x.qty||1))*qty*100)/100;x.qty=qty;}
+  if(x.kind==='meal'&&!bookingValid(x.serviceDate,x.qty)){alert(bookingText('expired')+'\n'+showDeadline(x.serviceDate,x.qty));}
   resetSubmitButton();persistCart();
 };
 window.removeCart=i=>{
@@ -406,6 +448,8 @@ async function placeOrder(e){
   e.preventDefault();if(isSubmitting)return;if(weeklyMode&&!checkWeeklyReady())return;if(!cart.length){alert(t('cartEmptyAlert'));return;}
   const stale=cart.filter(invalidCartMeal);
   if(stale.length){alert(calendarText('staleCart'));return;}
+  const late=cart.find(x=>x.kind==='meal'&&!bookingValid(x.serviceDate,x.qty||1));
+  if(late){alert(bookingText('expired')+'\n'+showDeadline(late.serviceDate,late.qty||1));return;}
   if(isDelivery() && (!validQuote()||deliveryQuote.manual||!$("#deliveryMatched").checked)){alert(validQuote()&&deliveryQuote.manual?dt('tooFar'):dt('quoteFirst'));return;}
   if(!paymentReady($("#paymentSelect").value)){alert(pt('choose'));return;}
   const submitBtn=e.target.querySelector('button[type="submit"]');const originalText=submitBtn.textContent;isSubmitting=true;submitBtn.disabled=true;submitBtn.textContent=t('submitting');
@@ -495,7 +539,7 @@ function refreshCalendarDate(){
     }
     if(changed){saveWeeklyDraft();syncEntireWeeklyCart();renderWeeklyPlanner();}
   }
-  renderCalendarHints();
+  renderCalendarHints();refreshBookingNotices();
 }
 function createOrderId(){const date=PCCalendar.nowInMalaysia().date.replaceAll('-','');return `PC-${date.slice(2)}-${Math.floor(1000+Math.random()*9000)}`}
 /* Weekly order: ten meals are selected before one single checkout/POST. */
@@ -611,6 +655,8 @@ function weeklyGridChange(e){
 function weeklyStatus(){return PCWeekly.status({drafts:weeklyDrafts,menu:weeklyMenu,calculate:calculateMeal});}
 function checkWeeklyReady(){
   if(!weeklyMode)return true;
+  const late=PCWeekly.slots().find(({day,key})=>weeklyDrafts[key]?.enabled&&!bookingValid(PCWeekly.dateFor(weeklyMonday,day),weeklyDrafts[key].qty||1));
+  if(late){alert(bookingText('expired')+'\n'+showDeadline(PCWeekly.dateFor(weeklyMonday,late.day),weeklyDrafts[late.key].qty||1));return false;}
   const s=weeklyStatus();if(s.ready)return true;
   alert(s.active===0?wt('weeklyNone'):wt('weeklyIncomplete').replace('{n}',s.active-s.complete));
   if(s.missing[0])document.querySelector(`[data-weekly-card="${s.missing[0].key}"]`)?.scrollIntoView({behavior:'smooth',block:'center'});
@@ -622,7 +668,9 @@ function renderWeeklyPlanner(){
   $('#weeklyProgress').textContent=`${progress.complete} / ${progress.active}`;
   $('#weeklyStatusText').textContent=wt('weeklyReady').replace('{done}',progress.complete).replace('{active}',progress.active);
   $('#weeklySubtotal').textContent=money(progress.total);
-  $('#weeklyReview').disabled=!progress.ready;
+  const lateSlot=PCWeekly.slots().find(({day,key})=>weeklyDrafts[key]?.enabled&&!bookingValid(PCWeekly.dateFor(weeklyMonday,day),weeklyDrafts[key].qty||1));
+  $('#weeklyReview').disabled=!progress.ready||!!lateSlot;
+  const deadlineHint=$('#weeklyDeadlineHint');if(deadlineHint){deadlineHint.textContent=lateSlot?bookingText('expired')+' '+showDeadline(PCWeekly.dateFor(weeklyMonday,lateSlot.day),weeklyDrafts[lateSlot.key].qty||1):'';deadlineHint.classList.toggle('deadline-expired',!!lateSlot);}
   $('#weeklyMonday').value=weeklyMonday;
   $('#weeklyWeekSelect').value=PCCalendar.summary(weeklyMonday).map(w=>t('week',{n:w})).join(' → ');
   $('#weeklyGrid').innerHTML=PCWeekly.DAYS.map(day=>{
@@ -645,7 +693,7 @@ function renderWeeklyPlanner(){
       return `<section class="weekly-meal ${!draft.enabled?'is-disabled':''} ${complete?'is-complete':''}" data-weekly-card="${key}">
          <label class="weekly-meal-title"><input type="checkbox" data-weekly-enable data-day="${day}" data-meal="${meal}" ${draft.enabled?'checked':''} ${!bookable?'disabled':''}/><span>${t(meal)}</span><span class="weekly-meal-tag">${label}</span></label>
          <div class="weekly-dishes">${opts}</div>
-         <label class="weekly-qty">${qtyLabel()} <input type="number" min="1" max="500" step="1" data-weekly-qty data-day="${day}" data-meal="${meal}" value="${draft.qty||1}" ${!draft.enabled?"disabled":""}></label>
+         <label class="weekly-qty">${qtyLabel()} <input type="number" min="1" max="500" step="1" data-weekly-qty data-day="${day}" data-meal="${meal}" value="${draft.qty||1}" ${!draft.enabled?"disabled":""}></label><small class="booking-deadline ${draft.enabled&&!bookingValid(dayDate,draft.qty||1)?"deadline-expired":""}">${showDeadline(dayDate,draft.qty||1)}</small>
          <p class="weekly-meal-price"><span>${draft.enabled?(complete?calc.label:`${chosen.filter(x=>x.type==='meat').length} ${t('meatShort')} + ${chosen.filter(x=>x.type==='veg').length} ${t('vegShort')}`):wt('skipMeal')}</span><strong>${complete?money(calc.total*(draft.qty||1)):'—'}</strong></p>
         </section>`;
     }).join('');

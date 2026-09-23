@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#174f3b" />
   <title>Premium Crest Online Ordering</title>
-  <link rel="stylesheet" href="styles.css?v=1.8.0" />
+  <link rel="stylesheet" href="styles.css?v=1.9.0" />
 </head>
 <body>
   <header class="site-header">
@@ -40,6 +40,7 @@
       </div>
     </section>
 
+    <section id="bookingPolicy" class="booking-policy card" aria-live="polite"></section>
     <div id="calendarWarning" class="calendar-warning hidden" role="alert"><span id="calendarWarningText"></span><button id="clearStaleCart" type="button">移除过期餐点</button></div>
     <section class="order-mode card" aria-label="Order type">
       <div class="mode-heading"><p class="eyebrow">ORDER TYPE · 点餐方式</p><h2 data-weekly-i18n="modeHeading">请选择点餐方式</h2></div>
@@ -64,6 +65,7 @@
           <button type="button" data-weekly-preset="none" data-weekly-i18n="clearWeek">全部取消</button>
         </div>
       </div>
+      <p id="weeklyDeadlineHint" role="status" aria-live="polite"></p>
       <div id="weeklyGrid" class="weekly-grid"></div>
       <div class="weekly-footer">
         <div><strong id="weeklyStatusText"></strong><p id="weeklySaveHint" data-weekly-i18n="draftSaved">选择会自动保存；提交前可随时修改。</p></div>
@@ -108,7 +110,7 @@
         <h3 data-i18n="mealSummary">本餐选择</h3>
         <div id="selectedList" class="selected-list empty"></div>
         <div class="price-breakdown" id="priceBreakdown"></div>
-        <label class="order-qty"><span data-qty-label>数量（1–500份）</span><input type="number" id="singleQty" min="1" max="500" step="1" value="1" inputmode="numeric"></label>
+        <label class="order-qty"><span data-qty-label>数量（1–500份）</span><input type="number" id="singleQty" min="1" max="500" step="1" value="1" inputmode="numeric"></label><p id="singleDeadlineHint" class="booking-deadline" role="status" aria-live="polite"></p>
         <button id="addMealBtn" class="primary" disabled data-i18n="addMeal">加入购物车</button>
         <p class="hint" data-i18n="minHint">提示：至少需要 1肉2菜 或 2肉1菜 才能加入购物车。</p>
       </aside>
@@ -174,6 +176,7 @@
         <label><span data-i18n="paymentRef">付款参考号</span><input name="paymentRef" autocomplete="off" /></label>
         <section id="paymentInfo" class="payment-info wide" aria-live="polite"></section>
         <label class="wide"><span data-i18n="remarks">备注</span><textarea name="remarks" rows="2" id="remarksField"></textarea></label>
+        <p id="checkoutDeadlineHint" class="wide" role="alert"></p>
         <button class="primary wide" type="submit" data-i18n="placeOrder">确认下单</button>
       </form>
       <div id="orderResult" class="order-result hidden"></div>
@@ -185,6 +188,6 @@
   <script src="delivery-plan.js?v=1.6.2"></script>
   <script src="weekly-plan.js?v=1.8.0"></script>
   <script src="payment-config.js?v=1.7.2"></script>
-  <script src="app.js?v=1.8.0"></script>
+  <script src="app.js?v=1.9.0"></script>
 </body>
 </html>
