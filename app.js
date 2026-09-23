@@ -230,7 +230,28 @@ function currentPlan(){return PCDelivery.plan(cart,chosenMode());}
 function deliveryTrips(){return currentPlan().trips;}
 function tripSignature(){return currentPlan().signature;}
 function normalizeAddress(s){return String(s||'').trim().replace(/\s+/g,' ').toLowerCase();}
-function validQuote(){return !!(deliveryQuote && deliveryQuote.ok && deliveryQuote.quoteId && deliveryQuote.fee!==null && deliveryQuote.fee!==undefined && deliveryQuote.addressKey===normalizeAddress(document.querySelector('[name="address"]').value) && deliveryQuote.trips===deliveryTrips() && deliveryQuote.mode===chosenMode() && deliveryQuote.signature===tripSignature() && deliveryQuote.jointTime===(chosenMode()==='together'?chosenJointTime():'none') && deliveryQuote.expiresAt>Date.now());}
+// Every displayed and submitted delivery fee must belong to this exact address,
+// set of meals and delivery arrangement. The backend independently verifies quoteId.
+function deliveryContext(){
+  return {
+    addressKey:normalizeAddress(document.querySelector('[name="address"]').value),
+    trips:deliveryTrips(),
+    mode:chosenMode(),
+    signature:tripSignature(),
+    jointTime:chosenMode()==='together'?chosenJointTime():'none'
+  };
+}
+function validQuote(){
+  if(!deliveryQuote || !deliveryQuote.ok || !deliveryQuote.quoteId || deliveryQuote.manual ||
+     !Number.isFinite(Number(deliveryQuote.fee)) || Number(deliveryQuote.fee)<0 ||
+     !Number.isFinite(Number(deliveryQuote.expiresAt)) || deliveryQuote.expiresAt<=Date.now())return false;
+  const saved=deliveryQuote.context;
+  if(!saved)return false;
+  const live=deliveryContext();
+  return saved.addressKey===live.addressKey && saved.trips===live.trips &&
+    saved.mode===live.mode && saved.signature===live.signature &&
+    saved.jointTime===live.jointTime;
+}
 function invalidateDelivery(){deliveryQuote=null;quoteEpoch++;if($("#deliveryMatched"))$("#deliveryMatched").checked=false;renderDeliverySection();}
 function renderDeliverySection(){
   const box=$("#deliverySection");if(!box)return;
@@ -248,16 +269,18 @@ function renderDeliverySection(){
   if(!isDelivery()){status.textContent=dt('pickupFree');match.classList.add('hidden');}
   else if(quoteBusy){status.textContent=dt('calculating');match.classList.add('hidden');}
   else if(deliveryQuote && deliveryQuote.ok){
-    status.textContent=deliveryQuote.manual?dt('tooFar'):(`${dt('distance')}: ${deliveryQuote.distanceKm.toFixed(2)} km · ${dt('tripCount')}: ${deliveryQuote.trips} · ${dt('deliveryFee')}: ${money(deliveryQuote.fee)}`);
-    match.classList.remove('hidden');
+    status.textContent=deliveryQuote.manual?dt('tooFar'):(`${dt('distance')}: ${Number(deliveryQuote.distanceKm).toFixed(2)} km · ${dt('tripCount')}: ${deliveryQuote.trips} · ${dt('deliveryFee')}: ${money(deliveryQuote.fee)}`);
+    if(!deliveryQuote.manual && !validQuote())status.textContent+=' · '+dt('addressChanged');
+    match.classList.toggle('hidden',!validQuote());
     $("#matchedAddress").textContent=deliveryQuote.matchedAddress||address.value;
     $("#confirmMatchedLabel").textContent=dt('confirmAddress');
   }else{status.textContent=dt('deliveryInfo')+': 0–5 km RM5 · >5–10 km RM9 · >10 km '+dt('tooFar').split(':')[0];match.classList.add('hidden');}
   $("#calculateDelivery").textContent=quoteBusy?dt('calculating'):dt('calculate');
   $("#calculateDelivery").disabled=quoteBusy||!cart.length;
   $("#deliveryLine").classList.toggle('hidden',!isDelivery());
-  $("#deliveryAmount").textContent=validQuote()?money(deliveryQuote.fee):'—';
-  const fullTotal=foodSubtotal()+(isDelivery()&&validQuote()?deliveryQuote.fee:0);
+  const quoteReady=isDelivery() && validQuote();
+  $("#deliveryAmount").textContent=quoteReady?money(deliveryQuote.fee):'—';
+  const fullTotal=foodSubtotal()+(quoteReady?Number(deliveryQuote.fee):0);
   $("#deliveryGrandTotal").textContent=money(fullTotal);
   $("#cartTotal").textContent=money(fullTotal);
   $("#foodSubtotal").textContent=money(foodSubtotal());
@@ -281,17 +304,32 @@ async function calculateDelivery(){
   if(!isDelivery()||quoteBusy||!cart.length)return;
   const address=document.querySelector('[name="address"]').value.trim();
   if(address.length<12){alert(dt('needAddress'));return;}
+  const context=deliveryContext();
+  const plan=cart.filter(x=>x.kind==='meal').map(x=>({week:x.week,day:x.day,meal:x.meal,serviceDate:x.serviceDate||''}));
   const epoch=++quoteEpoch;quoteBusy=true;deliveryQuote=null;renderDeliverySection();
   try{
     const result=await requestJsonp('deliveryQuote',{
-      address,mode:chosenMode(),jointTime:chosenMode()==='together'?chosenJointTime():'none',
-      plan:JSON.stringify(cart.filter(x=>x.kind==='meal').map(x=>({week:x.week,day:x.day,meal:x.meal,serviceDate:x.serviceDate||''}))),
-      trips:deliveryTrips()});
+      address,mode:context.mode,jointTime:context.jointTime,
+      plan:JSON.stringify(plan),trips:context.trips});
     if(epoch!==quoteEpoch)return;
     if(!result.ok)throw new Error(result.error||'Quote unavailable');
-    result.addressKey=normalizeAddress(address);
-    result.expiresAt=Date.now()+Math.min(15*60000,(Number(result.validForSeconds)||900)*1000);
-    deliveryQuote=result;
+    // Refuse a quote from an old deployment or a response for a different cart.
+    if(result.signature!==context.signature || Number(result.trips)!==context.trips ||
+       result.mode!==context.mode || result.jointTime!==context.jointTime){
+      throw new Error('Backend / website version mismatch. Update Code.gs, redeploy a New version and try again.');
+    }
+    if(context.addressKey!==deliveryContext().addressKey ||
+       context.signature!==deliveryContext().signature ||
+       context.mode!==deliveryContext().mode ||
+       context.jointTime!==deliveryContext().jointTime){
+      throw new Error('Address or meal selection changed. Calculate delivery again.');
+    }
+    if(!result.manual && (!result.quoteId || !Number.isFinite(Number(result.fee)) || Number(result.fee)<0)){
+      throw new Error('Delivery price missing; please calculate again.');
+    }
+    deliveryQuote={...result,fee:result.manual?null:Number(result.fee),trips:Number(result.trips),
+      distanceKm:Number(result.distanceKm),context,
+      expiresAt:Date.now()+Math.min(15*60000,(Number(result.validForSeconds)||900)*1000)};
     $("#deliveryMatched").checked=false;
   }catch(err){if(epoch===quoteEpoch){deliveryQuote=null;alert(dt('quoteFail')+'\n'+err.message);}}
   finally{quoteBusy=false;renderDeliverySection();}
