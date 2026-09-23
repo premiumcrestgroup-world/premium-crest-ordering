@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#174f3b" />
   <title>Premium Crest Online Ordering</title>
-  <link rel="stylesheet" href="styles.css?v=1.6.0" />
+  <link rel="stylesheet" href="styles.css?v=1.7.0" />
 </head>
 <body>
   <header class="site-header">
@@ -170,7 +170,8 @@
         <label><span data-i18n="payment">付款方式</span>
           <select name="payment" id="paymentSelect"></select>
         </label>
-        <label><span data-i18n="paymentRef">付款参考号</span><input name="paymentRef" /></label>
+        <label><span data-i18n="paymentRef">付款参考号</span><input name="paymentRef" autocomplete="off" /></label>
+        <section id="paymentInfo" class="payment-info wide" aria-live="polite"></section>
         <label class="wide"><span data-i18n="remarks">备注</span><textarea name="remarks" rows="2" id="remarksField"></textarea></label>
         <button class="primary wide" type="submit" data-i18n="placeOrder">确认下单</button>
       </form>
@@ -182,6 +183,7 @@
   <script src="calendar-sync.js?v=1.6.0"></script>
   <script src="delivery-plan.js?v=1.6.2"></script>
   <script src="weekly-plan.js?v=1.6.0"></script>
-  <script src="app.js?v=1.6.1"></script>
+  <script src="payment-config.js?v=1.7.2"></script>
+  <script src="app.js?v=1.7.2"></script>
 </body>
 </html>

@@ -122,6 +122,8 @@ async function init(){
   $("#jointTime").addEventListener('change',()=>{invalidateDelivery();renderDeliverySection();});
   $("#calculateDelivery").onclick=calculateDelivery;
   renderDeliverySection();
+  $("#paymentSelect").addEventListener('change', renderPaymentInfo);
+  renderPaymentInfo();
   renderCalendarHints();
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshCalendarDate();});
   window.setInterval(refreshCalendarDate,60000);
@@ -140,9 +142,56 @@ function applyLanguage(){
   const oldPayment=$("#paymentSelect").value;
   $("#paymentSelect").innerHTML=`<option value="DuitNow QR">${t('duitnow')}</option><option value="Bank Transfer">${t('bank')}</option><option value="Cash">${t('cash')}</option>`;
   if(oldPayment)$("#paymentSelect").value=oldPayment;
+  if(!paymentReady($("#paymentSelect").value))$("#paymentSelect").value=["DuitNow QR","Bank Transfer","Cash"].find(paymentReady)||"Cash";
+  renderPaymentInfo();
   resetSubmitButton(false);
   renderDeliverySection();
 }
+/* v1.7: public merchant payment information, NOT an automatic payment gateway. */
+const PAYMENT_TEXT = {
+  zh:{qrTitle:'扫描 DuitNow QR 付款',bankTitle:'银行转账资料',notReady:'商家尚未上传此付款方式，请选择其他方式或联系客服。',manual:'付款后请填写付款参考号。订单须由商家人工核对付款，网页不会自动确认已付款。',save:'保存 QR 图片',copy:'复制银行账号',copied:'已复制银行账号',bank:'银行',holder:'户口名称',account:'银行账号',amount:'订单金额（含运费）',cash:'现金付款：请在取餐／送达时付款。',choose:'请选择已配置的付款方式。'},
+  en:{qrTitle:'Scan DuitNow QR to pay',bankTitle:'Bank transfer details',notReady:'This payment method is not configured yet. Please choose another method or contact us.',manual:'After paying, enter your payment reference. We verify transfers manually; placing an order is not payment confirmation.',save:'Save QR image',copy:'Copy account number',copied:'Account number copied',bank:'Bank',holder:'Account holder',account:'Account number',amount:'Order total (including delivery)',cash:'Cash: pay when collecting or receiving your order.',choose:'Choose an available payment method.'},
+  ms:{qrTitle:'Imbas DuitNow QR untuk bayaran',bankTitle:'Butiran pindahan bank',notReady:'Kaedah pembayaran ini belum disediakan. Pilih kaedah lain atau hubungi kami.',manual:'Selepas bayaran, masukkan nombor rujukan. Bayaran disemak secara manual; pesanan bukan pengesahan bayaran.',save:'Simpan imej QR',copy:'Salin nombor akaun',copied:'Nombor akaun disalin',bank:'Bank',holder:'Nama pemegang akaun',account:'Nombor akaun',amount:'Jumlah pesanan (termasuk penghantaran)',cash:'Tunai: bayar semasa ambil atau menerima pesanan.',choose:'Pilih kaedah pembayaran tersedia.'}
+};
+const pt = key => PAYMENT_TEXT[lang]?.[key] || PAYMENT_TEXT.zh[key] || key;
+function paymentReady(method){
+  const c=window.PC_PAYMENT||{};
+  if(method==='DuitNow QR')return !!c.duitnowQrImage;
+  if(method==='Bank Transfer')return !!(c.bankName&&c.accountHolder&&c.accountNumber);
+  return method==='Cash';
+}
+function renderPaymentInfo(){
+  const container=$("#paymentInfo"), select=$("#paymentSelect");
+  if(!container||!select)return;
+  const method=select.value, c=window.PC_PAYMENT||{};
+  const empty=()=>{container.textContent=pt('notReady');container.classList.add('payment-pending');};
+  container.replaceChildren();container.classList.remove('payment-pending');
+  if(method==='Cash'){
+    container.textContent=pt('cash'); return;
+  }
+  if(!paymentReady(method)){empty();return;}
+  const heading=document.createElement('h4');heading.textContent=pt(method==='DuitNow QR'?'qrTitle':'bankTitle');container.appendChild(heading);
+  const total=document.createElement('p');total.className='payment-amount';
+  const cost=foodSubtotal()+(isDelivery()&&validQuote()?deliveryQuote.fee:0);
+  total.textContent=pt('amount')+': '+money(cost);container.appendChild(total);
+  if(method==='DuitNow QR'){
+    const img=document.createElement('img');img.className='payment-qr';img.src=c.duitnowQrImage;img.alt='Premium Crest DuitNow QR';
+    img.onerror=()=>{img.remove();container.classList.add('payment-pending');empty();};
+    container.appendChild(img);
+    if(c.duitnowReceivingName){const name=document.createElement('p');name.textContent=c.duitnowReceivingName;container.appendChild(name);}
+    const save=document.createElement('a');save.className='payment-link';save.href=c.duitnowQrImage;save.target='_blank';save.rel='noopener noreferrer';save.textContent=pt('save');container.appendChild(save);
+  }else{
+    [[pt('bank'),c.bankName],[pt('holder'),c.accountHolder],[pt('account'),c.accountNumber]].forEach(([label,value])=>{
+      const line=document.createElement('p');line.className='bank-line';const b=document.createElement('strong');b.textContent=label+': ';
+      const v=document.createElement('span');v.textContent=value;line.append(b,v);container.appendChild(line);
+    });
+    const copy=document.createElement('button');copy.type='button';copy.className='payment-link';copy.textContent=pt('copy');
+    copy.onclick=()=>navigator.clipboard?.writeText(c.accountNumber).then(()=>{copy.textContent=pt('copied')}).catch(()=>{copy.textContent=c.accountNumber});
+    container.appendChild(copy);
+  }
+  const note=document.createElement('p');note.className='payment-notice';note.textContent=pt('manual');container.appendChild(note);
+}
+
 function fillSelectors(){
   $("#weekSelect").value=t('week',{n:PCCalendar.menuWeek(singleDateIso)});
   $("#daySelect").innerHTML=DAYS.map(d=>`<option value="${d}">${dayName(d)}</option>`).join("");
@@ -284,6 +333,7 @@ function renderDeliverySection(){
   $("#deliveryGrandTotal").textContent=money(fullTotal);
   $("#cartTotal").textContent=money(fullTotal);
   $("#foodSubtotal").textContent=money(foodSubtotal());
+  renderPaymentInfo();
 }
 function requestJsonp(action, params={}){
   return new Promise((resolve,reject)=>{
@@ -339,6 +389,7 @@ async function placeOrder(e){
   const stale=cart.filter(invalidCartMeal);
   if(stale.length){alert(calendarText('staleCart'));return;}
   if(isDelivery() && (!validQuote()||deliveryQuote.manual||!$("#deliveryMatched").checked)){alert(validQuote()&&deliveryQuote.manual?dt('tooFar'):dt('quoteFirst'));return;}
+  if(!paymentReady($("#paymentSelect").value)){alert(pt('choose'));return;}
   const submitBtn=e.target.querySelector('button[type="submit"]');const originalText=submitBtn.textContent;isSubmitting=true;submitBtn.disabled=true;submitBtn.textContent=t('submitting');
   const form=Object.fromEntries(new FormData(e.target).entries());
   const serviceDates=[...new Set(cart.filter(x=>x.kind==='meal').map(x=>x.serviceDate).filter(Boolean))].sort();
