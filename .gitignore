@@ -1,0 +1,13 @@
+# Security: never commit private backend, secrets, or project archives
+*.zip
+*.tar
+*.tar.gz
+*.7z
+.env
+.env.*
+*.pem
+*.key
+secrets/
+private/
+google-apps-script/
+premium-crest-ordering/google-apps-script/
