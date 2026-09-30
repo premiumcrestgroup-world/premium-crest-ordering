@@ -33,45 +33,9 @@ const WEEKLY_I18N={
 };
 const wt=key=>((WEEKLY_I18N[lang]||WEEKLY_I18N.zh)[key]||key);
 
-const ADDON_I18N={
- zh:{
-  scheduleTitle:'选择 Add-on 日期与配送',scheduleHint:'先选哪一天，再选择该天要加购的食物。每一天可以独立选择。',
-  deliveryChoice:'Add-on 配送方式',withMeal:'跟当天 Meal 一起送',separate:'分开送',
-  joinMeal:'跟哪一餐一起送',noMeal:'当天没有 Meal，Add-on 会分开配送。',breakfast:'早餐',lunch:'午餐',
-  qty:'数量',date:'日期',addonShort:'Add-on',separateTrip:'Add-on 分开送',
-  container:'餐盒费',containers:'餐盒',containerRule:'Meal 与 A01–A08：RM1.00/份；A09–A10：RM0.50/份',
-  dateRequired:'请先选择 Add-on 日期。',pastDate:'这个日期已经超过可订时间，请选择之后的日期。',
-  sameMeal:'跟 {meal} 一起送',deliveryRepaired:'原本要一起送的 Meal 已取消，Add-on 已自动改为分开送。'
- },
- en:{
-  scheduleTitle:'Choose Add-on date & delivery',scheduleHint:'Pick the day first, then add the items needed for that day. Each day is independent.',
-  deliveryChoice:'Add-on delivery',withMeal:'Send with same-day Meal',separate:'Separate delivery',
-  joinMeal:'Send together with',noMeal:'There is no Meal on this day, so Add-ons will use a separate delivery.',breakfast:'Breakfast',lunch:'Lunch',
-  qty:'Qty',date:'Date',addonShort:'Add-on',separateTrip:'Separate Add-on delivery',
-  container:'Container Fee',containers:'containers',containerRule:'Meal and A01–A08: RM1.00/item; A09–A10: RM0.50/item',
-  dateRequired:'Choose an Add-on date first.',pastDate:'This date is past the ordering cut-off. Choose a later date.',
-  sameMeal:'With {meal}',deliveryRepaired:'The linked Meal was removed, so the Add-on was changed to separate delivery.'
- },
- ms:{
-  scheduleTitle:'Pilih tarikh & penghantaran Add-on',scheduleHint:'Pilih hari dahulu, kemudian pilih tambahan untuk hari tersebut. Setiap hari boleh berbeza.',
-  deliveryChoice:'Penghantaran Add-on',withMeal:'Hantar bersama Meal hari yang sama',separate:'Hantar berasingan',
-  joinMeal:'Hantar bersama',noMeal:'Tiada Meal pada hari ini, jadi Add-on akan dihantar berasingan.',breakfast:'Sarapan',lunch:'Makan Tengah Hari',
-  qty:'Kuantiti',date:'Tarikh',addonShort:'Add-on',separateTrip:'Penghantaran Add-on berasingan',
-  container:'Caj Bekas',containers:'bekas',containerRule:'Meal dan A01–A08: RM1.00/item; A09–A10: RM0.50/item',
-  dateRequired:'Pilih tarikh Add-on dahulu.',pastDate:'Tarikh ini melepasi masa tempahan. Pilih tarikh lain.',
-  sameMeal:'Bersama {meal}',deliveryRepaired:'Meal berkaitan telah dibuang, jadi Add-on ditukar kepada penghantaran berasingan.'
- }
-};
-const at=(key,vars={})=>{
-  let text=((ADDON_I18N[lang]||ADDON_I18N.zh)[key]||key);
-  Object.entries(vars).forEach(([k,v])=>text=text.replaceAll(`{${k}}`,v));
-  return text;
-};
-
 let lang = localStorage.getItem("pc_lang") || "zh";
-let data, state = {week:1, day:"Monday", meal:"breakfast", selected:new Set(), addons:{}, addonDate:"", addonSchedule:{}};
+let data, state = {week:1, day:"Monday", meal:"breakfast", selected:new Set(), addons:{}};
 let cart = JSON.parse(localStorage.getItem("pc_cart") || "[]");
-let runtimeSettings={containerFee:1.00,friedChickenContainerFee:0.50};
 let isSubmitting = false;
 let deliveryQuote = null;
 let quoteBusy = false;
@@ -91,7 +55,7 @@ function dateLocal(iso){
 function isoLocal(date){return [date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-')}
 function nextServiceDate(from=new Date()){return PCCalendar.initialSingleDate(from);}
 function mondayFrom(iso){return PCCalendar.mondayOf(iso);}
-function orderWeeks(){return new Set(cart.filter(x=>x.serviceDate).map(x=>mondayFrom(x.serviceDate)))}
+function orderWeeks(){return new Set(cart.filter(x=>x&&x.serviceDate).map(x=>mondayFrom(x.serviceDate)))}
 
 
 const QUOTE_TIMEOUT_MS = 18000;
@@ -107,7 +71,11 @@ const t = (key, vars={}) => {
 
 async function init(){
   data = await fetch("data/menu.json").then(r=>r.json());
-  await loadRuntimeSettings();
+  const legacyAddonCount=cart.filter(x=>x&&x.kind==='addon'&&(!x.serviceDate||!x.week||!x.day||!['with_breakfast','with_lunch','separate'].includes(String(x.addonDelivery||'')))).length;
+  if(legacyAddonCount){
+    cart=cart.filter(x=>!(x&&x.kind==='addon'&&(!x.serviceDate||!x.week||!x.day||!['with_breakfast','with_lunch','separate'].includes(String(x.addonDelivery||'')))));
+    localStorage.setItem("pc_cart",JSON.stringify(cart));
+  }
   $("#languageSelect").value=lang;
   $("#languageSelect").onchange=e=>setLanguage(e.target.value);
   singleDateIso=nextServiceDate();
@@ -117,8 +85,6 @@ async function init(){
   state.day=PCCalendar.weekday(singleDateIso);
   state.week=PCCalendar.menuWeek(singleDateIso);
   state.meal=PCCalendar.initialMeal(singleDateIso);
-  state.addonDate=singleDateIso;
-  migrateLegacyAddons();
   document.querySelectorAll('.meal-tab').forEach(b=>b.classList.toggle('active',b.dataset.meal===state.meal));
   fillSelectors(); renderAddons(); applyLanguage(); renderMeal(); updateCart();
   $('#singleDate').onchange=e=>{
@@ -132,8 +98,7 @@ async function init(){
     singleDateManuallyChosen=true;
     singleDateIso=e.target.value;state.day=PCCalendar.weekday(singleDateIso);
     state.week=PCCalendar.menuWeek(singleDateIso);
-    if(!weeklyMode)state.addonDate=singleDateIso;
-    state.selected.clear();fillSelectors();renderMeal();renderAddons();renderCalendarHints();
+    state.selected.clear();fillSelectors();renderMeal();renderCalendarHints();
   };
   $('#singleModeBtn').onclick=()=>switchOrderMode(false);
   $('#weeklyModeBtn').onclick=()=>switchOrderMode(true);
@@ -151,15 +116,15 @@ async function init(){
   document.querySelectorAll(".meal-tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".meal-tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");state.meal=b.dataset.meal;state.selected.clear();renderMeal();});
   $("#clearMeal").onclick=()=>{state.selected.clear();renderMeal()};
   $("#addMealBtn").onclick=addCurrentMeal;
-  $("#clearStaleCart").onclick=()=>{cart=cart.filter(x=>!invalidCartMeal(x));persistCart();resetSubmitButton();};
+  $("#clearStaleCart").onclick=()=>{cart=cart.filter(x=>!invalidCartItem(x));persistCart();renderAddons();resetSubmitButton();};
   $("#cartBtn").onclick=showCart; $("#closeCart").onclick=()=>$("#cartSection").classList.add("hidden");
   $("#checkoutForm").onsubmit=placeOrder;
   $("#fulfilmentSelect").onchange=() => {invalidateDelivery(); renderDeliverySection();};
   const addressField=document.querySelector('[name="address"]');
   addressField.addEventListener('input',invalidateDelivery);
   addressField.addEventListener('blur',()=>{if(isDelivery() && addressField.value.trim().length>=12 && cart.length) calculateDelivery();});
-  document.querySelectorAll('input[name="deliveryMode"]').forEach(el=>el.addEventListener('change',()=>{invalidateDelivery();renderDeliverySection();}));
-  $("#jointTime").addEventListener('change',()=>{invalidateDelivery();renderDeliverySection();});
+  document.querySelectorAll('input[name="deliveryMode"]').forEach(el=>el.addEventListener('change',()=>{invalidateDelivery();renderDeliverySection();if(document.getElementById('addonDeliveryModal')&&!document.getElementById('addonDeliveryModal').classList.contains('hidden'))refreshAddonModal();}));
+  $("#jointTime").addEventListener('change',()=>{invalidateDelivery();renderDeliverySection();if(document.getElementById('addonDeliveryModal')&&!document.getElementById('addonDeliveryModal').classList.contains('hidden'))refreshAddonModal();});
   $("#calculateDelivery").onclick=calculateDelivery;
   renderDeliverySection();
   renderCalendarHints();
@@ -168,7 +133,7 @@ async function init(){
 }
 
 function setLanguage(newLang){
-  lang=newLang;localStorage.setItem("pc_lang",lang);applyLanguage();fillSelectors();renderMeal();renderAddons();updateCart();applyWeeklyLanguage();renderWeeklyPlanner();renderCalendarHints();
+  lang=newLang;localStorage.setItem("pc_lang",lang);applyLanguage();fillSelectors();renderMeal();renderAddons();updateCart();applyWeeklyLanguage();renderWeeklyPlanner();renderCalendarHints();if(document.getElementById('addonDeliveryModal')&&!document.getElementById('addonDeliveryModal').classList.contains('hidden'))refreshAddonModal();
 }
 function applyLanguage(){
   document.documentElement.lang=lang==='zh'?'zh-Hans':lang;
@@ -239,217 +204,355 @@ function addonDisplayName(a){
   if(lang==='zh')return a.name;
   return parts.length>1?parts[1]:a.name;
 }
-function ensureAddonScheduleUi(){
-  const grid=$("#addonGrid");if(!grid)return;
-  if(!$("#addonScheduleControls")){
-    const box=document.createElement('section');
-    box.id='addonScheduleControls';box.className='addon-schedule-box';
-    grid.parentNode.insertBefore(box,grid);
+
+const ADDON_I18N={
+  zh:{
+    title:'选择 Add-on 配送方式',date:'配送日期',withMeal:'跟当天 Meal 一起送',separate:'分开送',
+    breakfast:'跟 Breakfast 一起送',lunch:'跟 Lunch 一起送',
+    chooseMeal:'当天有 Breakfast 和 Lunch，请选择 Add-on 跟哪一餐一起送。',
+    noMeal:'这一天没有 Meal，可以选择「分开送」。',
+    togetherHint:'当天 Breakfast 和 Lunch 已选择合并配送，Add-on 会跟合并配送时段一起送。',
+    cancel:'取消',confirm:'加入购物车',chooseFirst:'请选择配送方式。',
+    deliveryLabel:'Add-on 配送',withBreakfastLabel:'跟 Breakfast 一起送',withLunchLabel:'跟 Lunch 一起送',separateLabel:'分开送'
+  },
+  en:{
+    title:'Choose Add-on Delivery',date:'Delivery date',withMeal:'Deliver with the Meal',separate:'Deliver separately',
+    breakfast:'Deliver with Breakfast',lunch:'Deliver with Lunch',
+    chooseMeal:'Breakfast and Lunch are both ordered. Choose which meal this Add-on should follow.',
+    noMeal:'There is no Meal on this date. Please choose separate delivery.',
+    togetherHint:'Breakfast and Lunch are combined, so this Add-on will follow the combined delivery time.',
+    cancel:'Cancel',confirm:'Add to Cart',chooseFirst:'Please choose a delivery option.',
+    deliveryLabel:'Add-on delivery',withBreakfastLabel:'With Breakfast',withLunchLabel:'With Lunch',separateLabel:'Separate delivery'
+  },
+  ms:{
+    title:'Pilih Penghantaran Add-on',date:'Tarikh penghantaran',withMeal:'Hantar bersama Meal',separate:'Hantar berasingan',
+    breakfast:'Hantar bersama Sarapan',lunch:'Hantar bersama Makan Tengah Hari',
+    chooseMeal:'Sarapan dan makan tengah hari kedua-duanya ditempah. Pilih Add-on ikut hidangan yang mana.',
+    noMeal:'Tiada Meal pada tarikh ini. Sila pilih penghantaran berasingan.',
+    togetherHint:'Sarapan dan makan tengah hari dihantar bersama, jadi Add-on akan ikut penghantaran tersebut.',
+    cancel:'Batal',confirm:'Tambah ke Troli',chooseFirst:'Sila pilih cara penghantaran.',
+    deliveryLabel:'Penghantaran Add-on',withBreakfastLabel:'Bersama Sarapan',withLunchLabel:'Bersama Makan Tengah Hari',separateLabel:'Hantar berasingan'
   }
-  if(!$("#pcAddonScheduleStyle")){
-    const style=document.createElement('style');style.id='pcAddonScheduleStyle';
-    style.textContent=`
-      .addon-schedule-box{margin:10px 0 14px;padding:12px;border:1px solid #dfe7ea;border-radius:14px;background:#f8fbfc}
-      .addon-schedule-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}
-      .addon-schedule-head strong{font-size:15px}.addon-schedule-head small{display:block;color:#667b82;margin-top:3px}
-      .addon-day-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:10px 0}
-      .addon-day-btn{border:1px solid #c7d5da;background:#fff;border-radius:10px;padding:9px 5px;cursor:pointer;font-weight:700}
-      .addon-day-btn small{display:block;font-weight:500;color:#6b7b80;margin-top:3px}.addon-day-btn.active{border-color:#155e68;background:#eaf6f7}
-      .addon-day-btn:disabled{opacity:.42;cursor:not-allowed}
-      .addon-delivery-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.addon-delivery-grid select{width:100%}
-      .addon-note{font-size:12px;color:#667b82;margin-top:8px}.addon-line-meta{font-size:12px;color:#65777c;margin-top:4px}
-      @media(max-width:650px){.addon-day-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.addon-delivery-grid{grid-template-columns:1fr}}
-    `;
-    document.head.appendChild(style);
-  }
+};
+const at=key=>((ADDON_I18N[lang]||ADDON_I18N.zh)[key]||key);
+
+let addonPicker={addon:null,serviceDate:'',choice:'',mealTarget:''};
+
+function installAddonModalStyles(){
+  if(document.getElementById('pcAddonModalStyles'))return;
+  const style=document.createElement('style');
+  style.id='pcAddonModalStyles';
+  style.textContent=`
+    .addon-modal{position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,.55);display:flex;align-items:center;justify-content:center;padding:18px}
+    .addon-modal.hidden{display:none}
+    .addon-modal-card{width:100%;max-width:440px;background:#fff;border-radius:18px;padding:20px;box-shadow:0 18px 60px rgba(0,0,0,.25)}
+    .addon-modal-card h3{margin:0 0 18px;font-size:18px}
+    .addon-date-row{margin-bottom:14px}
+    .addon-date-row.hidden{display:none}
+    .addon-date-row label{display:block;margin-bottom:6px;font-weight:700}
+    .addon-date-row select{width:100%;padding:11px 12px;border:1px solid #d8d8d8;border-radius:10px;font-size:15px;background:#fff;color:#222}
+    .addon-main-options{display:flex;flex-direction:column;gap:10px}
+    .addon-delivery-option,.addon-delivery-suboption{display:flex;align-items:center;gap:11px;padding:14px;border:2px solid #e4e4e4;border-radius:12px;background:#fff;cursor:pointer;transition:.15s ease}
+    .addon-delivery-option:hover,.addon-delivery-suboption:hover{border-color:#e3a35c}
+    .addon-delivery-option:has(input:checked),.addon-delivery-suboption:has(input:checked){border-color:#e58b2b;background:#fff5e9}
+    .addon-delivery-option.disabled{opacity:.45;cursor:not-allowed}
+    .addon-delivery-option input,.addon-delivery-suboption input{width:20px;height:20px;flex:0 0 20px;accent-color:#e58b2b;cursor:pointer}
+    .addon-meal-target{margin-left:18px;display:flex;flex-direction:column;gap:7px}
+    .addon-meal-target.hidden{display:none}
+    .addon-small-hint,.addon-delivery-hint{font-size:13px;line-height:1.5;color:#666}
+    .addon-delivery-hint{margin-top:12px}
+    .addon-modal-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+    .addon-cancel-btn,.addon-confirm-btn{min-height:46px;border-radius:11px;font-size:15px;font-weight:700;cursor:pointer}
+    .addon-cancel-btn{background:#f3f3f3;border:1px solid #ddd;color:#333}
+    .addon-confirm-btn{background:#e58b2b;border:1px solid #e58b2b;color:#fff}
+    .addon-confirm-btn:disabled{opacity:.45;cursor:not-allowed}
+    .addon-card .qty-row button:disabled{opacity:.4;cursor:not-allowed}
+  `;
+  document.head.appendChild(style);
 }
-function addonWeekMonday(){
-  if(weeklyMode)return weeklyMonday;
-  const firstMeal=cart.find(x=>x.kind==='meal'&&x.serviceDate);
-  return mondayFrom(firstMeal?.serviceDate||singleDateIso||nextServiceDate());
+
+function addonQtyInCart(id){
+  return cart.filter(x=>x.kind==='addon'&&x.id===id).reduce((sum,x)=>sum+Number(x.qty||1),0);
 }
-function addonDateOptions(){
-  const monday=addonWeekMonday();
-  return DAYS.map((day,i)=>({day,date:PCCalendar.addDays(monday,i)}));
+
+function addonServiceDates(){
+  const dates=[...new Set(cart.filter(x=>x.kind==='meal'&&x.serviceDate).map(x=>x.serviceDate))].sort();
+  if(!dates.length&&!weeklyMode&&singleDateIso)dates.push(singleDateIso);
+  if(!dates.length&&weeklyMode&&weeklyMonday)dates.push(weeklyMonday);
+  return dates;
 }
-function malaysiaClock(){
-  const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kuala_Lumpur',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());
-  const v={};parts.forEach(p=>{if(p.type!=='literal')v[p.type]=p.value;});
-  return {date:`${v.year}-${v.month}-${v.day}`,minutes:Number(v.hour)*60+Number(v.minute)};
+
+function mealsOnDate(serviceDate){
+  const meals=cart.filter(x=>x.kind==='meal'&&x.serviceDate===serviceDate);
+  return {
+    breakfast:meals.some(x=>x.meal==='breakfast'),
+    lunch:meals.some(x=>x.meal==='lunch')
+  };
 }
-function addonDateBookable(serviceDate,qty=1){
-  if(!ISO_DATE.test(String(serviceDate||'')))return false;
-  const n=Math.max(1,Number(qty)||1),days=n<50?1:n<100?2:n<300?3:5;
-  const deadline=PCCalendar.addDays(serviceDate,-days),now=malaysiaClock();
-  return now.date<deadline||(now.date===deadline&&now.minutes<14*60);
-}
-function mealsOnDate(date){
-  return [...new Set(cart.filter(x=>x.kind==='meal'&&x.serviceDate===date).map(x=>String(x.meal||'').toLowerCase()).filter(x=>['breakfast','lunch'].includes(x)))];
-}
-function addonScheduleForDate(date){
-  const meals=mealsOnDate(date);
-  let s=state.addonSchedule[date];
-  if(!s){
-    const existing=cart.find(x=>x.kind==='addon'&&x.serviceDate===date);
-    s=existing?{mode:existing.addonDeliveryMode||'separate',withMeal:existing.withMeal||''}:{mode:meals.length?'with_meal':'separate',withMeal:meals[0]||''};
-  }
-  if(s.mode==='with_meal'&&!meals.includes(s.withMeal)){
-    s=meals.length?{mode:'with_meal',withMeal:meals[0]}:{mode:'separate',withMeal:''};
-  }
-  state.addonSchedule[date]=s;return s;
-}
-function normalizeAddonSchedules(){
-  let changed=false;
-  const dates=[...new Set(cart.filter(x=>x.kind==='addon'&&x.serviceDate).map(x=>x.serviceDate))];
-  dates.forEach(date=>{
-    const meals=mealsOnDate(date);
-    cart.filter(x=>x.kind==='addon'&&x.serviceDate===date).forEach(x=>{
-      const mode=x.addonDeliveryMode||'separate';
-      if(mode==='with_meal'&&!meals.includes(String(x.withMeal||'').toLowerCase())){
-        if(meals.length){x.addonDeliveryMode='with_meal';x.withMeal=meals[0];}
-        else{x.addonDeliveryMode='separate';x.withMeal='';}
-        changed=true;
-      }
+
+function ensureAddonModal(){
+  installAddonModalStyles();
+  if(document.getElementById('addonDeliveryModal'))return;
+  const modal=document.createElement('div');
+  modal.id='addonDeliveryModal';
+  modal.className='addon-modal hidden';
+  modal.innerHTML=`
+    <div class="addon-modal-card" role="dialog" aria-modal="true" aria-labelledby="addonModalTitle">
+      <h3 id="addonModalTitle"></h3>
+      <div id="addonDateRow" class="addon-date-row">
+        <label id="addonDateLabel" for="addonDateSelect"></label>
+        <select id="addonDateSelect"></select>
+      </div>
+      <div class="addon-main-options">
+        <label class="addon-delivery-option" id="addonWithMealOption">
+          <input type="radio" name="addonDeliveryChoice" value="with_meal">
+          <span id="addonWithMealText"></span>
+        </label>
+        <div id="addonMealTargetRow" class="addon-meal-target hidden">
+          <div id="addonMealTargetHint" class="addon-small-hint"></div>
+          <label class="addon-delivery-suboption">
+            <input type="radio" name="addonMealTarget" value="breakfast">
+            <span id="addonBreakfastText"></span>
+          </label>
+          <label class="addon-delivery-suboption">
+            <input type="radio" name="addonMealTarget" value="lunch">
+            <span id="addonLunchText"></span>
+          </label>
+        </div>
+        <label class="addon-delivery-option">
+          <input type="radio" name="addonDeliveryChoice" value="separate">
+          <span id="addonSeparateText"></span>
+        </label>
+      </div>
+      <div id="addonDeliveryHint" class="addon-delivery-hint"></div>
+      <div class="addon-modal-actions">
+        <button type="button" id="addonCancelBtn" class="addon-cancel-btn"></button>
+        <button type="button" id="addonConfirmBtn" class="addon-confirm-btn" disabled></button>
+      </div>
+    </div>`;
+  document.body.appendChild(modal);
+
+  document.querySelectorAll('input[name="addonDeliveryChoice"]').forEach(radio=>{
+    radio.addEventListener('change',e=>{
+      addonPicker.choice=e.target.value;
+      addonPicker.mealTarget='';
+      document.querySelectorAll('input[name="addonMealTarget"]').forEach(r=>r.checked=false);
+      refreshAddonModal();
     });
   });
-  return changed;
-}
-function migrateLegacyAddons(){
-  const fallback=(cart.find(x=>x.kind==='meal'&&x.serviceDate)||{}).serviceDate||singleDateIso;
-  let changed=false;
-  cart.forEach(x=>{
-    if(x.kind!=='addon')return;
-    if(!x.serviceDate){x.serviceDate=fallback;changed=true;}
-    if(!x.qty)x.qty=1;
-    if(x.unitPrice==null)x.unitPrice=Number(x.price||0)/Number(x.qty||1);
-    if(!x.addonDeliveryMode){
-      const meals=mealsOnDate(x.serviceDate);
-      x.addonDeliveryMode=meals.length?'with_meal':'separate';x.withMeal=meals[0]||'';changed=true;
-    }
+  document.querySelectorAll('input[name="addonMealTarget"]').forEach(radio=>{
+    radio.addEventListener('change',e=>{addonPicker.mealTarget=e.target.value;refreshAddonModal();});
   });
-  if(normalizeAddonSchedules())changed=true;
-  if(changed)localStorage.setItem("pc_cart",JSON.stringify(cart));
+  document.getElementById('addonDateSelect').addEventListener('change',e=>{
+    addonPicker.serviceDate=e.target.value;
+    addonPicker.choice='';
+    addonPicker.mealTarget='';
+    document.querySelectorAll('input[name="addonDeliveryChoice"],input[name="addonMealTarget"]').forEach(r=>r.checked=false);
+    refreshAddonModal();
+  });
+  document.getElementById('addonCancelBtn').addEventListener('click',closeAddonModal);
+  document.getElementById('addonConfirmBtn').addEventListener('click',confirmAddonDelivery);
+  modal.addEventListener('click',e=>{if(e.target===modal)closeAddonModal();});
 }
-function setAddonSchedule(date,mode,withMeal){
-  const meals=mealsOnDate(date);
-  const normalizedMode=mode==='with_meal'&&meals.length?'with_meal':'separate';
-  const target=normalizedMode==='with_meal'&&meals.includes(withMeal)?withMeal:(normalizedMode==='with_meal'?meals[0]:'');
-  state.addonSchedule[date]={mode:normalizedMode,withMeal:target};
-  cart.filter(x=>x.kind==='addon'&&x.serviceDate===date).forEach(x=>{x.addonDeliveryMode=normalizedMode;x.withMeal=target;});
-  resetSubmitButton();persistCart();
-}
-function addonCartItem(id,date){return cart.find(x=>x.kind==='addon'&&x.id===id&&x.serviceDate===date);}
-function setAddonQty(id,date,qty){
-  if(!date){alert(at('dateRequired'));return;}
-  if(qty>0&&!addonDateBookable(date,qty)){alert(at('pastDate'));return;}
-  const a=data.addons.find(x=>x.id===id);if(!a)return;
-  const existing=addonCartItem(id,date);
-  if(qty<=0){
-    cart=cart.filter(x=>!(x.kind==='addon'&&x.id===id&&x.serviceDate===date));
-  }else{
-    const s=addonScheduleForDate(date);
-    if(existing){
-      existing.qty=qty;existing.unitPrice=Number(a.price);existing.price=Number(a.price)*qty;
-      existing.name=a.name;existing.addonDeliveryMode=s.mode;existing.withMeal=s.withMeal;
-    }else{
-      cart.push({kind:'addon',id:a.id,name:a.name,qty,unitPrice:Number(a.price),price:Number(a.price)*qty,serviceDate:date,addonDeliveryMode:s.mode,withMeal:s.withMeal});
-    }
-  }
-  resetSubmitButton();persistCart();
-}
-function renderAddons(){
-  ensureAddonScheduleUi();
-  const options=addonDateOptions();
-  if(!options.some(x=>x.date===state.addonDate))state.addonDate=(options.find(x=>addonDateBookable(x.date,1))||options[0]).date;
-  const date=state.addonDate,schedule=addonScheduleForDate(date),meals=mealsOnDate(date);
-  const box=$("#addonScheduleControls");
-  box.innerHTML=`<div class="addon-schedule-head"><div><strong>${at('scheduleTitle')}</strong><small>${at('scheduleHint')}</small></div><span>${date}</span></div>
-    <div class="addon-day-tabs">${options.map(x=>`<button type="button" class="addon-day-btn ${x.date===date?'active':''}" data-addon-date="${x.date}" ${!addonDateBookable(x.date,1)?'disabled':''}>${dayName(x.day)}<small>${x.date}</small></button>`).join('')}</div>
-    <div class="addon-delivery-grid">
-      <label><span>${at('deliveryChoice')}</span><select id="addonDeliveryMode">
-        <option value="with_meal" ${schedule.mode==='with_meal'?'selected':''} ${!meals.length?'disabled':''}>${at('withMeal')}</option>
-        <option value="separate" ${schedule.mode==='separate'?'selected':''}>${at('separate')}</option>
-      </select></label>
-      <label id="addonWithMealWrap" class="${schedule.mode==='with_meal'&&meals.length?'':'hidden'}"><span>${at('joinMeal')}</span>
-        <select id="addonWithMeal">${meals.map(m=>`<option value="${m}" ${schedule.withMeal===m?'selected':''}>${at(m)}</option>`).join('')}</select>
-      </label>
-    </div>
-    <div class="addon-note">${meals.length?at('containerRule'):at('noMeal')+' '+at('containerRule')}</div>`;
-  box.querySelectorAll('[data-addon-date]').forEach(b=>b.onclick=()=>{state.addonDate=b.dataset.addonDate;renderAddons();});
-  $("#addonDeliveryMode").onchange=e=>setAddonSchedule(date,e.target.value,$("#addonWithMeal")?.value||'');
-  if($("#addonWithMeal"))$("#addonWithMeal").onchange=e=>setAddonSchedule(date,'with_meal',e.target.value);
 
-  $("#addonGrid").innerHTML=data.addons.map(a=>{
-    const item=addonCartItem(a.id,date),q=Number(item?.qty||0);
-    return `<div class="addon-card"><strong>${addonDisplayName(a)}</strong><span class="price">${money(a.price)}</span>
-      <div class="addon-line-meta">${date} · ${q?addonDeliveryLabel(item):addonDeliveryLabel({serviceDate:date,addonDeliveryMode:schedule.mode,withMeal:schedule.withMeal})}</div>
-      <div class="qty-row"><button data-a="${a.id}" data-d="-1">−</button><span id="q-${a.id}">${q}</span><button data-a="${a.id}" data-d="1">＋</button></div></div>`;
-  }).join("");
-  document.querySelectorAll(".qty-row button").forEach(b=>b.onclick=()=>{
-    const id=b.dataset.a,d=Number(b.dataset.d),current=Number(addonCartItem(id,date)?.qty||0);
-    setAddonQty(id,date,Math.max(0,current+d));
+function openAddonModal(addonId){
+  ensureAddonModal();
+  const addon=data.addons.find(x=>x.id===addonId);
+  if(!addon)return;
+  const dates=addonServiceDates();
+  addonPicker={addon,serviceDate:dates[0]||singleDateIso,choice:'',mealTarget:''};
+  document.querySelectorAll('input[name="addonDeliveryChoice"],input[name="addonMealTarget"]').forEach(r=>r.checked=false);
+  refreshAddonModal();
+  document.getElementById('addonDeliveryModal').classList.remove('hidden');
+}
+
+function closeAddonModal(){
+  const modal=document.getElementById('addonDeliveryModal');
+  if(modal)modal.classList.add('hidden');
+}
+
+function refreshAddonModal(){
+  const addon=addonPicker.addon;if(!addon)return;
+  const dates=addonServiceDates();
+  const dateSelect=document.getElementById('addonDateSelect');
+  dateSelect.innerHTML=dates.map(date=>`<option value="${date}">${date} · ${dayName(PCCalendar.weekday(date))}</option>`).join('');
+  if(addonPicker.serviceDate&&dates.includes(addonPicker.serviceDate))dateSelect.value=addonPicker.serviceDate;
+  else{addonPicker.serviceDate=dates[0]||singleDateIso;dateSelect.value=addonPicker.serviceDate;}
+
+  const mealInfo=mealsOnDate(addonPicker.serviceDate);
+  const hasMeal=mealInfo.breakfast||mealInfo.lunch;
+  const hasBoth=mealInfo.breakfast&&mealInfo.lunch;
+
+  document.getElementById('addonModalTitle').textContent=`${addonDisplayName(addon)} · ${at('title')}`;
+  document.getElementById('addonDateLabel').textContent=at('date');
+  document.getElementById('addonWithMealText').textContent=at('withMeal');
+  document.getElementById('addonSeparateText').textContent=at('separate');
+  document.getElementById('addonBreakfastText').textContent=at('breakfast');
+  document.getElementById('addonLunchText').textContent=at('lunch');
+  document.getElementById('addonCancelBtn').textContent=at('cancel');
+  document.getElementById('addonConfirmBtn').textContent=at('confirm');
+  document.getElementById('addonDateRow').classList.toggle('hidden',dates.length<=1);
+
+  const withMealRadio=document.querySelector('input[name="addonDeliveryChoice"][value="with_meal"]');
+  withMealRadio.disabled=!hasMeal;
+  document.getElementById('addonWithMealOption').classList.toggle('disabled',!hasMeal);
+  if(!hasMeal&&addonPicker.choice==='with_meal'){addonPicker.choice='';withMealRadio.checked=false;}
+
+  const targetRow=document.getElementById('addonMealTargetRow');
+  const hint=document.getElementById('addonDeliveryHint');
+  targetRow.classList.add('hidden');hint.textContent='';
+
+  if(addonPicker.choice==='with_meal'){
+    if(!hasMeal)hint.textContent=at('noMeal');
+    else if(hasBoth&&chosenMode()==='separate'){
+      targetRow.classList.remove('hidden');
+      document.getElementById('addonMealTargetHint').textContent=at('chooseMeal');
+    }else if(hasBoth&&chosenMode()==='together')hint.textContent=at('togetherHint');
+  }
+  if(!hasMeal&&!addonPicker.choice)hint.textContent=at('noMeal');
+
+  let ready=false;
+  if(addonPicker.choice==='separate')ready=true;
+  else if(addonPicker.choice==='with_meal'){
+    if(hasBoth&&chosenMode()==='separate')ready=!!addonPicker.mealTarget;
+    else ready=hasMeal;
+  }
+  document.getElementById('addonConfirmBtn').disabled=!ready;
+}
+
+function resolveAddonDelivery(serviceDate){
+  if(addonPicker.choice==='separate')return 'separate';
+  const mealInfo=mealsOnDate(serviceDate);
+  if(mealInfo.breakfast&&!mealInfo.lunch)return 'with_breakfast';
+  if(!mealInfo.breakfast&&mealInfo.lunch)return 'with_lunch';
+  if(mealInfo.breakfast&&mealInfo.lunch){
+    if(chosenMode()==='together')return chosenJointTime()==='lunch'?'with_lunch':'with_breakfast';
+    return addonPicker.mealTarget==='lunch'?'with_lunch':'with_breakfast';
+  }
+  return null;
+}
+
+function confirmAddonDelivery(){
+  const addon=addonPicker.addon,serviceDate=addonPicker.serviceDate;
+  if(!addon||!serviceDate)return;
+  if(!addonPicker.choice){alert(at('chooseFirst'));return;}
+  const addonDelivery=resolveAddonDelivery(serviceDate);
+  if(!addonDelivery){alert(at('noMeal'));return;}
+  const requestedMonday=mondayFrom(serviceDate);
+  if([...orderWeeks()].some(m=>m!==requestedMonday)){alert(wt('singleDateDifferentWeek'));return;}
+  resetSubmitButton();
+  cart.push({
+    kind:'addon',id:addon.id,name:addon.name,qty:1,price:Number(addon.price||0),
+    week:PCCalendar.menuWeek(serviceDate),day:PCCalendar.weekday(serviceDate),
+    serviceDate,addonDelivery
   });
+  closeAddonModal();
+  persistCart();
+  renderAddons();
+  showCart();
 }
-function persistCart(){
-  normalizeAddonSchedules();
-  invalidateDelivery();
-  localStorage.setItem("pc_cart",JSON.stringify(cart));
-  updateCart();
-  if(data)renderAddons();
+
+function removeOneAddon(addonId){
+  for(let i=cart.length-1;i>=0;i--){
+    if(cart[i].kind==='addon'&&cart[i].id===addonId){cart.splice(i,1);break;}
+  }
+  resetSubmitButton();
+  persistCart();
+  renderAddons();
 }
-function addonDeliveryLabel(x){
-  if((x.addonDeliveryMode||'separate')==='with_meal'&&x.withMeal)return at('sameMeal',{meal:at(x.withMeal)});
-  return at('separate');
+
+function renderAddons(){
+  const grid=document.getElementById('addonGrid');
+  if(!grid||!data)return;
+  grid.innerHTML=data.addons.map(a=>{
+    const qty=addonQtyInCart(a.id);
+    return `<div class="addon-card">
+      <strong>${addonDisplayName(a)}</strong>
+      <span class="price">${money(a.price)}</span>
+      <div class="qty-row">
+        <button type="button" data-addon-minus="${a.id}" ${qty<=0?'disabled':''}>−</button>
+        <span>${qty}</span>
+        <button type="button" data-addon-plus="${a.id}">＋</button>
+      </div>
+    </div>`;
+  }).join('');
+  document.querySelectorAll('[data-addon-plus]').forEach(btn=>btn.onclick=()=>openAddonModal(btn.dataset.addonPlus));
+  document.querySelectorAll('[data-addon-minus]').forEach(btn=>btn.onclick=()=>removeOneAddon(btn.dataset.addonMinus));
 }
-function containerSummary(){
-  let qty=0,fee=0;
-  cart.forEach(x=>{
-    const n=Math.max(0,Number(x.qty||1));
-    if(x.kind==='meal'){qty+=n;fee+=n*runtimeSettings.containerFee;}
-    else if(x.kind==='addon'){
-      qty+=n;fee+=n*((x.id==='A09'||x.id==='A10')?runtimeSettings.friedChickenContainerFee:runtimeSettings.containerFee);
-    }
-  });
-  return {qty,fee:Math.round(fee*100)/100};
-}
-function ensureContainerLine(){
-  const deliveryLine=$("#deliveryLine");if(!deliveryLine||$("#containerLine"))return;
-  const row=document.createElement('div');row.id='containerLine';row.className=deliveryLine.className||'total-row';
-  row.innerHTML='<span id="containerLabel"></span><strong id="containerAmount"></strong>';
-  deliveryLine.parentNode.insertBefore(row,deliveryLine);
+function persistCart(){invalidateDelivery();localStorage.setItem("pc_cart",JSON.stringify(cart));updateCart()}
+function addonDeliveryLabel(value){
+  if(value==='with_breakfast')return at('withBreakfastLabel');
+  if(value==='with_lunch')return at('withLunchLabel');
+  return at('separateLabel');
 }
 function updateCart(){
-  $("#cartCount").textContent=cart.reduce((sum,x)=>sum+Number(x.qty||1),0);
-  const box=$("#cartItems");if(!box)return;
-  const display=cart.map((x,i)=>({x,i})).sort((a,b)=>String(a.x.serviceDate||'').localeCompare(String(b.x.serviceDate||''))||(a.x.kind==='meal'?-1:1));
-  box.innerHTML=display.length?display.map(({x,i})=>x.kind==='meal'
-    ?`<div class="cart-item"><div><h4>${x.serviceDate||''} · ${t('week',{n:x.week})} · ${dayName(x.day)} ${t(x.meal)}</h4><p>${x.items.map(a=>`#${a.no} ${dishPrimary(a)}`).join(' · ')}</p><p>${calculateMeal(x.items).label}${Number(x.qty||1)>1?` · ×${x.qty}`:''}</p></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`
-    :`<div class="cart-item"><div><h4>${x.serviceDate||''} · ${dayName(PCCalendar.weekday(x.serviceDate))} · ${t('addonCart')}</h4><p>${addonNameFromCart(x.name)} × ${x.qty||1}</p><p>${addonDeliveryLabel(x)}</p></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`
+  $("#cartCount").textContent=cart.length;const box=$("#cartItems"); if(!box)return;
+  box.innerHTML=cart.length?cart.map((x,i)=>x.kind==='meal'
+    ?`<div class="cart-item"><div><h4>${x.serviceDate||''} · ${t('week',{n:x.week})} · ${dayName(x.day)} ${t(x.meal)}</h4><p>${x.items.map(a=>`#${a.no} ${dishPrimary(a)}`).join(' · ')}</p><p>${calculateMeal(x.items).label}</p></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`
+    :`<div class="cart-item"><div><h4>${t('addonCart')} · ${x.serviceDate||''}</h4><p>${addonNameFromCart(x.name)}</p><p>${at('deliveryLabel')}: ${addonDeliveryLabel(x.addonDelivery)}</p></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`
   ).join(""):`<p class='muted'>${t('emptyCart')}</p>`;
-  const subtotal=foodSubtotal(),container=containerSummary();
-  $("#cartTotal").textContent=money(subtotal+container.fee+(isDelivery()&&validQuote()?deliveryQuote.fee:0));
-  if($("#foodSubtotal"))$("#foodSubtotal").textContent=money(subtotal);
-  ensureContainerLine();
-  if($("#containerLabel"))$("#containerLabel").textContent=`${at('container')} (${container.qty} ${at('containers')})`;
-  if($("#containerAmount"))$("#containerAmount").textContent=money(container.fee);
+  const subtotal=foodSubtotal();
+  $("#cartTotal").textContent=money(subtotal+(isDelivery() && validQuote()?deliveryQuote.fee:0));
+  if($("#foodSubtotal")) $("#foodSubtotal").textContent=money(subtotal);
   renderDeliverySection();
   renderCalendarHints();
 }
-function addonNameFromCart(name){const parts=String(name||'').split('/').map(x=>x.trim());return lang==='zh'?name:(parts[1]||name)}
+function addonNameFromCart(name){const parts=name.split('/').map(x=>x.trim());return lang==='zh'?name:(parts[1]||name)}
 window.removeCart=i=>{
   const removed=cart.splice(i,1)[0];
   if(removed?.weeklyPlanId===weeklyPlanId&&weeklyDrafts?.[removed.weeklySlot]){
     weeklyDrafts[removed.weeklySlot].enabled=false;saveWeeklyDraft();renderWeeklyPlanner();
   }
   persistCart();
+  if(removed?.kind==='addon')renderAddons();
 };
 function showCart(){updateCart();$("#cartSection").classList.remove("hidden");$("#cartSection").scrollIntoView({behavior:"smooth"})}
 function isDelivery(){return $("#fulfilmentSelect").value === "Delivery / 送餐";}
 function foodSubtotal(){return Math.round(cart.reduce((sum,x)=>sum+Number(x.price||0),0)*100)/100;}
-function grandSubtotal(){const c=containerSummary();return Math.round((foodSubtotal()+c.fee)*100)/100;}
 function chosenMode(){return document.querySelector('input[name="deliveryMode"]:checked')?.value||'separate';}
 function chosenJointTime(){return $("#jointTime").value||'breakfast';}
-function currentPlan(){return PCDelivery.plan(cart,chosenMode());}
+function currentPlan(){
+  const mode=chosenMode();
+  const days={};
+  const mealTypes=['breakfast','lunch'];
+  const addonTargets=['with_breakfast','with_lunch','separate'];
+
+  cart.forEach(x=>{
+    if(!x||!['meal','addon'].includes(String(x.kind||'')))return;
+    const week=Number(x.week),day=String(x.day||''),serviceDate=String(x.serviceDate||'');
+    if(!serviceDate||!Number.isInteger(week)||week<1||week>5||!DAYS.includes(day))return;
+    const key='DATE:'+serviceDate;
+    if(!days[key])days[key]={week,day,serviceDate,meals:{},addonTargets:{}};
+    if(x.kind==='meal'){
+      const meal=String(x.meal||'').toLowerCase();
+      if(mealTypes.includes(meal))days[key].meals[meal]=true;
+    }else{
+      const target=String(x.addonDelivery||'separate');
+      if(addonTargets.includes(target))days[key].addonTargets[target]=true;
+    }
+  });
+
+  const ordered=Object.values(days).sort((a,b)=>a.serviceDate.localeCompare(b.serviceDate));
+  let trips=0;
+  const signatureParts=[];
+  const breakdown=ordered.map(d=>{
+    const meals=mealTypes.filter(m=>d.meals[m]);
+    const targets=addonTargets.filter(t=>d.addonTargets[t]);
+    const mealTrips=meals.length?(mode==='together'?1:meals.length):0;
+    const addonTrips=targets.includes('separate')?1:0;
+    const dayTrips=mealTrips+addonTrips;
+    trips+=dayTrips;
+    signatureParts.push(d.serviceDate+':'+d.week+':'+d.day+':'+meals.join('+')+':addons='+(targets.join('+')||'none'));
+    return {week:d.week,day:d.day,serviceDate:d.serviceDate,meals,addonTargets:targets,mealTrips,addonTrips,trips:dayTrips};
+  });
+  return {
+    trips,
+    signature:signatureParts.join('|')||'empty',
+    breakdown,
+    days:breakdown,
+    eligible:breakdown.some(x=>x.meals.includes('breakfast')&&x.meals.includes('lunch'))
+  };
+}
 function deliveryTrips(){return currentPlan().trips;}
 function tripSignature(){return currentPlan().signature;}
 function normalizeAddress(s){return String(s||'').trim().replace(/\s+/g,' ').toLowerCase();}
@@ -460,34 +563,30 @@ function renderDeliverySection(){
   box.classList.toggle('hidden',!isDelivery());
   const address=document.querySelector('[name="address"]');address.required=isDelivery();
   const deliveryPlan=currentPlan();
-  $("#deliveryRule").textContent=dt('tripInfo')+' '+at('scheduleHint');
+  $("#deliveryRule").textContent=dt('tripInfo');
   document.querySelectorAll('[data-delivery-i18n]').forEach(el=>el.textContent=dt(el.dataset.deliveryI18n));
   $("#jointTimeRow").classList.toggle('hidden',chosenMode()!=='together'||!deliveryPlan.eligible);
   $("#jointWarning").classList.toggle('hidden',chosenMode()!=='together'||!deliveryPlan.eligible);
   const dayText=deliveryPlan.days.map(x=>{
-    const parts=x.meals.map(m=>t(m));
-    if(x.addonWithMeal?.length)parts.push(`${at('addonShort')}→${x.addonWithMeal.map(m=>at(m)).join('+')}`);
-    if(x.addonSeparate)parts.push(at('separateTrip'));
-    return `${x.serviceDate} ${dayName(x.day)}: ${parts.join(' + ')||at('addonShort')} → ${x.trips} ${dt('tripCount')}`;
+    const mealText=x.meals.length?x.meals.map(m=>t(m)).join(' + '):t('addonCart');
+    return `${x.serviceDate||t('week',{n:x.week})} ${dayName(x.day)}: ${mealText} → ${x.trips} ${dt('tripCount')}`;
   });
   $("#deliveryPlanPreview").textContent=deliveryPlan.days.length?`${dt('dayTrips')}: ${dayText.join(' · ')} · ${dt('tripCount')}: ${deliveryPlan.trips}`:dt('addonOnly');
   $("#kitchenAddress").textContent=CONFIG.kitchenAddress;
-  const status=$("#deliveryStatus"),match=$("#deliveryMatchRow");
+  const status=$("#deliveryStatus"), match=$("#deliveryMatchRow");
   if(!isDelivery()){status.textContent=dt('pickupFree');match.classList.add('hidden');}
   else if(quoteBusy){status.textContent=dt('calculating');match.classList.add('hidden');}
-  else if(deliveryQuote&&deliveryQuote.ok){
+  else if(deliveryQuote && deliveryQuote.ok){
     status.textContent=deliveryQuote.manual?dt('tooFar'):(`${dt('distance')}: ${deliveryQuote.distanceKm.toFixed(2)} km · ${dt('tripCount')}: ${deliveryQuote.trips} · ${dt('deliveryFee')}: ${money(deliveryQuote.fee)}`);
-    match.classList.remove('hidden');$("#matchedAddress").textContent=deliveryQuote.matchedAddress||address.value;$("#confirmMatchedLabel").textContent=dt('confirmAddress');
+    match.classList.remove('hidden');
+    $("#matchedAddress").textContent=deliveryQuote.matchedAddress||address.value;
+    $("#confirmMatchedLabel").textContent=dt('confirmAddress');
   }else{status.textContent=dt('deliveryInfo')+': 0–5 km RM5 · >5–10 km RM9 · >10 km '+dt('tooFar').split(':')[0];match.classList.add('hidden');}
   $("#calculateDelivery").textContent=quoteBusy?dt('calculating'):dt('calculate');
-  $("#calculateDelivery").disabled=quoteBusy||!cart.length||deliveryPlan.trips<1;
+  $("#calculateDelivery").disabled=quoteBusy||!cart.length;
   $("#deliveryLine").classList.toggle('hidden',!isDelivery());
   $("#deliveryAmount").textContent=validQuote()?money(deliveryQuote.fee):'—';
-  ensureContainerLine();
-  const container=containerSummary();
-  if($("#containerLabel"))$("#containerLabel").textContent=`${at('container')} (${container.qty} ${at('containers')})`;
-  if($("#containerAmount"))$("#containerAmount").textContent=money(container.fee);
-  const fullTotal=grandSubtotal()+(isDelivery()&&validQuote()?deliveryQuote.fee:0);
+  const fullTotal=foodSubtotal()+(isDelivery()&&validQuote()?deliveryQuote.fee:0);
   $("#deliveryGrandTotal").textContent=money(fullTotal);
   $("#cartTotal").textContent=money(fullTotal);
   $("#foodSubtotal").textContent=money(foodSubtotal());
@@ -507,21 +606,6 @@ function requestJsonp(action, params={}){
     script.src=u.href;document.head.appendChild(script);
   });
 }
-async function loadRuntimeSettings(){
-  try{
-    if(!CONFIG.appsScriptUrl)return;
-    const r=await requestJsonp('settings');
-    if(!r||!r.ok||!r.settings)return;
-    const normal=Number(r.settings.CONTAINER_FEE),fried=Number(r.settings.CONTAINER_FEE_FRIED_CHICKEN);
-    if(Number.isFinite(normal)&&normal>=0)runtimeSettings.containerFee=normal;
-    if(Number.isFinite(fried)&&fried>=0)runtimeSettings.friedChickenContainerFee=fried;
-  }catch(_e){}
-}
-function deliveryPlanPayload(){
-  return cart.filter(x=>x&&x.serviceDate&&(x.kind==='meal'||x.kind==='addon')).map(x=>x.kind==='meal'
-    ?{kind:'meal',week:x.week,day:x.day,meal:x.meal,serviceDate:x.serviceDate}
-    :{kind:'addon',id:x.id,serviceDate:x.serviceDate,addonDeliveryMode:x.addonDeliveryMode||'separate',withMeal:x.withMeal||''});
-}
 async function calculateDelivery(){
   if(!isDelivery()||quoteBusy||!cart.length)return;
   const address=document.querySelector('[name="address"]').value.trim();
@@ -530,7 +614,9 @@ async function calculateDelivery(){
   try{
     const result=await requestJsonp('deliveryQuote',{
       address,mode:chosenMode(),jointTime:chosenMode()==='together'?chosenJointTime():'none',
-      plan:JSON.stringify(deliveryPlanPayload()),
+      plan:JSON.stringify(cart.map(x=>x.kind==='meal'
+        ?{kind:'meal',week:x.week,day:x.day,meal:x.meal,serviceDate:x.serviceDate||''}
+        :{kind:'addon',week:x.week,day:x.day,serviceDate:x.serviceDate||'',addonDelivery:x.addonDelivery||'separate'})),
       trips:deliveryTrips()});
     if(epoch!==quoteEpoch)return;
     if(!result.ok)throw new Error(result.error||'Quote unavailable');
@@ -543,7 +629,7 @@ async function calculateDelivery(){
 }
 async function placeOrder(e){
   e.preventDefault();if(isSubmitting)return;if(weeklyMode&&!checkWeeklyReady())return;if(!cart.length){alert(t('cartEmptyAlert'));return;}
-  const stale=cart.filter(invalidCartMeal);
+  const stale=cart.filter(invalidCartItem);
   if(stale.length){alert(calendarText('staleCart'));return;}
   if(isDelivery() && (!validQuote()||deliveryQuote.manual||!$("#deliveryMatched").checked)){alert(validQuote()&&deliveryQuote.manual?dt('tooFar'):dt('quoteFirst'));return;}
   const submitBtn=e.target.querySelector('button[type="submit"]');const originalText=submitBtn.textContent;isSubmitting=true;submitBtn.disabled=true;submitBtn.textContent=t('submitting');
@@ -552,8 +638,8 @@ async function placeOrder(e){
   const mealCount=cart.filter(x=>x.kind==='meal').length;
   form.orderType=serviceDates.length>1?'Weekly':mealCount>1?'Full Day':mealCount===1?'Single Meal':'Add-on';
   form.serviceDate=serviceDates.length>1?`${serviceDates[0]} – ${serviceDates[serviceDates.length-1]}`:(serviceDates[0]||'');
-  const fee=isDelivery()?deliveryQuote.fee:0,container=containerSummary();
-  const order={orderId:createOrderId(),createdAt:new Date().toISOString(),customer:form,items:cart,subtotal:foodSubtotal(),containerFee:container.fee,containerQty:container.qty,deliveryFee:fee,total:grandSubtotal()+fee,deliveryMode:isDelivery()?chosenMode():'pickup',jointTime:isDelivery()&&chosenMode()==='together'?chosenJointTime():'none',deliverySignature:isDelivery()?tripSignature():null,deliveryQuoteId:isDelivery()?deliveryQuote.quoteId:null,deliveryTrips:isDelivery()?deliveryTrips():0,deliveryDistanceKm:isDelivery()?deliveryQuote.distanceKm:null};
+  const fee=isDelivery()?deliveryQuote.fee:0;
+  const order={orderId:createOrderId(),createdAt:new Date().toISOString(),customer:form,items:cart,subtotal:foodSubtotal(),deliveryFee:fee,total:foodSubtotal()+fee,deliveryMode:isDelivery()?chosenMode():'pickup',jointTime:isDelivery()&&chosenMode()==='together'?chosenJointTime():'none',deliverySignature:isDelivery()?tripSignature():null,deliveryQuoteId:isDelivery()?deliveryQuote.quoteId:null,deliveryTrips:isDelivery()?deliveryTrips():0,deliveryDistanceKm:isDelivery()?deliveryQuote.distanceKm:null};
   try{
     if(!CONFIG.appsScriptUrl)throw new Error('Apps Script URL missing');
     // Apps Script redirects often block CORS for POST. Cross-origin no-cors sends, then JSONP polls the order receipt.
@@ -572,7 +658,7 @@ async function placeOrder(e){
     $("#orderResult").classList.remove('hidden');
     $("#orderResult").textContent=`${t('success')} · ${order.orderId} · ${dt('grandTotal')}: ${money(order.total)}. ${t('doNotRepeat')}`;
     cart=[];localStorage.removeItem(weeklyStorageKey());weeklyDrafts=PCWeekly.emptyDraft(false);
-    persistCart();saveWeeklyDraft();renderWeeklyPlanner();e.target.reset();applyLanguage();submitBtn.disabled=true;submitBtn.textContent=t('submitted');
+    persistCart();saveWeeklyDraft();renderWeeklyPlanner();renderAddons();e.target.reset();applyLanguage();submitBtn.disabled=true;submitBtn.textContent=t('submitted');
   }catch(err){isSubmitting=false;submitBtn.disabled=false;submitBtn.textContent=originalText;alert(t('submitFail')+' '+err.message);}
 }
 
@@ -590,11 +676,24 @@ function invalidCartMeal(x){
   if(x.kind!=='meal')return false;
   try{return !x.serviceDate||PCCalendar.menuWeek(x.serviceDate)!==Number(x.week)||PCCalendar.weekday(x.serviceDate)!==x.day||!PCCalendar.mealBookable(x.serviceDate,x.meal);}catch(_e){return true;}
 }
+function invalidCartItem(x){
+  if(!x||!['meal','addon'].includes(String(x.kind||'')))return true;
+  if(x.kind==='meal')return invalidCartMeal(x);
+  try{
+    if(!x.serviceDate||PCCalendar.menuWeek(x.serviceDate)!==Number(x.week)||PCCalendar.weekday(x.serviceDate)!==x.day)return true;
+    const target=String(x.addonDelivery||'');
+    if(!['with_breakfast','with_lunch','separate'].includes(target))return true;
+    if(x.serviceDate<PCCalendar.nowInMalaysia().date)return true;
+    if(target==='with_breakfast'&&!cart.some(m=>m.kind==='meal'&&m.serviceDate===x.serviceDate&&m.meal==='breakfast'))return true;
+    if(target==='with_lunch'&&!cart.some(m=>m.kind==='meal'&&m.serviceDate===x.serviceDate&&m.meal==='lunch'))return true;
+    return false;
+  }catch(_e){return true;}
+}
 function renderCalendarHints(){
   if($('#singleCalendarHint'))$('#singleCalendarHint').textContent=calendarText('single');
   if($('#weeklyCalendarHint'))$('#weeklyCalendarHint').textContent=calendarText('weekly');
   const banner=$('#calendarWarning');
-  if(banner){const hasInvalid=cart.some(invalidCartMeal);banner.classList.toggle('hidden',!hasInvalid);$('#calendarWarningText').textContent=calendarText('staleCart');$('#clearStaleCart').textContent=calendarText('clearStale');}
+  if(banner){const hasInvalid=cart.some(invalidCartItem);banner.classList.toggle('hidden',!hasInvalid);$('#calendarWarningText').textContent=calendarText('staleCart');$('#clearStaleCart').textContent=calendarText('clearStale');}
 }
 function refreshCalendarDate(){
   if(!data||!$('#singleDate'))return;
@@ -691,8 +790,6 @@ function switchOrderMode(weekly){
   $('#weeklyModeBtn').classList.toggle('active',weekly);
   $('#singleModeBtn').setAttribute('aria-pressed',String(!weekly));
   $('#weeklyModeBtn').setAttribute('aria-pressed',String(weekly));
-  state.addonDate=weekly?weeklyMonday:singleDateIso;
-  renderAddons();
   if(weekly){applyWeeklyLanguage();renderWeeklyPlanner();$('#weeklyPanel').scrollIntoView({behavior:'smooth',block:'start'});}
 }
 function changeWeeklyPlan(monday){
@@ -704,18 +801,15 @@ function changeWeeklyPlan(monday){
     alert(wt('singleDateDifferentWeek'));$('#weeklyMonday').value=weeklyMonday;return;
   }
   const oldId=weeklyPlanId;
-  const oldWeekHasItems=cart.some(x=>x.serviceDate&&mondayFrom(x.serviceDate)===weeklyMonday);
-  if(oldWeekHasItems&&!confirm(wt('weeklyChanged'))){
+  if(cart.some(x=>x.weeklyPlanId===oldId)&&!confirm(wt('weeklyChanged'))){
     $('#weeklyMonday').value=weeklyMonday;return;
   }
-  // Weekly Add-ons belong to the same selected service week, so changing the
-  // week removes both that week's Meal entries and dated Add-ons after confirmation.
-  cart=cart.filter(x=>!(x.weeklyPlanId===oldId||(x.kind==='addon'&&x.serviceDate&&mondayFrom(x.serviceDate)===weeklyMonday)));
+  cart=cart.filter(x=>x.weeklyPlanId!==oldId);
   saveWeeklyDraft();
   weeklyMonday=monday;state.selected.clear();
   fillSelectors();renderMeal();loadWeeklyDraft();saveWeeklyDraft();
   $('#weeklyMonday').value=weeklyMonday;applyWeeklyLanguage();renderWeeklyPlanner();
-  state.addonDate=weeklyMonday;persistCart();renderAddons();
+  persistCart();
 }
 function setWeeklyPreset(preset){
   if(!weeklyDrafts)return;
