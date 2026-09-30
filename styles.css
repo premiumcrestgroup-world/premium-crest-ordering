@@ -88,3 +88,20 @@
 .booking-deadline{display:block;margin:.4rem 0;font-size:.88rem;font-weight:600;color:#345d48}
 .deadline-expired{color:#ab2732!important;background:#fff0f1;padding:.45rem;border-radius:6px}
 #checkoutDeadlineHint:empty,#weeklyDeadlineHint:empty{display:none}
+
+/* v2.6 Add-on day planner */
+.addon-planner{margin:4px 0 16px;padding:14px;border:1px solid var(--line);border-radius:16px;background:#fbfcfa}
+.addon-planner-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:12px}
+.addon-planner-head strong{color:var(--green);font-size:16px}.addon-planner-head p{margin:4px 0 0}
+.addon-week-label{font-size:12px;font-weight:800;color:var(--green2);background:#edf5ef;padding:7px 10px;border-radius:999px;white-space:nowrap}
+.addon-day-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-bottom:14px}
+.addon-day-tab{border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 7px;cursor:pointer;text-align:center;font-weight:800;color:var(--green);line-height:1.25}
+.addon-day-tab small{display:block;margin-top:3px;font-weight:600;color:#7d817c}.addon-day-tab.active{background:var(--green);color:#fff;border-color:var(--green)}.addon-day-tab.active small{color:#e7f3ea}
+.addon-day-toolbar{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,1fr);gap:14px;align-items:start}
+.addon-date-caption{display:block;font-weight:900;color:var(--green);margin-bottom:4px}
+.addon-delivery-choice{border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:0;background:#fff}.addon-delivery-choice legend{padding:0 5px;font-size:12px;font-weight:800;color:#646963}
+.addon-delivery-options{display:flex;flex-wrap:wrap;gap:8px}.addon-delivery-option{display:flex;align-items:center;gap:7px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:12px;font-weight:750;cursor:pointer;background:#fff}.addon-delivery-option input{width:17px;height:17px;accent-color:var(--green)}.addon-delivery-option.disabled{opacity:.48;cursor:not-allowed}.addon-delivery-note{width:100%;font-size:11px;color:#7a7e79;margin:2px 0 0}
+.addon-card .addon-date-mini{display:block;font-size:11px;color:#777;margin-top:4px}.addon-card .addon-container-mini{display:block;font-size:10px;color:#777;margin-top:2px}
+.cart-addon-delivery{font-weight:700;color:var(--green2)!important}
+@media(max-width:880px){.addon-day-toolbar{grid-template-columns:1fr}.addon-day-tabs{grid-template-columns:repeat(5,1fr)}}
+@media(max-width:600px){.addon-day-tabs{grid-template-columns:repeat(2,1fr)}.addon-day-tab:last-child{grid-column:1/-1}.addon-week-label{white-space:normal}.addon-planner-head{display:block}.addon-week-label{display:inline-block;margin-top:8px}}
