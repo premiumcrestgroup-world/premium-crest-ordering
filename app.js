@@ -57,6 +57,8 @@ let addonDeliveryDraft={};
 const MAX_ORDER_QTY=1000;
 let CONTAINER_FEE_PER_PORTION=1.00;
 let CONTAINER_FEE_FRIED_CHICKEN=0.50;
+let DELIVERY_RATE_0_5=5.00;
+let DELIVERY_RATE_5_10=9.00;
 const qtyLabel=()=>({zh:"数量（1–1000份）",en:"Quantity (1–1000)",ms:"Kuantiti (1–1000)"}[lang]||"Qty");
 const readQty=v=>{const n=Number(v);return Number.isInteger(n)&&n>=1&&n<=MAX_ORDER_QTY?n:null;};
 function syncQtyLabels(){document.querySelectorAll("[data-qty-label]").forEach(el=>el.textContent=qtyLabel());}
@@ -512,7 +514,7 @@ function renderDeliverySection(){
     match.classList.toggle('hidden',!validQuote());
     $("#matchedAddress").textContent=deliveryQuote.matchedAddress||address.value;
     $("#confirmMatchedLabel").textContent=dt('confirmAddress');
-  }else{status.textContent=dt('deliveryInfo')+': 0–5 km RM5 · >5–10 km RM9 · >10 km '+dt('tooFar').split(':')[0];match.classList.add('hidden');}
+  }else{status.textContent=dt('deliveryInfo')+`: 0–5 km ${money(DELIVERY_RATE_0_5)} · >5–10 km ${money(DELIVERY_RATE_5_10)} · >10 km `+dt('tooFar').split(':')[0];match.classList.add('hidden');}
   $("#calculateDelivery").textContent=quoteBusy?dt('calculating'):dt('calculate');
   $("#calculateDelivery").disabled=quoteBusy||!cart.length;
   $("#deliveryLine").classList.toggle('hidden',!isDelivery());
@@ -547,9 +549,15 @@ async function loadRuntimeSettings(){
     const result=await requestJsonp('settings');
     const standard=Number(result?.settings?.CONTAINER_FEE);
     const chicken=Number(result?.settings?.CONTAINER_FEE_FRIED_CHICKEN);
+    const delivery05=Number(result?.settings?.DELIVERY_0_5_KM);
+    const delivery510=Number(result?.settings?.DELIVERY_OVER_5_TO_10_KM);
+    const kitchen=String(result?.settings?.KITCHEN_ADDRESS||'').trim();
     if(result?.ok){
       if(Number.isFinite(standard) && standard>=0 && standard<=100) CONTAINER_FEE_PER_PORTION=Math.round(standard*100)/100;
       if(Number.isFinite(chicken) && chicken>=0 && chicken<=100) CONTAINER_FEE_FRIED_CHICKEN=Math.round(chicken*100)/100;
+      if(Number.isFinite(delivery05) && delivery05>=0 && delivery05<=1000) DELIVERY_RATE_0_5=Math.round(delivery05*100)/100;
+      if(Number.isFinite(delivery510) && delivery510>=0 && delivery510<=1000) DELIVERY_RATE_5_10=Math.round(delivery510*100)/100;
+      if(kitchen) CONFIG.kitchenAddress=kitchen;
       syncContainerFeeLabels();
       updateCart();
     }
