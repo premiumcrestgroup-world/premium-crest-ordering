@@ -21,9 +21,9 @@ const I18N = {
 };
 
 const DELIVERY_I18N = {
-  zh: {origin:'出餐地点',deliveryInfo:'送餐运费（单程行车距离）',distance:'实际行车距离',tripCount:'配送次数',deliveryFee:'送餐费',subtotal:'餐费',containerFee:'餐盒费',grandTotal:'应付总额',calculate:'计算送餐费',calculating:'正在查询行车距离…',needAddress:'请输入完整送餐地址，再计算运费。',confirmAddress:'请确认系统找到的送餐地点正确',tooFar:'超过 10 km：请联系客服报价，暂时不能线上结账。',quoteFail:'无法查询准确行车距离。请检查地址或联系客服；不会自动收取估算运费。',quoteFirst:'请先计算并确认送餐距离，才可以提交订单。',tripInfo:'同一天早餐、午餐可选择分别配送或一次送达；按实际配送次数收费。',chooseMode:'请选择配送方式',separate:'分别配送：早餐、午餐各送一次',together:'合并配送：同一天两餐同时送达，运费只收一次',togetherTime:'合并配送的送达时段',morning:'早餐时段一起送达',midday:'午餐时段一起送达',jointWarning:'选合并配送后，两餐将在同一时段送达；不会分别送两次。',noJoint:'购物车里没有同一天的早餐＋午餐；每个订餐日只计一次配送。',dayTrips:'配送明细',addonOnly:'只有单点加购：收一次送餐费',pickupFree:'自取免费',addressChanged:'地址或餐点已更改，请重新计算运费。',pending:'正在确认服务器是否收到订单…',unverified:'订单已送出，但暂时无法确认是否成功。请先检查订单表或联系客服，不要重复提交。'},
-  en: {origin:'Kitchen',deliveryInfo:'Delivery fee (one-way driving distance)',distance:'Driving distance',tripCount:'Delivery trips',deliveryFee:'Delivery fee',subtotal:'Food subtotal',containerFee:'Container fee',grandTotal:'Grand total',calculate:'Calculate delivery',calculating:'Calculating route…',needAddress:'Please enter the complete delivery address.',confirmAddress:'Please verify this matched address',tooFar:'Over 10 km: contact us for a quote. Online checkout is unavailable.',quoteFail:'Could not determine a reliable driving distance. Check the address or contact us. No estimated fee will be charged.',quoteFirst:'Calculate and confirm the delivery distance before placing an order.',tripInfo:'Choose separate drop-offs or one combined drop-off for breakfast and lunch on the same day.',chooseMode:'Choose your delivery arrangement',separate:'Separate delivery: breakfast and lunch delivered separately',together:'Combined delivery: same-day breakfast and lunch delivered together, one fee',togetherTime:'Combined drop-off time',morning:'Deliver both at breakfast time',midday:'Deliver both at lunch time',jointWarning:'Both meals arrive at the same time; there will not be separate morning and midday drop-offs.',noJoint:'No breakfast-and-lunch pair on the same day. Each ordered day needs only one trip.',dayTrips:'Trip breakdown',addonOnly:'Add-ons only: one delivery trip',pickupFree:'Free pickup',addressChanged:'Address or meals changed. Please recalculate delivery.',pending:'Checking whether the server received your order…',unverified:'Order sent, but receipt could not be verified. Check the order sheet or contact us before trying again.'},
-  ms: {origin:'Dapur',deliveryInfo:'Caj penghantaran (jarak memandu sehala)',distance:'Jarak memandu',tripCount:'Bilangan penghantaran',deliveryFee:'Caj penghantaran',subtotal:'Jumlah makanan',containerFee:'Caj bekas',grandTotal:'Jumlah keseluruhan',calculate:'Kira caj penghantaran',calculating:'Mengira laluan…',needAddress:'Masukkan alamat penghantaran yang lengkap.',confirmAddress:'Sila sahkan alamat yang ditemui',tooFar:'Lebih 10 km: hubungi kami untuk sebut harga. Bayaran dalam talian tidak tersedia.',quoteFail:'Jarak memandu tidak dapat ditentukan. Semak alamat atau hubungi kami. Caj anggaran tidak dikenakan.',quoteFirst:'Kira dan sahkan jarak sebelum membuat pesanan.',tripInfo:'Pilih penghantaran berasingan atau sekali hantar untuk sarapan dan makan tengah hari pada hari sama.',chooseMode:'Pilih cara penghantaran',separate:'Asing: sarapan dan makan tengah hari dihantar berasingan',together:'Gabung: kedua-dua hidangan hari sama dihantar sekali, satu caj sahaja',togetherTime:'Masa penghantaran gabungan',morning:'Hantar kedua-duanya waktu sarapan',midday:'Hantar kedua-duanya waktu makan tengah hari',jointWarning:'Kedua-dua hidangan tiba serentak; tiada penghantaran berasingan.',noJoint:'Tiada pasangan sarapan dan makan tengah hari pada hari yang sama. Satu penghantaran setiap hari.',dayTrips:'Butiran penghantaran',addonOnly:'Tambahan sahaja: satu caj penghantaran',pickupFree:'Ambil sendiri percuma',addressChanged:'Alamat atau hidangan berubah. Sila kira semula caj penghantaran.',pending:'Menyemak sama ada pelayan menerima pesanan…',unverified:'Pesanan dihantar tetapi pengesahan belum diterima. Semak rekod pesanan atau hubungi kami sebelum mencuba lagi.'}
+  zh: {origin:'出餐地点',deliveryInfo:'送餐运费（单程行车距离）',distance:'实际行车距离',tripCount:'配送次数',deliveryFee:'送餐费',subtotal:'餐费',grandTotal:'应付总额',calculate:'计算送餐费',calculating:'正在查询行车距离…',needAddress:'请输入完整送餐地址，再计算运费。',confirmAddress:'请确认系统找到的送餐地点正确',tooFar:'超过 10 km：请联系客服报价，暂时不能线上结账。',quoteFail:'无法查询准确行车距离。请检查地址或联系客服；不会自动收取估算运费。',quoteFirst:'请先计算并确认送餐距离，才可以提交订单。',tripInfo:'同一天早餐、午餐可选择分别配送或一次送达；按实际配送次数收费。',chooseMode:'请选择配送方式',separate:'分别配送：早餐、午餐各送一次',together:'合并配送：同一天两餐同时送达，运费只收一次',togetherTime:'合并配送的送达时段',morning:'早餐时段一起送达',midday:'午餐时段一起送达',jointWarning:'选合并配送后，两餐将在同一时段送达；不会分别送两次。',noJoint:'购物车里没有同一天的早餐＋午餐；每个订餐日只计一次配送。',dayTrips:'配送明细',addonOnly:'只有单点加购：收一次送餐费',pickupFree:'自取免费',addressChanged:'地址或餐点已更改，请重新计算运费。',pending:'正在确认服务器是否收到订单…',unverified:'订单已送出，但暂时无法确认是否成功。请先检查订单表或联系客服，不要重复提交。'},
+  en: {origin:'Kitchen',deliveryInfo:'Delivery fee (one-way driving distance)',distance:'Driving distance',tripCount:'Delivery trips',deliveryFee:'Delivery fee',subtotal:'Food subtotal',grandTotal:'Grand total',calculate:'Calculate delivery',calculating:'Calculating route…',needAddress:'Please enter the complete delivery address.',confirmAddress:'Please verify this matched address',tooFar:'Over 10 km: contact us for a quote. Online checkout is unavailable.',quoteFail:'Could not determine a reliable driving distance. Check the address or contact us. No estimated fee will be charged.',quoteFirst:'Calculate and confirm the delivery distance before placing an order.',tripInfo:'Choose separate drop-offs or one combined drop-off for breakfast and lunch on the same day.',chooseMode:'Choose your delivery arrangement',separate:'Separate delivery: breakfast and lunch delivered separately',together:'Combined delivery: same-day breakfast and lunch delivered together, one fee',togetherTime:'Combined drop-off time',morning:'Deliver both at breakfast time',midday:'Deliver both at lunch time',jointWarning:'Both meals arrive at the same time; there will not be separate morning and midday drop-offs.',noJoint:'No breakfast-and-lunch pair on the same day. Each ordered day needs only one trip.',dayTrips:'Trip breakdown',addonOnly:'Add-ons only: one delivery trip',pickupFree:'Free pickup',addressChanged:'Address or meals changed. Please recalculate delivery.',pending:'Checking whether the server received your order…',unverified:'Order sent, but receipt could not be verified. Check the order sheet or contact us before trying again.'},
+  ms: {origin:'Dapur',deliveryInfo:'Caj penghantaran (jarak memandu sehala)',distance:'Jarak memandu',tripCount:'Bilangan penghantaran',deliveryFee:'Caj penghantaran',subtotal:'Jumlah makanan',grandTotal:'Jumlah keseluruhan',calculate:'Kira caj penghantaran',calculating:'Mengira laluan…',needAddress:'Masukkan alamat penghantaran yang lengkap.',confirmAddress:'Sila sahkan alamat yang ditemui',tooFar:'Lebih 10 km: hubungi kami untuk sebut harga. Bayaran dalam talian tidak tersedia.',quoteFail:'Jarak memandu tidak dapat ditentukan. Semak alamat atau hubungi kami. Caj anggaran tidak dikenakan.',quoteFirst:'Kira dan sahkan jarak sebelum membuat pesanan.',tripInfo:'Pilih penghantaran berasingan atau sekali hantar untuk sarapan dan makan tengah hari pada hari sama.',chooseMode:'Pilih cara penghantaran',separate:'Asing: sarapan dan makan tengah hari dihantar berasingan',together:'Gabung: kedua-dua hidangan hari sama dihantar sekali, satu caj sahaja',togetherTime:'Masa penghantaran gabungan',morning:'Hantar kedua-duanya waktu sarapan',midday:'Hantar kedua-duanya waktu makan tengah hari',jointWarning:'Kedua-dua hidangan tiba serentak; tiada penghantaran berasingan.',noJoint:'Tiada pasangan sarapan dan makan tengah hari pada hari yang sama. Satu penghantaran setiap hari.',dayTrips:'Butiran penghantaran',addonOnly:'Tambahan sahaja: satu caj penghantaran',pickupFree:'Ambil sendiri percuma',addressChanged:'Alamat atau hidangan berubah. Sila kira semula caj penghantaran.',pending:'Menyemak sama ada pelayan menerima pesanan…',unverified:'Pesanan dihantar tetapi pengesahan belum diterima. Semak rekod pesanan atau hubungi kami sebelum mencuba lagi.'}
 };
 const dt = key => (DELIVERY_I18N[lang] || DELIVERY_I18N.zh)[key] || key;
 const WEEKLY_I18N={
@@ -33,9 +33,45 @@ const WEEKLY_I18N={
 };
 const wt=key=>((WEEKLY_I18N[lang]||WEEKLY_I18N.zh)[key]||key);
 
+const ADDON_I18N={
+ zh:{
+  scheduleTitle:'选择 Add-on 日期与配送',scheduleHint:'先选哪一天，再选择该天要加购的食物。每一天可以独立选择。',
+  deliveryChoice:'Add-on 配送方式',withMeal:'跟当天 Meal 一起送',separate:'分开送',
+  joinMeal:'跟哪一餐一起送',noMeal:'当天没有 Meal，Add-on 会分开配送。',breakfast:'早餐',lunch:'午餐',
+  qty:'数量',date:'日期',addonShort:'Add-on',separateTrip:'Add-on 分开送',
+  container:'餐盒费',containers:'餐盒',containerRule:'Meal 与 A01–A08：RM1.00/份；A09–A10：RM0.50/份',
+  dateRequired:'请先选择 Add-on 日期。',pastDate:'这个日期已经超过可订时间，请选择之后的日期。',
+  sameMeal:'跟 {meal} 一起送',deliveryRepaired:'原本要一起送的 Meal 已取消，Add-on 已自动改为分开送。'
+ },
+ en:{
+  scheduleTitle:'Choose Add-on date & delivery',scheduleHint:'Pick the day first, then add the items needed for that day. Each day is independent.',
+  deliveryChoice:'Add-on delivery',withMeal:'Send with same-day Meal',separate:'Separate delivery',
+  joinMeal:'Send together with',noMeal:'There is no Meal on this day, so Add-ons will use a separate delivery.',breakfast:'Breakfast',lunch:'Lunch',
+  qty:'Qty',date:'Date',addonShort:'Add-on',separateTrip:'Separate Add-on delivery',
+  container:'Container Fee',containers:'containers',containerRule:'Meal and A01–A08: RM1.00/item; A09–A10: RM0.50/item',
+  dateRequired:'Choose an Add-on date first.',pastDate:'This date is past the ordering cut-off. Choose a later date.',
+  sameMeal:'With {meal}',deliveryRepaired:'The linked Meal was removed, so the Add-on was changed to separate delivery.'
+ },
+ ms:{
+  scheduleTitle:'Pilih tarikh & penghantaran Add-on',scheduleHint:'Pilih hari dahulu, kemudian pilih tambahan untuk hari tersebut. Setiap hari boleh berbeza.',
+  deliveryChoice:'Penghantaran Add-on',withMeal:'Hantar bersama Meal hari yang sama',separate:'Hantar berasingan',
+  joinMeal:'Hantar bersama',noMeal:'Tiada Meal pada hari ini, jadi Add-on akan dihantar berasingan.',breakfast:'Sarapan',lunch:'Makan Tengah Hari',
+  qty:'Kuantiti',date:'Tarikh',addonShort:'Add-on',separateTrip:'Penghantaran Add-on berasingan',
+  container:'Caj Bekas',containers:'bekas',containerRule:'Meal dan A01–A08: RM1.00/item; A09–A10: RM0.50/item',
+  dateRequired:'Pilih tarikh Add-on dahulu.',pastDate:'Tarikh ini melepasi masa tempahan. Pilih tarikh lain.',
+  sameMeal:'Bersama {meal}',deliveryRepaired:'Meal berkaitan telah dibuang, jadi Add-on ditukar kepada penghantaran berasingan.'
+ }
+};
+const at=(key,vars={})=>{
+  let text=((ADDON_I18N[lang]||ADDON_I18N.zh)[key]||key);
+  Object.entries(vars).forEach(([k,v])=>text=text.replaceAll(`{${k}}`,v));
+  return text;
+};
+
 let lang = localStorage.getItem("pc_lang") || "zh";
-let data, state = {week:1, day:"Monday", meal:"breakfast", selected:new Set(), addons:{}};
+let data, state = {week:1, day:"Monday", meal:"breakfast", selected:new Set(), addons:{}, addonDate:"", addonSchedule:{}};
 let cart = JSON.parse(localStorage.getItem("pc_cart") || "[]");
+let runtimeSettings={containerFee:1.00,friedChickenContainerFee:0.50};
 let isSubmitting = false;
 let deliveryQuote = null;
 let quoteBusy = false;
@@ -46,53 +82,7 @@ let weeklyDrafts = null;
 let weeklyPlanId = '';
 let singleDateIso='';
 let singleDateManuallyChosen=false;
-const MAX_ORDER_QTY=500;
-let CONTAINER_FEE_PER_PORTION=1.00;
-let CONTAINER_FEE_FRIED_CHICKEN=0.50;
-const qtyLabel=()=>({zh:"数量（1–500份）",en:"Quantity (1–500)",ms:"Kuantiti (1–500)"}[lang]||"Qty");
-const readQty=v=>{const n=Number(v);return Number.isInteger(n)&&n>=1&&n<=MAX_ORDER_QTY?n:null;};
-function syncQtyLabels(){document.querySelectorAll("[data-qty-label]").forEach(el=>el.textContent=qtyLabel());}
-
 const ISO_DATE=/^\d{4}-\d{2}-\d{2}$/;
-
-// Booking policy: calendar days before service, 14:00 Asia/Kuala_Lumpur.
-// Each meal line has its own quantity; mixed weekly orders check each service day.
-const BOOKING_POLICY=[{min:1,max:49,days:1},{min:50,max:99,days:2},{min:100,max:299,days:3},{min:300,max:500,days:5}];
-const bookingText=key=>({
- zh:{title:'最迟下单时间（马来西亚时间）',normal:'普通订单 1–49份：前一天下午2点前',fifty:'50–99份：提前2天，下午2点前',hundred:'100–299份：提前3天，下午2点前',threehundred:'300–500份：提前5天，下午2点前',last:'最迟下单：',expired:'已超过最迟下单时间。请更改送餐日期或数量。',invalid:'请选择1–500份。',now:'截止日期已过',notice:'以上为日历天；星期六、日也计入预订天数。',addon:'仅单点加购请在备注写明需要日期，并向商家确认。'},
- en:{title:'Last order deadlines (Malaysia time)',normal:'Regular 1–49: by 2 pm the previous day',fifty:'50–99: 2 calendar days ahead, by 2 pm',hundred:'100–299: 3 calendar days ahead, by 2 pm',threehundred:'300–500: 5 calendar days ahead, by 2 pm',last:'Last order: ',expired:'Order deadline passed. Change the service date or quantity.',invalid:'Choose 1–500 portions.',now:'Deadline passed',notice:'Calendar days include weekends.',addon:'For add-ons only, specify a service date in notes and confirm with us.'},
- ms:{title:'Tarikh akhir tempahan (waktu Malaysia)',normal:'Biasa 1–49: sebelum 2 ptg sehari sebelumnya',fifty:'50–99: 2 hari kalendar lebih awal, sebelum 2 ptg',hundred:'100–299: 3 hari lebih awal, sebelum 2 ptg',threehundred:'300–500: 5 hari lebih awal, sebelum 2 ptg',last:'Tempahan akhir: ',expired:'Masa tempahan tamat. Tukar tarikh atau kuantiti.',invalid:'Pilih 1–500 hidangan.',now:'Tarikh akhir telah berlalu',notice:'Hari kalendar termasuk hujung minggu.',addon:'Untuk tambahan sahaja, nyatakan tarikh dalam nota dan sahkan dengan kami.'}
-}[lang]||{})[key]||key;
-function malaysiaNowStamp(now=new Date()){
- const parts=Object.fromEntries(new Intl.DateTimeFormat('en-GB',{timeZone:'Asia/Kuala_Lumpur',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(now).filter(x=>x.type!=='literal').map(x=>[x.type,x.value]));
- return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}`;
-}
-function bookingDeadline(serviceDate,qty){
- const n=readQty(qty),policy=BOOKING_POLICY.find(p=>n>=p.min&&n<=p.max);
- if(!policy||!ISO_DATE.test(String(serviceDate)))return null;
- const time=new Date(`${serviceDate}T12:00:00Z`);
- if(Number.isNaN(+time)||time.toISOString().slice(0,10)!==serviceDate)return null;
- time.setUTCDate(time.getUTCDate()-policy.days);
- return `${time.toISOString().slice(0,10)}T14:00`;
-}
-function bookingValid(serviceDate,qty,now=new Date()){
- const cutoff=bookingDeadline(serviceDate,qty);
- return cutoff!==null && malaysiaNowStamp(now)<cutoff;
-}
-function showDeadline(serviceDate,qty){
- const cutoff=bookingDeadline(serviceDate,qty);if(!cutoff)return bookingText('invalid');
- const date=cutoff.slice(0,10),isValid=bookingValid(serviceDate,qty);
- return `${bookingText('last')}${date} 14:00 MYT${isValid?'':' · '+bookingText('now')}`;
-}
-function refreshBookingNotices(){
- const policy=document.querySelector('#bookingPolicy');
- if(policy)policy.innerHTML=`<strong>${bookingText('title')}</strong><br>${['normal','fifty','hundred','threehundred'].map(x=>bookingText(x)).join('<br>')}<br><small>${bookingText('notice')}</small>`;
- const hint=document.querySelector('#singleDeadlineHint');
- if(hint){const qty=readQty(document.querySelector('#singleQty')?.value);hint.textContent=showDeadline(singleDateIso,qty);hint.classList.toggle('deadline-expired',!!qty&&!bookingValid(singleDateIso,qty));}
- const addBtn=document.querySelector('#addMealBtn');if(addBtn && data){const qty=readQty(document.querySelector('#singleQty')?.value);if(!qty||!bookingValid(singleDateIso,qty))addBtn.disabled=true;}
- const checkout=document.querySelector('#checkoutDeadlineHint');if(checkout){const invalid=cart.filter(x=>x.kind==='meal'&&!bookingValid(x.serviceDate,x.qty||1));checkout.textContent=invalid.length?`${bookingText('expired')} ${invalid.map(x=>`${x.serviceDate} × ${x.qty||1}`).join(' · ')}`:'';checkout.classList.toggle('deadline-expired',invalid.length>0);}
-}
-
 function dateLocal(iso){
   if(!ISO_DATE.test(iso))return null;
   const [y,m,d]=iso.split('-').map(Number),v=new Date(y,m-1,d,12);
@@ -101,7 +91,7 @@ function dateLocal(iso){
 function isoLocal(date){return [date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-')}
 function nextServiceDate(from=new Date()){return PCCalendar.initialSingleDate(from);}
 function mondayFrom(iso){return PCCalendar.mondayOf(iso);}
-function orderWeeks(){return new Set(cart.filter(x=>x.kind==='meal'&&x.serviceDate).map(x=>mondayFrom(x.serviceDate)))}
+function orderWeeks(){return new Set(cart.filter(x=>x.serviceDate).map(x=>mondayFrom(x.serviceDate)))}
 
 
 const QUOTE_TIMEOUT_MS = 18000;
@@ -117,7 +107,7 @@ const t = (key, vars={}) => {
 
 async function init(){
   data = await fetch("data/menu.json").then(r=>r.json());
-  loadRuntimeSettings(); // Non-blocking: Sheet CONTAINER_FEE can update the displayed RM/box.
+  await loadRuntimeSettings();
   $("#languageSelect").value=lang;
   $("#languageSelect").onchange=e=>setLanguage(e.target.value);
   singleDateIso=nextServiceDate();
@@ -127,6 +117,8 @@ async function init(){
   state.day=PCCalendar.weekday(singleDateIso);
   state.week=PCCalendar.menuWeek(singleDateIso);
   state.meal=PCCalendar.initialMeal(singleDateIso);
+  state.addonDate=singleDateIso;
+  migrateLegacyAddons();
   document.querySelectorAll('.meal-tab').forEach(b=>b.classList.toggle('active',b.dataset.meal===state.meal));
   fillSelectors(); renderAddons(); applyLanguage(); renderMeal(); updateCart();
   $('#singleDate').onchange=e=>{
@@ -140,7 +132,8 @@ async function init(){
     singleDateManuallyChosen=true;
     singleDateIso=e.target.value;state.day=PCCalendar.weekday(singleDateIso);
     state.week=PCCalendar.menuWeek(singleDateIso);
-    state.selected.clear();fillSelectors();renderMeal();renderCalendarHints();refreshBookingNotices();
+    if(!weeklyMode)state.addonDate=singleDateIso;
+    state.selected.clear();fillSelectors();renderMeal();renderAddons();renderCalendarHints();
   };
   $('#singleModeBtn').onclick=()=>switchOrderMode(false);
   $('#weeklyModeBtn').onclick=()=>switchOrderMode(true);
@@ -158,8 +151,6 @@ async function init(){
   document.querySelectorAll(".meal-tab").forEach(b=>b.onclick=()=>{document.querySelectorAll(".meal-tab").forEach(x=>x.classList.remove("active"));b.classList.add("active");state.meal=b.dataset.meal;state.selected.clear();renderMeal();});
   $("#clearMeal").onclick=()=>{state.selected.clear();renderMeal()};
   $("#addMealBtn").onclick=addCurrentMeal;
-  $("#singleQty").addEventListener("input",()=>renderSummary());
-  $("#weeklyGrid").addEventListener("input",weeklyQtyInput);
   $("#clearStaleCart").onclick=()=>{cart=cart.filter(x=>!invalidCartMeal(x));persistCart();resetSubmitButton();};
   $("#cartBtn").onclick=showCart; $("#closeCart").onclick=()=>$("#cartSection").classList.add("hidden");
   $("#checkoutForm").onsubmit=placeOrder;
@@ -171,16 +162,13 @@ async function init(){
   $("#jointTime").addEventListener('change',()=>{invalidateDelivery();renderDeliverySection();});
   $("#calculateDelivery").onclick=calculateDelivery;
   renderDeliverySection();
-  $("#paymentSelect").addEventListener('change', renderPaymentInfo);
-  renderPaymentInfo();
   renderCalendarHints();
-  syncQtyLabels();refreshBookingNotices();
   document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshCalendarDate();});
   window.setInterval(refreshCalendarDate,60000);
 }
 
 function setLanguage(newLang){
-  lang=newLang;localStorage.setItem("pc_lang",lang);applyLanguage();fillSelectors();renderMeal();renderAddons();updateCart();applyWeeklyLanguage();renderWeeklyPlanner();renderCalendarHints();syncQtyLabels();refreshBookingNotices();
+  lang=newLang;localStorage.setItem("pc_lang",lang);applyLanguage();fillSelectors();renderMeal();renderAddons();updateCart();applyWeeklyLanguage();renderWeeklyPlanner();renderCalendarHints();
 }
 function applyLanguage(){
   document.documentElement.lang=lang==='zh'?'zh-Hans':lang;
@@ -192,56 +180,9 @@ function applyLanguage(){
   const oldPayment=$("#paymentSelect").value;
   $("#paymentSelect").innerHTML=`<option value="DuitNow QR">${t('duitnow')}</option><option value="Bank Transfer">${t('bank')}</option><option value="Cash">${t('cash')}</option>`;
   if(oldPayment)$("#paymentSelect").value=oldPayment;
-  if(!paymentReady($("#paymentSelect").value))$("#paymentSelect").value=["DuitNow QR","Bank Transfer","Cash"].find(paymentReady)||"Cash";
-  renderPaymentInfo();
   resetSubmitButton(false);
   renderDeliverySection();
 }
-/* v1.7: public merchant payment information, NOT an automatic payment gateway. */
-const PAYMENT_TEXT = {
-  zh:{qrTitle:'扫描 DuitNow QR 付款',bankTitle:'银行转账资料',notReady:'商家尚未上传此付款方式，请选择其他方式或联系客服。',manual:'付款后请填写付款参考号。订单须由商家人工核对付款，网页不会自动确认已付款。',save:'保存 QR 图片',copy:'复制银行账号',copied:'已复制银行账号',bank:'银行',holder:'户口名称',account:'银行账号',amount:'订单金额（含运费）',cash:'现金付款：请在取餐／送达时付款。',choose:'请选择已配置的付款方式。'},
-  en:{qrTitle:'Scan DuitNow QR to pay',bankTitle:'Bank transfer details',notReady:'This payment method is not configured yet. Please choose another method or contact us.',manual:'After paying, enter your payment reference. We verify transfers manually; placing an order is not payment confirmation.',save:'Save QR image',copy:'Copy account number',copied:'Account number copied',bank:'Bank',holder:'Account holder',account:'Account number',amount:'Order total (including container & delivery)',cash:'Cash: pay when collecting or receiving your order.',choose:'Choose an available payment method.'},
-  ms:{qrTitle:'Imbas DuitNow QR untuk bayaran',bankTitle:'Butiran pindahan bank',notReady:'Kaedah pembayaran ini belum disediakan. Pilih kaedah lain atau hubungi kami.',manual:'Selepas bayaran, masukkan nombor rujukan. Bayaran disemak secara manual; pesanan bukan pengesahan bayaran.',save:'Simpan imej QR',copy:'Salin nombor akaun',copied:'Nombor akaun disalin',bank:'Bank',holder:'Nama pemegang akaun',account:'Nombor akaun',amount:'Jumlah pesanan (termasuk penghantaran)',cash:'Tunai: bayar semasa ambil atau menerima pesanan.',choose:'Pilih kaedah pembayaran tersedia.'}
-};
-const pt = key => PAYMENT_TEXT[lang]?.[key] || PAYMENT_TEXT.zh[key] || key;
-function paymentReady(method){
-  const c=window.PC_PAYMENT||{};
-  if(method==='DuitNow QR')return !!c.duitnowQrImage;
-  if(method==='Bank Transfer')return !!(c.bankName&&c.accountHolder&&c.accountNumber);
-  return method==='Cash';
-}
-function renderPaymentInfo(){
-  const container=$("#paymentInfo"), select=$("#paymentSelect");
-  if(!container||!select)return;
-  const method=select.value, c=window.PC_PAYMENT||{};
-  const empty=()=>{container.textContent=pt('notReady');container.classList.add('payment-pending');};
-  container.replaceChildren();container.classList.remove('payment-pending');
-  if(method==='Cash'){
-    container.textContent=pt('cash'); return;
-  }
-  if(!paymentReady(method)){empty();return;}
-  const heading=document.createElement('h4');heading.textContent=pt(method==='DuitNow QR'?'qrTitle':'bankTitle');container.appendChild(heading);
-  const total=document.createElement('p');total.className='payment-amount';
-  const cost=checkoutSubtotal()+(isDelivery()&&validQuote()?deliveryQuote.fee:0);
-  total.textContent=pt('amount')+': '+money(cost);container.appendChild(total);
-  if(method==='DuitNow QR'){
-    const img=document.createElement('img');img.className='payment-qr';img.src=c.duitnowQrImage;img.alt='Premium Crest DuitNow QR';
-    img.onerror=()=>{img.remove();container.classList.add('payment-pending');empty();};
-    container.appendChild(img);
-    if(c.duitnowReceivingName){const name=document.createElement('p');name.textContent=c.duitnowReceivingName;container.appendChild(name);}
-    const save=document.createElement('a');save.className='payment-link';save.href=c.duitnowQrImage;save.target='_blank';save.rel='noopener noreferrer';save.textContent=pt('save');container.appendChild(save);
-  }else{
-    [[pt('bank'),c.bankName],[pt('holder'),c.accountHolder],[pt('account'),c.accountNumber]].forEach(([label,value])=>{
-      const line=document.createElement('p');line.className='bank-line';const b=document.createElement('strong');b.textContent=label+': ';
-      const v=document.createElement('span');v.textContent=value;line.append(b,v);container.appendChild(line);
-    });
-    const copy=document.createElement('button');copy.type='button';copy.className='payment-link';copy.textContent=pt('copy');
-    copy.onclick=()=>navigator.clipboard?.writeText(c.accountNumber).then(()=>{copy.textContent=pt('copied')}).catch(()=>{copy.textContent=c.accountNumber});
-    container.appendChild(copy);
-  }
-  const note=document.createElement('p');note.className='payment-notice';note.textContent=pt('manual');container.appendChild(note);
-}
-
 function fillSelectors(){
   $("#weekSelect").value=t('week',{n:PCCalendar.menuWeek(singleDateIso)});
   $("#daySelect").innerHTML=DAYS.map(d=>`<option value="${d}">${dayName(d)}</option>`).join("");
@@ -279,11 +220,9 @@ function renderSummary(){
     html+=`<div class="price-line"><span>${calc.label}</span><strong>${money(calc.base)}</strong></div>`;
     if(calc.extraMeat)html+=`<div class="price-line"><span>${t('extraMeat')} × ${calc.extraMeat}</span><strong>${money(calc.extraMeat*data.pricing.extraMeat)}</strong></div>`;
     if(calc.extraVeg)html+=`<div class="price-line"><span>${t('extraVeg')} × ${calc.extraVeg}</span><strong>${money(calc.extraVeg*data.pricing.extraVeg)}</strong></div>`;
-    const qty=readQty($("#singleQty").value);
-    html+=`<div class="price-line total"><span>${t('mealTotal')} × ${qty||"?"}</span><strong>${qty?money(calc.total*qty):"—"}</strong></div>`;
+    html+=`<div class="price-line total"><span>${t('mealTotal')}</span><strong>${money(calc.total)}</strong></div>`;
   } else html=`<div class="muted">${t('selected')} ${calc.m} ${t('meatShort')} + ${calc.v} ${t('vegShort')}<br>${calc.label}</div>`;
-  $("#priceBreakdown").innerHTML=html; $("#addMealBtn").disabled=!calc.valid||!readQty($("#singleQty").value)||!bookingValid(singleDateIso,$("#singleQty").value);
-  refreshBookingNotices();
+  $("#priceBreakdown").innerHTML=html; $("#addMealBtn").disabled=!calc.valid;
 }
 function addCurrentMeal(){
   if(!PCCalendar.mealBookable(singleDateIso,state.meal)){alert(calendarText('pastMeal'));return;}
@@ -293,46 +232,210 @@ function addCurrentMeal(){
   if([...orderWeeks()].some(m=>m!==requestedMonday)){
     alert(wt('singleDateDifferentWeek'));return;
   }
-  const qty=readQty($("#singleQty").value);if(!qty){alert(qtyLabel());return;}
-  if(!bookingValid(singleDateIso,qty)){alert(bookingText("expired")+"\n"+showDeadline(singleDateIso,qty));return;}
-  resetSubmitButton();cart.push({kind:'meal',week:state.week,day:state.day,meal:state.meal,serviceDate:singleDateIso,items,calc,qty,price:calc.total*qty});state.selected.clear();persistCart();renderMeal();showCart();
+  resetSubmitButton();cart.push({kind:'meal',week:state.week,day:state.day,meal:state.meal,serviceDate:singleDateIso,items,calc,price:calc.total});state.selected.clear();persistCart();renderMeal();showCart();
 }
 function addonDisplayName(a){
   const parts=a.name.split('/').map(x=>x.trim());
   if(lang==='zh')return a.name;
   return parts.length>1?parts[1]:a.name;
 }
-function renderAddons(){
-  $("#addonGrid").innerHTML=data.addons.map(a=>`<div class="addon-card"><strong>${addonDisplayName(a)}</strong><span class="price">${money(a.price)}</span><div class="qty-row"><button data-a="${a.id}" data-d="-1">−</button><span id="q-${a.id}">${state.addons[a.id]||0}</span><button data-a="${a.id}" data-d="1">＋</button></div></div>`).join("");
-  document.querySelectorAll(".qty-row button").forEach(b=>b.onclick=()=>{const id=b.dataset.a,d=+b.dataset.d,q=Math.max(0,(state.addons[id]||0)+d);state.addons[id]=q;$("#q-"+id).textContent=q;if(d>0){resetSubmitButton();const a=data.addons.find(x=>x.id===id);cart.push({kind:"addon",id:a.id,name:a.name,qty:1,unitPrice:a.price,price:a.price});persistCart()}else if(d<0){const idx=cart.findIndex(x=>x.kind==='addon'&&x.id===id);if(idx>=0){cart.splice(idx,1);persistCart()}}});
+function ensureAddonScheduleUi(){
+  const grid=$("#addonGrid");if(!grid)return;
+  if(!$("#addonScheduleControls")){
+    const box=document.createElement('section');
+    box.id='addonScheduleControls';box.className='addon-schedule-box';
+    grid.parentNode.insertBefore(box,grid);
+  }
+  if(!$("#pcAddonScheduleStyle")){
+    const style=document.createElement('style');style.id='pcAddonScheduleStyle';
+    style.textContent=`
+      .addon-schedule-box{margin:10px 0 14px;padding:12px;border:1px solid #dfe7ea;border-radius:14px;background:#f8fbfc}
+      .addon-schedule-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:10px}
+      .addon-schedule-head strong{font-size:15px}.addon-schedule-head small{display:block;color:#667b82;margin-top:3px}
+      .addon-day-tabs{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:10px 0}
+      .addon-day-btn{border:1px solid #c7d5da;background:#fff;border-radius:10px;padding:9px 5px;cursor:pointer;font-weight:700}
+      .addon-day-btn small{display:block;font-weight:500;color:#6b7b80;margin-top:3px}.addon-day-btn.active{border-color:#155e68;background:#eaf6f7}
+      .addon-day-btn:disabled{opacity:.42;cursor:not-allowed}
+      .addon-delivery-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.addon-delivery-grid select{width:100%}
+      .addon-note{font-size:12px;color:#667b82;margin-top:8px}.addon-line-meta{font-size:12px;color:#65777c;margin-top:4px}
+      @media(max-width:650px){.addon-day-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.addon-delivery-grid{grid-template-columns:1fr}}
+    `;
+    document.head.appendChild(style);
+  }
 }
-function persistCart(){invalidateDelivery();localStorage.setItem("pc_cart",JSON.stringify(cart));updateCart()}
-function updateCart(){
-  syncContainerFeeLabels();
-  $("#cartCount").textContent=cart.length;const box=$("#cartItems"); if(!box)return;
-  box.innerHTML=cart.length?cart.map((x,i)=>x.kind==='meal'?`<div class="cart-item"><div><h4>${x.serviceDate||''} · ${t('week',{n:x.week})} · ${dayName(x.day)} ${t(x.meal)}</h4><p>${x.items.map(a=>`#${a.no} ${dishPrimary(a)}`).join(' · ')}</p><p>${calculateMeal(x.items).label}</p><label>${qtyLabel()} <input class="cart-qty" type="number" min="1" max="500" step="1" value="${x.qty||1}" onchange="changeCartQty(${i},this.value)"></label></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`:`<div class="cart-item"><div><h4>${t('addonCart')}</h4><p>${addonNameFromCart(x.name)}</p><label>${qtyLabel()} <input class="cart-qty" type="number" min="1" max="500" step="1" value="${x.qty||1}" onchange="changeCartQty(${i},this.value)"></label></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`).join(""):`<p class='muted'>${t('emptyCart')}</p>`;
-  const subtotal=foodSubtotal();
-  const pack=containerFee();
-  $("#cartTotal").textContent=money(subtotal+pack+(isDelivery() && validQuote()?deliveryQuote.fee:0));
-  if($("#foodSubtotal")) $("#foodSubtotal").textContent=money(subtotal);
-  if($("#containerAmount")) $("#containerAmount").textContent=money(pack);
-  if($("#cartFoodSubtotal")) $("#cartFoodSubtotal").textContent=money(subtotal);
-  if($("#cartContainerQty")) $("#cartContainerQty").textContent=String(containerQty());
-  if($("#cartContainerAmount")) $("#cartContainerAmount").textContent=money(pack);
-  if($("#checkoutContainerQty")) $("#checkoutContainerQty").textContent=String(containerQty());
-  renderDeliverySection();
-  renderCalendarHints();refreshBookingNotices();
+function addonWeekMonday(){
+  if(weeklyMode)return weeklyMonday;
+  const firstMeal=cart.find(x=>x.kind==='meal'&&x.serviceDate);
+  return mondayFrom(firstMeal?.serviceDate||singleDateIso||nextServiceDate());
 }
-function addonNameFromCart(name){const parts=name.split('/').map(x=>x.trim());return lang==='zh'?name:(parts[1]||name)}
-window.changeCartQty=(i,raw)=>{
-  const qty=readQty(raw);if(!qty){alert(qtyLabel());updateCart();return;}
-  const x=cart[i];if(!x)return;
-  if(x.kind==='meal'){x.qty=qty;x.price=Math.round(calculateMeal(x.items).total*qty*100)/100;
-    if(x.weeklyPlanId===weeklyPlanId&&weeklyDrafts?.[x.weeklySlot]){weeklyDrafts[x.weeklySlot].qty=qty;saveWeeklyDraft();renderWeeklyPlanner();}
-  }else{x.price=Math.round((x.unitPrice||x.price/(x.qty||1))*qty*100)/100;x.qty=qty;}
-  if(x.kind==='meal'&&!bookingValid(x.serviceDate,x.qty)){alert(bookingText('expired')+'\n'+showDeadline(x.serviceDate,x.qty));}
+function addonDateOptions(){
+  const monday=addonWeekMonday();
+  return DAYS.map((day,i)=>({day,date:PCCalendar.addDays(monday,i)}));
+}
+function malaysiaClock(){
+  const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kuala_Lumpur',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}).formatToParts(new Date());
+  const v={};parts.forEach(p=>{if(p.type!=='literal')v[p.type]=p.value;});
+  return {date:`${v.year}-${v.month}-${v.day}`,minutes:Number(v.hour)*60+Number(v.minute)};
+}
+function addonDateBookable(serviceDate,qty=1){
+  if(!ISO_DATE.test(String(serviceDate||'')))return false;
+  const n=Math.max(1,Number(qty)||1),days=n<50?1:n<100?2:n<300?3:5;
+  const deadline=PCCalendar.addDays(serviceDate,-days),now=malaysiaClock();
+  return now.date<deadline||(now.date===deadline&&now.minutes<14*60);
+}
+function mealsOnDate(date){
+  return [...new Set(cart.filter(x=>x.kind==='meal'&&x.serviceDate===date).map(x=>String(x.meal||'').toLowerCase()).filter(x=>['breakfast','lunch'].includes(x)))];
+}
+function addonScheduleForDate(date){
+  const meals=mealsOnDate(date);
+  let s=state.addonSchedule[date];
+  if(!s){
+    const existing=cart.find(x=>x.kind==='addon'&&x.serviceDate===date);
+    s=existing?{mode:existing.addonDeliveryMode||'separate',withMeal:existing.withMeal||''}:{mode:meals.length?'with_meal':'separate',withMeal:meals[0]||''};
+  }
+  if(s.mode==='with_meal'&&!meals.includes(s.withMeal)){
+    s=meals.length?{mode:'with_meal',withMeal:meals[0]}:{mode:'separate',withMeal:''};
+  }
+  state.addonSchedule[date]=s;return s;
+}
+function normalizeAddonSchedules(){
+  let changed=false;
+  const dates=[...new Set(cart.filter(x=>x.kind==='addon'&&x.serviceDate).map(x=>x.serviceDate))];
+  dates.forEach(date=>{
+    const meals=mealsOnDate(date);
+    cart.filter(x=>x.kind==='addon'&&x.serviceDate===date).forEach(x=>{
+      const mode=x.addonDeliveryMode||'separate';
+      if(mode==='with_meal'&&!meals.includes(String(x.withMeal||'').toLowerCase())){
+        if(meals.length){x.addonDeliveryMode='with_meal';x.withMeal=meals[0];}
+        else{x.addonDeliveryMode='separate';x.withMeal='';}
+        changed=true;
+      }
+    });
+  });
+  return changed;
+}
+function migrateLegacyAddons(){
+  const fallback=(cart.find(x=>x.kind==='meal'&&x.serviceDate)||{}).serviceDate||singleDateIso;
+  let changed=false;
+  cart.forEach(x=>{
+    if(x.kind!=='addon')return;
+    if(!x.serviceDate){x.serviceDate=fallback;changed=true;}
+    if(!x.qty)x.qty=1;
+    if(x.unitPrice==null)x.unitPrice=Number(x.price||0)/Number(x.qty||1);
+    if(!x.addonDeliveryMode){
+      const meals=mealsOnDate(x.serviceDate);
+      x.addonDeliveryMode=meals.length?'with_meal':'separate';x.withMeal=meals[0]||'';changed=true;
+    }
+  });
+  if(normalizeAddonSchedules())changed=true;
+  if(changed)localStorage.setItem("pc_cart",JSON.stringify(cart));
+}
+function setAddonSchedule(date,mode,withMeal){
+  const meals=mealsOnDate(date);
+  const normalizedMode=mode==='with_meal'&&meals.length?'with_meal':'separate';
+  const target=normalizedMode==='with_meal'&&meals.includes(withMeal)?withMeal:(normalizedMode==='with_meal'?meals[0]:'');
+  state.addonSchedule[date]={mode:normalizedMode,withMeal:target};
+  cart.filter(x=>x.kind==='addon'&&x.serviceDate===date).forEach(x=>{x.addonDeliveryMode=normalizedMode;x.withMeal=target;});
   resetSubmitButton();persistCart();
-};
+}
+function addonCartItem(id,date){return cart.find(x=>x.kind==='addon'&&x.id===id&&x.serviceDate===date);}
+function setAddonQty(id,date,qty){
+  if(!date){alert(at('dateRequired'));return;}
+  if(qty>0&&!addonDateBookable(date,qty)){alert(at('pastDate'));return;}
+  const a=data.addons.find(x=>x.id===id);if(!a)return;
+  const existing=addonCartItem(id,date);
+  if(qty<=0){
+    cart=cart.filter(x=>!(x.kind==='addon'&&x.id===id&&x.serviceDate===date));
+  }else{
+    const s=addonScheduleForDate(date);
+    if(existing){
+      existing.qty=qty;existing.unitPrice=Number(a.price);existing.price=Number(a.price)*qty;
+      existing.name=a.name;existing.addonDeliveryMode=s.mode;existing.withMeal=s.withMeal;
+    }else{
+      cart.push({kind:'addon',id:a.id,name:a.name,qty,unitPrice:Number(a.price),price:Number(a.price)*qty,serviceDate:date,addonDeliveryMode:s.mode,withMeal:s.withMeal});
+    }
+  }
+  resetSubmitButton();persistCart();
+}
+function renderAddons(){
+  ensureAddonScheduleUi();
+  const options=addonDateOptions();
+  if(!options.some(x=>x.date===state.addonDate))state.addonDate=(options.find(x=>addonDateBookable(x.date,1))||options[0]).date;
+  const date=state.addonDate,schedule=addonScheduleForDate(date),meals=mealsOnDate(date);
+  const box=$("#addonScheduleControls");
+  box.innerHTML=`<div class="addon-schedule-head"><div><strong>${at('scheduleTitle')}</strong><small>${at('scheduleHint')}</small></div><span>${date}</span></div>
+    <div class="addon-day-tabs">${options.map(x=>`<button type="button" class="addon-day-btn ${x.date===date?'active':''}" data-addon-date="${x.date}" ${!addonDateBookable(x.date,1)?'disabled':''}>${dayName(x.day)}<small>${x.date}</small></button>`).join('')}</div>
+    <div class="addon-delivery-grid">
+      <label><span>${at('deliveryChoice')}</span><select id="addonDeliveryMode">
+        <option value="with_meal" ${schedule.mode==='with_meal'?'selected':''} ${!meals.length?'disabled':''}>${at('withMeal')}</option>
+        <option value="separate" ${schedule.mode==='separate'?'selected':''}>${at('separate')}</option>
+      </select></label>
+      <label id="addonWithMealWrap" class="${schedule.mode==='with_meal'&&meals.length?'':'hidden'}"><span>${at('joinMeal')}</span>
+        <select id="addonWithMeal">${meals.map(m=>`<option value="${m}" ${schedule.withMeal===m?'selected':''}>${at(m)}</option>`).join('')}</select>
+      </label>
+    </div>
+    <div class="addon-note">${meals.length?at('containerRule'):at('noMeal')+' '+at('containerRule')}</div>`;
+  box.querySelectorAll('[data-addon-date]').forEach(b=>b.onclick=()=>{state.addonDate=b.dataset.addonDate;renderAddons();});
+  $("#addonDeliveryMode").onchange=e=>setAddonSchedule(date,e.target.value,$("#addonWithMeal")?.value||'');
+  if($("#addonWithMeal"))$("#addonWithMeal").onchange=e=>setAddonSchedule(date,'with_meal',e.target.value);
+
+  $("#addonGrid").innerHTML=data.addons.map(a=>{
+    const item=addonCartItem(a.id,date),q=Number(item?.qty||0);
+    return `<div class="addon-card"><strong>${addonDisplayName(a)}</strong><span class="price">${money(a.price)}</span>
+      <div class="addon-line-meta">${date} · ${q?addonDeliveryLabel(item):addonDeliveryLabel({serviceDate:date,addonDeliveryMode:schedule.mode,withMeal:schedule.withMeal})}</div>
+      <div class="qty-row"><button data-a="${a.id}" data-d="-1">−</button><span id="q-${a.id}">${q}</span><button data-a="${a.id}" data-d="1">＋</button></div></div>`;
+  }).join("");
+  document.querySelectorAll(".qty-row button").forEach(b=>b.onclick=()=>{
+    const id=b.dataset.a,d=Number(b.dataset.d),current=Number(addonCartItem(id,date)?.qty||0);
+    setAddonQty(id,date,Math.max(0,current+d));
+  });
+}
+function persistCart(){
+  normalizeAddonSchedules();
+  invalidateDelivery();
+  localStorage.setItem("pc_cart",JSON.stringify(cart));
+  updateCart();
+  if(data)renderAddons();
+}
+function addonDeliveryLabel(x){
+  if((x.addonDeliveryMode||'separate')==='with_meal'&&x.withMeal)return at('sameMeal',{meal:at(x.withMeal)});
+  return at('separate');
+}
+function containerSummary(){
+  let qty=0,fee=0;
+  cart.forEach(x=>{
+    const n=Math.max(0,Number(x.qty||1));
+    if(x.kind==='meal'){qty+=n;fee+=n*runtimeSettings.containerFee;}
+    else if(x.kind==='addon'){
+      qty+=n;fee+=n*((x.id==='A09'||x.id==='A10')?runtimeSettings.friedChickenContainerFee:runtimeSettings.containerFee);
+    }
+  });
+  return {qty,fee:Math.round(fee*100)/100};
+}
+function ensureContainerLine(){
+  const deliveryLine=$("#deliveryLine");if(!deliveryLine||$("#containerLine"))return;
+  const row=document.createElement('div');row.id='containerLine';row.className=deliveryLine.className||'total-row';
+  row.innerHTML='<span id="containerLabel"></span><strong id="containerAmount"></strong>';
+  deliveryLine.parentNode.insertBefore(row,deliveryLine);
+}
+function updateCart(){
+  $("#cartCount").textContent=cart.reduce((sum,x)=>sum+Number(x.qty||1),0);
+  const box=$("#cartItems");if(!box)return;
+  const display=cart.map((x,i)=>({x,i})).sort((a,b)=>String(a.x.serviceDate||'').localeCompare(String(b.x.serviceDate||''))||(a.x.kind==='meal'?-1:1));
+  box.innerHTML=display.length?display.map(({x,i})=>x.kind==='meal'
+    ?`<div class="cart-item"><div><h4>${x.serviceDate||''} · ${t('week',{n:x.week})} · ${dayName(x.day)} ${t(x.meal)}</h4><p>${x.items.map(a=>`#${a.no} ${dishPrimary(a)}`).join(' · ')}</p><p>${calculateMeal(x.items).label}${Number(x.qty||1)>1?` · ×${x.qty}`:''}</p></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`
+    :`<div class="cart-item"><div><h4>${x.serviceDate||''} · ${dayName(PCCalendar.weekday(x.serviceDate))} · ${t('addonCart')}</h4><p>${addonNameFromCart(x.name)} × ${x.qty||1}</p><p>${addonDeliveryLabel(x)}</p></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`
+  ).join(""):`<p class='muted'>${t('emptyCart')}</p>`;
+  const subtotal=foodSubtotal(),container=containerSummary();
+  $("#cartTotal").textContent=money(subtotal+container.fee+(isDelivery()&&validQuote()?deliveryQuote.fee:0));
+  if($("#foodSubtotal"))$("#foodSubtotal").textContent=money(subtotal);
+  ensureContainerLine();
+  if($("#containerLabel"))$("#containerLabel").textContent=`${at('container')} (${container.qty} ${at('containers')})`;
+  if($("#containerAmount"))$("#containerAmount").textContent=money(container.fee);
+  renderDeliverySection();
+  renderCalendarHints();
+}
+function addonNameFromCart(name){const parts=String(name||'').split('/').map(x=>x.trim());return lang==='zh'?name:(parts[1]||name)}
 window.removeCart=i=>{
   const removed=cart.splice(i,1)[0];
   if(removed?.weeklyPlanId===weeklyPlanId&&weeklyDrafts?.[removed.weeklySlot]){
@@ -343,121 +446,51 @@ window.removeCart=i=>{
 function showCart(){updateCart();$("#cartSection").classList.remove("hidden");$("#cartSection").scrollIntoView({behavior:"smooth"})}
 function isDelivery(){return $("#fulfilmentSelect").value === "Delivery / 送餐";}
 function foodSubtotal(){return Math.round(cart.reduce((sum,x)=>sum+Number(x.price||0),0)*100)/100;}
-function mealContainerQty(){return cart.filter(x=>x.kind==='meal').reduce((sum,x)=>sum+(readQty(x.qty||1)||0),0);}
-function addonContainerQty(){return cart.filter(x=>x.kind==='addon').reduce((sum,x)=>sum+(readQty(x.qty||1)||0),0);}
-// Container policy:
-// - Every Meal portion uses 1 container at the standard rate.
-// - A01-A08: 1 container per add-on portion at the standard rate.
-// - A09-A10: 1 container per add-on portion at the fried-chicken rate.
-// - Mixed orders add all container quantities and fees together.
-function containerQty(){return mealContainerQty()+addonContainerQty();}
-function addonContainerFee(){
-  return cart.filter(x=>x.kind==='addon').reduce((sum,x)=>{
-    const qty=readQty(x.qty||1)||0;
-    const id=String(x.id||'').trim().toUpperCase();
-    const unit=(id==='A09'||id==='A10')?CONTAINER_FEE_FRIED_CHICKEN:CONTAINER_FEE_PER_PORTION;
-    return sum+(qty*unit);
-  },0);
-}
-function containerFee(){
-  const fee=(mealContainerQty()*CONTAINER_FEE_PER_PORTION)+addonContainerFee();
-  return Math.round(fee*100)/100;
-}
-function checkoutSubtotal(){return Math.round((foodSubtotal()+containerFee())*100)/100;}
+function grandSubtotal(){const c=containerSummary();return Math.round((foodSubtotal()+c.fee)*100)/100;}
 function chosenMode(){return document.querySelector('input[name="deliveryMode"]:checked')?.value||'separate';}
 function chosenJointTime(){return $("#jointTime").value||'breakfast';}
 function currentPlan(){return PCDelivery.plan(cart,chosenMode());}
 function deliveryTrips(){return currentPlan().trips;}
 function tripSignature(){return currentPlan().signature;}
 function normalizeAddress(s){return String(s||'').trim().replace(/\s+/g,' ').toLowerCase();}
-// Every displayed and submitted delivery fee must belong to this exact address,
-// set of meals and delivery arrangement. The backend independently verifies quoteId.
-function deliveryContext(){
-  return {
-    addressKey:normalizeAddress(document.querySelector('[name="address"]').value),
-    trips:deliveryTrips(),
-    mode:chosenMode(),
-    signature:tripSignature(),
-    jointTime:chosenMode()==='together'?chosenJointTime():'none'
-  };
-}
-function validQuote(){
-  if(!deliveryQuote || !deliveryQuote.ok || !deliveryQuote.quoteId || deliveryQuote.manual ||
-     !Number.isFinite(Number(deliveryQuote.fee)) || Number(deliveryQuote.fee)<0 ||
-     !Number.isFinite(Number(deliveryQuote.expiresAt)) || deliveryQuote.expiresAt<=Date.now())return false;
-  const saved=deliveryQuote.context;
-  if(!saved)return false;
-  const live=deliveryContext();
-  return saved.addressKey===live.addressKey && saved.trips===live.trips &&
-    saved.mode===live.mode && saved.signature===live.signature &&
-    saved.jointTime===live.jointTime;
-}
+function validQuote(){return !!(deliveryQuote && deliveryQuote.ok && deliveryQuote.quoteId && deliveryQuote.fee!==null && deliveryQuote.fee!==undefined && deliveryQuote.addressKey===normalizeAddress(document.querySelector('[name="address"]').value) && deliveryQuote.trips===deliveryTrips() && deliveryQuote.mode===chosenMode() && deliveryQuote.signature===tripSignature() && deliveryQuote.jointTime===(chosenMode()==='together'?chosenJointTime():'none') && deliveryQuote.expiresAt>Date.now());}
 function invalidateDelivery(){deliveryQuote=null;quoteEpoch++;if($("#deliveryMatched"))$("#deliveryMatched").checked=false;renderDeliverySection();}
 function renderDeliverySection(){
   const box=$("#deliverySection");if(!box)return;
   box.classList.toggle('hidden',!isDelivery());
   const address=document.querySelector('[name="address"]');address.required=isDelivery();
   const deliveryPlan=currentPlan();
-  $("#deliveryRule").textContent=dt('tripInfo');
+  $("#deliveryRule").textContent=dt('tripInfo')+' '+at('scheduleHint');
   document.querySelectorAll('[data-delivery-i18n]').forEach(el=>el.textContent=dt(el.dataset.deliveryI18n));
   $("#jointTimeRow").classList.toggle('hidden',chosenMode()!=='together'||!deliveryPlan.eligible);
   $("#jointWarning").classList.toggle('hidden',chosenMode()!=='together'||!deliveryPlan.eligible);
-  const dayText=deliveryPlan.days.map(x=>`${x.serviceDate||t('week',{n:x.week})} ${dayName(x.day)}: ${x.meals.map(m=>t(m)).join(' + ')} → ${x.trips} ${dt('tripCount')}`);
+  const dayText=deliveryPlan.days.map(x=>{
+    const parts=x.meals.map(m=>t(m));
+    if(x.addonWithMeal?.length)parts.push(`${at('addonShort')}→${x.addonWithMeal.map(m=>at(m)).join('+')}`);
+    if(x.addonSeparate)parts.push(at('separateTrip'));
+    return `${x.serviceDate} ${dayName(x.day)}: ${parts.join(' + ')||at('addonShort')} → ${x.trips} ${dt('tripCount')}`;
+  });
   $("#deliveryPlanPreview").textContent=deliveryPlan.days.length?`${dt('dayTrips')}: ${dayText.join(' · ')} · ${dt('tripCount')}: ${deliveryPlan.trips}`:dt('addonOnly');
   $("#kitchenAddress").textContent=CONFIG.kitchenAddress;
-  const status=$("#deliveryStatus"), match=$("#deliveryMatchRow");
+  const status=$("#deliveryStatus"),match=$("#deliveryMatchRow");
   if(!isDelivery()){status.textContent=dt('pickupFree');match.classList.add('hidden');}
   else if(quoteBusy){status.textContent=dt('calculating');match.classList.add('hidden');}
-  else if(deliveryQuote && deliveryQuote.ok){
-    status.textContent=deliveryQuote.manual?dt('tooFar'):(`${dt('distance')}: ${Number(deliveryQuote.distanceKm).toFixed(2)} km · ${dt('tripCount')}: ${deliveryQuote.trips} · ${dt('deliveryFee')}: ${money(deliveryQuote.fee)}`);
-    if(!deliveryQuote.manual && !validQuote())status.textContent+=' · '+dt('addressChanged');
-    match.classList.toggle('hidden',!validQuote());
-    $("#matchedAddress").textContent=deliveryQuote.matchedAddress||address.value;
-    $("#confirmMatchedLabel").textContent=dt('confirmAddress');
+  else if(deliveryQuote&&deliveryQuote.ok){
+    status.textContent=deliveryQuote.manual?dt('tooFar'):(`${dt('distance')}: ${deliveryQuote.distanceKm.toFixed(2)} km · ${dt('tripCount')}: ${deliveryQuote.trips} · ${dt('deliveryFee')}: ${money(deliveryQuote.fee)}`);
+    match.classList.remove('hidden');$("#matchedAddress").textContent=deliveryQuote.matchedAddress||address.value;$("#confirmMatchedLabel").textContent=dt('confirmAddress');
   }else{status.textContent=dt('deliveryInfo')+': 0–5 km RM5 · >5–10 km RM9 · >10 km '+dt('tooFar').split(':')[0];match.classList.add('hidden');}
   $("#calculateDelivery").textContent=quoteBusy?dt('calculating'):dt('calculate');
-  $("#calculateDelivery").disabled=quoteBusy||!cart.length;
+  $("#calculateDelivery").disabled=quoteBusy||!cart.length||deliveryPlan.trips<1;
   $("#deliveryLine").classList.toggle('hidden',!isDelivery());
-  const quoteReady=isDelivery() && validQuote();
-  $("#deliveryAmount").textContent=quoteReady?money(deliveryQuote.fee):'—';
-  const fullTotal=checkoutSubtotal()+(quoteReady?Number(deliveryQuote.fee):0);
+  $("#deliveryAmount").textContent=validQuote()?money(deliveryQuote.fee):'—';
+  ensureContainerLine();
+  const container=containerSummary();
+  if($("#containerLabel"))$("#containerLabel").textContent=`${at('container')} (${container.qty} ${at('containers')})`;
+  if($("#containerAmount"))$("#containerAmount").textContent=money(container.fee);
+  const fullTotal=grandSubtotal()+(isDelivery()&&validQuote()?deliveryQuote.fee:0);
   $("#deliveryGrandTotal").textContent=money(fullTotal);
   $("#cartTotal").textContent=money(fullTotal);
   $("#foodSubtotal").textContent=money(foodSubtotal());
-  if($("#containerAmount")) $("#containerAmount").textContent=money(containerFee());
-  if($("#cartFoodSubtotal")) $("#cartFoodSubtotal").textContent=money(foodSubtotal());
-  if($("#cartContainerQty")) $("#cartContainerQty").textContent=String(containerQty());
-  if($("#cartContainerAmount")) $("#cartContainerAmount").textContent=money(containerFee());
-  if($("#checkoutContainerQty")) $("#checkoutContainerQty").textContent=String(containerQty());
-  renderPaymentInfo();
-}
-function syncContainerFeeLabels(){
-  document.querySelectorAll('[data-container-unit]').forEach(el=>el.textContent=money(CONTAINER_FEE_PER_PORTION));
-  document.querySelectorAll('[data-container-chicken-unit]').forEach(el=>el.textContent=money(CONTAINER_FEE_FRIED_CHICKEN));
-  document.querySelectorAll('[data-container-policy]').forEach(el=>{
-    el.textContent = lang==='zh'
-      ? `Meal 与 A01–A08：每份 1 个餐盒，每盒 ${money(CONTAINER_FEE_PER_PORTION)}；A09 整鸡腿与 A10 鸡腿：每份 1 个餐盒，每盒 ${money(CONTAINER_FEE_FRIED_CHICKEN)}。`
-      : lang==='ms'
-        ? `Meal dan A01–A08: 1 bekas setiap unit pada ${money(CONTAINER_FEE_PER_PORTION)}; A09 dan A10: 1 bekas setiap unit pada ${money(CONTAINER_FEE_FRIED_CHICKEN)}.`
-        : `Meal and A01–A08: 1 container per unit at ${money(CONTAINER_FEE_PER_PORTION)}; A09 and A10: 1 container per unit at ${money(CONTAINER_FEE_FRIED_CHICKEN)}.`;
-  });
-}
-async function loadRuntimeSettings(){
-  syncContainerFeeLabels();
-  if(!CONFIG.appsScriptUrl)return;
-  try{
-    const result=await requestJsonp('settings');
-    const standard=Number(result?.settings?.CONTAINER_FEE);
-    const chicken=Number(result?.settings?.CONTAINER_FEE_FRIED_CHICKEN);
-    if(result?.ok){
-      if(Number.isFinite(standard) && standard>=0 && standard<=100) CONTAINER_FEE_PER_PORTION=Math.round(standard*100)/100;
-      if(Number.isFinite(chicken) && chicken>=0 && chicken<=100) CONTAINER_FEE_FRIED_CHICKEN=Math.round(chicken*100)/100;
-      syncContainerFeeLabels();
-      updateCart();
-    }
-  }catch(err){
-    console.warn('Using default container fees:',CONTAINER_FEE_PER_PORTION,CONTAINER_FEE_FRIED_CHICKEN,err);
-  }
 }
 function requestJsonp(action, params={}){
   return new Promise((resolve,reject)=>{
@@ -474,36 +507,36 @@ function requestJsonp(action, params={}){
     script.src=u.href;document.head.appendChild(script);
   });
 }
+async function loadRuntimeSettings(){
+  try{
+    if(!CONFIG.appsScriptUrl)return;
+    const r=await requestJsonp('settings');
+    if(!r||!r.ok||!r.settings)return;
+    const normal=Number(r.settings.CONTAINER_FEE),fried=Number(r.settings.CONTAINER_FEE_FRIED_CHICKEN);
+    if(Number.isFinite(normal)&&normal>=0)runtimeSettings.containerFee=normal;
+    if(Number.isFinite(fried)&&fried>=0)runtimeSettings.friedChickenContainerFee=fried;
+  }catch(_e){}
+}
+function deliveryPlanPayload(){
+  return cart.filter(x=>x&&x.serviceDate&&(x.kind==='meal'||x.kind==='addon')).map(x=>x.kind==='meal'
+    ?{kind:'meal',week:x.week,day:x.day,meal:x.meal,serviceDate:x.serviceDate}
+    :{kind:'addon',id:x.id,serviceDate:x.serviceDate,addonDeliveryMode:x.addonDeliveryMode||'separate',withMeal:x.withMeal||''});
+}
 async function calculateDelivery(){
   if(!isDelivery()||quoteBusy||!cart.length)return;
   const address=document.querySelector('[name="address"]').value.trim();
   if(address.length<12){alert(dt('needAddress'));return;}
-  const context=deliveryContext();
-  const plan=cart.filter(x=>x.kind==='meal').map(x=>({week:x.week,day:x.day,meal:x.meal,serviceDate:x.serviceDate||''}));
   const epoch=++quoteEpoch;quoteBusy=true;deliveryQuote=null;renderDeliverySection();
   try{
     const result=await requestJsonp('deliveryQuote',{
-      address,mode:context.mode,jointTime:context.jointTime,
-      plan:JSON.stringify(plan),trips:context.trips});
+      address,mode:chosenMode(),jointTime:chosenMode()==='together'?chosenJointTime():'none',
+      plan:JSON.stringify(deliveryPlanPayload()),
+      trips:deliveryTrips()});
     if(epoch!==quoteEpoch)return;
     if(!result.ok)throw new Error(result.error||'Quote unavailable');
-    // Refuse a quote from an old deployment or a response for a different cart.
-    if(result.signature!==context.signature || Number(result.trips)!==context.trips ||
-       result.mode!==context.mode || result.jointTime!==context.jointTime){
-      throw new Error('Backend / website version mismatch. Update Code.gs, redeploy a New version and try again.');
-    }
-    if(context.addressKey!==deliveryContext().addressKey ||
-       context.signature!==deliveryContext().signature ||
-       context.mode!==deliveryContext().mode ||
-       context.jointTime!==deliveryContext().jointTime){
-      throw new Error('Address or meal selection changed. Calculate delivery again.');
-    }
-    if(!result.manual && (!result.quoteId || !Number.isFinite(Number(result.fee)) || Number(result.fee)<0)){
-      throw new Error('Delivery price missing; please calculate again.');
-    }
-    deliveryQuote={...result,fee:result.manual?null:Number(result.fee),trips:Number(result.trips),
-      distanceKm:Number(result.distanceKm),context,
-      expiresAt:Date.now()+Math.min(15*60000,(Number(result.validForSeconds)||900)*1000)};
+    result.addressKey=normalizeAddress(address);
+    result.expiresAt=Date.now()+Math.min(15*60000,(Number(result.validForSeconds)||900)*1000);
+    deliveryQuote=result;
     $("#deliveryMatched").checked=false;
   }catch(err){if(epoch===quoteEpoch){deliveryQuote=null;alert(dt('quoteFail')+'\n'+err.message);}}
   finally{quoteBusy=false;renderDeliverySection();}
@@ -512,19 +545,15 @@ async function placeOrder(e){
   e.preventDefault();if(isSubmitting)return;if(weeklyMode&&!checkWeeklyReady())return;if(!cart.length){alert(t('cartEmptyAlert'));return;}
   const stale=cart.filter(invalidCartMeal);
   if(stale.length){alert(calendarText('staleCart'));return;}
-  const late=cart.find(x=>x.kind==='meal'&&!bookingValid(x.serviceDate,x.qty||1));
-  if(late){alert(bookingText('expired')+'\n'+showDeadline(late.serviceDate,late.qty||1));return;}
   if(isDelivery() && (!validQuote()||deliveryQuote.manual||!$("#deliveryMatched").checked)){alert(validQuote()&&deliveryQuote.manual?dt('tooFar'):dt('quoteFirst'));return;}
-  if(!paymentReady($("#paymentSelect").value)){alert(pt('choose'));return;}
   const submitBtn=e.target.querySelector('button[type="submit"]');const originalText=submitBtn.textContent;isSubmitting=true;submitBtn.disabled=true;submitBtn.textContent=t('submitting');
   const form=Object.fromEntries(new FormData(e.target).entries());
-  const serviceDates=[...new Set(cart.filter(x=>x.kind==='meal').map(x=>x.serviceDate).filter(Boolean))].sort();
-  const mealCount=cart.filter(x=>x.kind==='meal').reduce((n,x)=>n+(x.qty||1),0);
-  form.orderType=serviceDates.length>1?'Weekly':mealCount>1?'Full Day':'Single Meal';
+  const serviceDates=[...new Set(cart.map(x=>x.serviceDate).filter(Boolean))].sort();
+  const mealCount=cart.filter(x=>x.kind==='meal').length;
+  form.orderType=serviceDates.length>1?'Weekly':mealCount>1?'Full Day':mealCount===1?'Single Meal':'Add-on';
   form.serviceDate=serviceDates.length>1?`${serviceDates[0]} – ${serviceDates[serviceDates.length-1]}`:(serviceDates[0]||'');
-  if(cart.some(x=>!readQty(x.qty||1))){alert(qtyLabel());return;}
-  const fee=isDelivery()?deliveryQuote.fee:0;
-  const order={orderId:createOrderId(),createdAt:new Date().toISOString(),customer:form,items:cart,foodSubtotal:foodSubtotal(),containerFee:containerFee(),subtotal:checkoutSubtotal(),deliveryFee:fee,total:checkoutSubtotal()+fee,deliveryMode:isDelivery()?chosenMode():'pickup',jointTime:isDelivery()&&chosenMode()==='together'?chosenJointTime():'none',deliverySignature:isDelivery()?tripSignature():null,deliveryQuoteId:isDelivery()?deliveryQuote.quoteId:null,deliveryTrips:isDelivery()?deliveryTrips():0,deliveryDistanceKm:isDelivery()?deliveryQuote.distanceKm:null};
+  const fee=isDelivery()?deliveryQuote.fee:0,container=containerSummary();
+  const order={orderId:createOrderId(),createdAt:new Date().toISOString(),customer:form,items:cart,subtotal:foodSubtotal(),containerFee:container.fee,containerQty:container.qty,deliveryFee:fee,total:grandSubtotal()+fee,deliveryMode:isDelivery()?chosenMode():'pickup',jointTime:isDelivery()&&chosenMode()==='together'?chosenJointTime():'none',deliverySignature:isDelivery()?tripSignature():null,deliveryQuoteId:isDelivery()?deliveryQuote.quoteId:null,deliveryTrips:isDelivery()?deliveryTrips():0,deliveryDistanceKm:isDelivery()?deliveryQuote.distanceKm:null};
   try{
     if(!CONFIG.appsScriptUrl)throw new Error('Apps Script URL missing');
     // Apps Script redirects often block CORS for POST. Cross-origin no-cors sends, then JSONP polls the order receipt.
@@ -603,7 +632,7 @@ function refreshCalendarDate(){
     }
     if(changed){saveWeeklyDraft();syncEntireWeeklyCart();renderWeeklyPlanner();}
   }
-  renderCalendarHints();refreshBookingNotices();
+  renderCalendarHints();
 }
 function createOrderId(){const date=PCCalendar.nowInMalaysia().date.replaceAll('-','');return `PC-${date.slice(2)}-${Math.floor(1000+Math.random()*9000)}`}
 /* Weekly order: ten meals are selected before one single checkout/POST. */
@@ -621,7 +650,7 @@ function loadWeeklyDraft(){
   if(!raw){
     cart.filter(x=>x.kind==='meal'&&x.weeklyPlanId===weeklyPlanId).forEach(x=>{
       const k=PCWeekly.slotKey(x.day,x.meal);
-      weeklyDrafts[k]={enabled:PCCalendar.mealBookable(x.serviceDate,x.meal),selected:x.items.map(item=>item.id),qty:x.qty||1};
+      weeklyDrafts[k]={enabled:PCCalendar.mealBookable(x.serviceDate,x.meal),selected:x.items.map(item=>item.id)};
     });
   }
   syncEntireWeeklyCart();
@@ -640,7 +669,7 @@ function syncEntireWeeklyCart(){
   cart=cart.filter(x=>x.weeklyPlanId!==weeklyPlanId);
   for(const {day,meal,key} of PCWeekly.slots()){
     const entry=PCWeekly.buildMeal({week:weekOfDay,monday:weeklyMonday,day,meal,draft:weeklyDrafts[key],menu:weeklyMenu,calculate:calculateMeal,planId:weeklyPlanId});
-    if(entry){entry.qty=readQty(weeklyDrafts[key].qty)||1;entry.price=Math.round(entry.price*entry.qty*100)/100;cart.push(entry);}
+    if(entry)cart.push(entry);
   }
   if(before||cart.length)persistCart();else updateCart();
 }
@@ -662,6 +691,8 @@ function switchOrderMode(weekly){
   $('#weeklyModeBtn').classList.toggle('active',weekly);
   $('#singleModeBtn').setAttribute('aria-pressed',String(!weekly));
   $('#weeklyModeBtn').setAttribute('aria-pressed',String(weekly));
+  state.addonDate=weekly?weeklyMonday:singleDateIso;
+  renderAddons();
   if(weekly){applyWeeklyLanguage();renderWeeklyPlanner();$('#weeklyPanel').scrollIntoView({behavior:'smooth',block:'start'});}
 }
 function changeWeeklyPlan(monday){
@@ -673,15 +704,18 @@ function changeWeeklyPlan(monday){
     alert(wt('singleDateDifferentWeek'));$('#weeklyMonday').value=weeklyMonday;return;
   }
   const oldId=weeklyPlanId;
-  if(cart.some(x=>x.weeklyPlanId===oldId)&&!confirm(wt('weeklyChanged'))){
+  const oldWeekHasItems=cart.some(x=>x.serviceDate&&mondayFrom(x.serviceDate)===weeklyMonday);
+  if(oldWeekHasItems&&!confirm(wt('weeklyChanged'))){
     $('#weeklyMonday').value=weeklyMonday;return;
   }
-  cart=cart.filter(x=>x.weeklyPlanId!==oldId);
+  // Weekly Add-ons belong to the same selected service week, so changing the
+  // week removes both that week's Meal entries and dated Add-ons after confirmation.
+  cart=cart.filter(x=>!(x.weeklyPlanId===oldId||(x.kind==='addon'&&x.serviceDate&&mondayFrom(x.serviceDate)===weeklyMonday)));
   saveWeeklyDraft();
   weeklyMonday=monday;state.selected.clear();
   fillSelectors();renderMeal();loadWeeklyDraft();saveWeeklyDraft();
   $('#weeklyMonday').value=weeklyMonday;applyWeeklyLanguage();renderWeeklyPlanner();
-  persistCart();
+  state.addonDate=weeklyMonday;persistCart();renderAddons();
 }
 function setWeeklyPreset(preset){
   if(!weeklyDrafts)return;
@@ -701,13 +735,6 @@ function weeklyGridClick(e){
   if(slot.selected.includes(id))slot.selected=slot.selected.filter(x=>x!==id);else slot.selected.push(id);
   saveWeeklyDraft();syncEntireWeeklyCart();resetSubmitButton();renderWeeklyPlanner();
 }
-function weeklyQtyInput(e){
-  if(!e.target.matches("[data-weekly-qty]"))return;
-  const key=PCWeekly.slotKey(e.target.dataset.day,e.target.dataset.meal);
-  const qty=readQty(e.target.value);if(!qty)return;
-  weeklyDrafts[key].qty=qty;saveWeeklyDraft();syncEntireWeeklyCart();
-  $("#weeklySubtotal").textContent=money(weeklyStatus().total);
-}
 function weeklyGridChange(e){
   if(!e.target.matches('[data-weekly-enable]'))return;
   const key=PCWeekly.slotKey(e.target.dataset.day,e.target.dataset.meal);
@@ -719,8 +746,6 @@ function weeklyGridChange(e){
 function weeklyStatus(){return PCWeekly.status({drafts:weeklyDrafts,menu:weeklyMenu,calculate:calculateMeal});}
 function checkWeeklyReady(){
   if(!weeklyMode)return true;
-  const late=PCWeekly.slots().find(({day,key})=>weeklyDrafts[key]?.enabled&&!bookingValid(PCWeekly.dateFor(weeklyMonday,day),weeklyDrafts[key].qty||1));
-  if(late){alert(bookingText('expired')+'\n'+showDeadline(PCWeekly.dateFor(weeklyMonday,late.day),weeklyDrafts[late.key].qty||1));return false;}
   const s=weeklyStatus();if(s.ready)return true;
   alert(s.active===0?wt('weeklyNone'):wt('weeklyIncomplete').replace('{n}',s.active-s.complete));
   if(s.missing[0])document.querySelector(`[data-weekly-card="${s.missing[0].key}"]`)?.scrollIntoView({behavior:'smooth',block:'center'});
@@ -732,9 +757,7 @@ function renderWeeklyPlanner(){
   $('#weeklyProgress').textContent=`${progress.complete} / ${progress.active}`;
   $('#weeklyStatusText').textContent=wt('weeklyReady').replace('{done}',progress.complete).replace('{active}',progress.active);
   $('#weeklySubtotal').textContent=money(progress.total);
-  const lateSlot=PCWeekly.slots().find(({day,key})=>weeklyDrafts[key]?.enabled&&!bookingValid(PCWeekly.dateFor(weeklyMonday,day),weeklyDrafts[key].qty||1));
-  $('#weeklyReview').disabled=!progress.ready||!!lateSlot;
-  const deadlineHint=$('#weeklyDeadlineHint');if(deadlineHint){deadlineHint.textContent=lateSlot?bookingText('expired')+' '+showDeadline(PCWeekly.dateFor(weeklyMonday,lateSlot.day),weeklyDrafts[lateSlot.key].qty||1):'';deadlineHint.classList.toggle('deadline-expired',!!lateSlot);}
+  $('#weeklyReview').disabled=!progress.ready;
   $('#weeklyMonday').value=weeklyMonday;
   $('#weeklyWeekSelect').value=PCCalendar.summary(weeklyMonday).map(w=>t('week',{n:w})).join(' → ');
   $('#weeklyGrid').innerHTML=PCWeekly.DAYS.map(day=>{
@@ -757,8 +780,7 @@ function renderWeeklyPlanner(){
       return `<section class="weekly-meal ${!draft.enabled?'is-disabled':''} ${complete?'is-complete':''}" data-weekly-card="${key}">
          <label class="weekly-meal-title"><input type="checkbox" data-weekly-enable data-day="${day}" data-meal="${meal}" ${draft.enabled?'checked':''} ${!bookable?'disabled':''}/><span>${t(meal)}</span><span class="weekly-meal-tag">${label}</span></label>
          <div class="weekly-dishes">${opts}</div>
-         <label class="weekly-qty">${qtyLabel()} <input type="number" min="1" max="500" step="1" data-weekly-qty data-day="${day}" data-meal="${meal}" value="${draft.qty||1}" ${!draft.enabled?"disabled":""}></label><small class="booking-deadline ${draft.enabled&&!bookingValid(dayDate,draft.qty||1)?"deadline-expired":""}">${showDeadline(dayDate,draft.qty||1)}</small>
-         <p class="weekly-meal-price"><span>${draft.enabled?(complete?calc.label:`${chosen.filter(x=>x.type==='meat').length} ${t('meatShort')} + ${chosen.filter(x=>x.type==='veg').length} ${t('vegShort')}`):wt('skipMeal')}</span><strong>${complete?money(calc.total*(draft.qty||1)):'—'}</strong></p>
+         <p class="weekly-meal-price"><span>${draft.enabled?(complete?calc.label:`${chosen.filter(x=>x.type==='meat').length} ${t('meatShort')} + ${chosen.filter(x=>x.type==='veg').length} ${t('vegShort')}`):wt('skipMeal')}</span><strong>${complete?money(calc.total):'—'}</strong></p>
         </section>`;
     }).join('');
     return `<section class="weekly-day"><header class="weekly-day-header"><h3>${dayName(day)} <span class="week-pill">${t('week',{n:dayWeek})}</span></h3><small>${dayDate}</small></header><div class="weekly-day-meals">${meals}</div></section>`;
