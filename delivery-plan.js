@@ -1,99 +1,62 @@
-/* Premium Crest delivery planner v2.0
- * Supports dated add-ons that can ride with a same-day meal or be sent separately.
- * Public API kept compatible: PCDelivery.plan(cart, mealMode)
- */
-(function(global){
+/* Premium Crest v3.6 delivery planner: dated meals + dated add-ons. */
+(function(root,factory){
+  const api=factory();
+  if(typeof module !== 'undefined' && module.exports)module.exports=api;
+  root.PCDelivery=api;
+})(typeof globalThis !== 'undefined' ? globalThis : this,function(){
   'use strict';
+  const weekdays=['Monday','Tuesday','Wednesday','Thursday','Friday'];
+  const meals=['breakfast','lunch'];
+  const addonTargets=['with_breakfast','with_lunch','separate'];
 
-  const WEEKDAYS=['Monday','Tuesday','Wednesday','Thursday','Friday'];
-  const MEALS=['breakfast','lunch'];
+  function plan(items,mode='separate'){
+    if(!['separate','together'].includes(mode))throw new Error('Invalid mode');
+    const group=new Map();
 
-  function validIso(iso){
-    return /^\d{4}-\d{2}-\d{2}$/.test(String(iso||''));
-  }
-  function dayFromIso(iso){
-    if(!validIso(iso))return '';
-    const d=new Date(String(iso)+'T12:00:00Z');
-    if(Number.isNaN(d.getTime())||d.toISOString().slice(0,10)!==iso)return '';
-    const n=d.getUTCDay();
-    return n>=1&&n<=5?WEEKDAYS[n-1]:'';
-  }
-  function unique(arr){return Array.from(new Set(arr));}
+    for(const x of (items||[])){
+      if(!x || !['meal','addon'].includes(String(x.kind||'')))continue;
+      const serviceDate=String(x.serviceDate||'');
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(serviceDate))throw new Error('Invalid delivery date');
+      const week=Number(x.week || 0);
+      const day=String(x.day||'');
+      if(!Number.isInteger(week)||week<1||week>5||!weekdays.includes(day))throw new Error('Invalid delivery day');
+      const key=`DATE:${serviceDate}`;
+      if(!group.has(key))group.set(key,{week,day,serviceDate,meals:new Set(),addonTargets:new Set()});
+      const g=group.get(key);
+      if(g.week!==week||g.day!==day)throw new Error('Conflicting delivery day');
 
-  function plan(items, mealMode){
-    const mode=mealMode==='together'?'together':'separate';
-    const days={};
-
-    (Array.isArray(items)?items:[]).forEach(item=>{
-      if(!item||!validIso(item.serviceDate))return;
-      const serviceDate=String(item.serviceDate);
-      const derivedDay=dayFromIso(serviceDate);
-      if(!derivedDay)return;
-      if(!days[serviceDate]){
-        days[serviceDate]={serviceDate,day:derivedDay,week:Number(item.week)||0,meals:{},addonSeparate:false,addonWithMeal:[]};
+      if(x.kind==='meal'){
+        const meal=String(x.meal||'').toLowerCase();
+        if(!meals.includes(meal))throw new Error('Invalid meal schedule');
+        g.meals.add(meal);
+      }else{
+        const target=String(x.addonDelivery||'separate');
+        if(!addonTargets.includes(target))throw new Error('Invalid add-on delivery choice');
+        g.addonTargets.add(target);
       }
-      const d=days[serviceDate];
-      if(item.kind==='meal'){
-        const meal=String(item.meal||'').toLowerCase();
-        if(MEALS.includes(meal))d.meals[meal]=true;
-        if(Number(item.week))d.week=Number(item.week);
-      }else if(item.kind==='addon'){
-        const delivery=String(item.addonDeliveryMode||item.addonDelivery||'separate');
-        const target=String(item.withMeal||'').toLowerCase();
-        if(delivery==='with_meal'&&MEALS.includes(target))d.addonWithMeal.push(target);
-        else d.addonSeparate=true;
-      }
-    });
+    }
 
-    const ordered=Object.values(days).sort((a,b)=>a.serviceDate.localeCompare(b.serviceDate));
-    let totalTrips=0;
-    let eligible=false;
-    const signatureParts=[];
-
-    const resultDays=ordered.map(d=>{
-      const meals=MEALS.filter(m=>d.meals[m]);
-      if(meals.length===2)eligible=true;
-
-      // If a cart became stale after a meal was removed, count that add-on as a
-      // separate trip rather than undercharging. The frontend normally repairs it.
-      const validJoins=unique(d.addonWithMeal.filter(m=>meals.includes(m))).sort();
-      const invalidJoin=d.addonWithMeal.some(m=>!meals.includes(m));
-      const addonSeparate=!!d.addonSeparate||invalidJoin;
-      const mealTrips=meals.length?(mode==='together'?1:meals.length):0;
-      const trips=mealTrips+(addonSeparate?1:0);
-      totalTrips+=trips;
-
-      signatureParts.push([
-        d.serviceDate,
-        'M='+meals.join('+'),
-        'AM='+validJoins.join('+'),
-        'AS='+(addonSeparate?'1':'0'),
-        'MM='+mode
-      ].join(':'));
-
+    const days=[...group.values()].sort((a,b)=>a.serviceDate.localeCompare(b.serviceDate)).map(g=>{
+      const types=meals.filter(m=>g.meals.has(m));
+      const targets=addonTargets.filter(t=>g.addonTargets.has(t));
+      if(targets.includes('with_breakfast')&&!types.includes('breakfast'))throw new Error('Add-on is linked to breakfast but no breakfast meal exists');
+      if(targets.includes('with_lunch')&&!types.includes('lunch'))throw new Error('Add-on is linked to lunch but no lunch meal exists');
+      const mealTrips=types.length?(mode==='together'?1:types.length):0;
+      const addonTrips=targets.includes('separate')?1:0;
+      const trips=mealTrips+addonTrips;
       return {
-        week:d.week,
-        day:d.day,
-        serviceDate:d.serviceDate,
-        meals,
-        addonWithMeal:validJoins,
-        addonSeparate,
-        trips
+        week:g.week,day:g.day,serviceDate:g.serviceDate,meals:types,
+        addonTargets:targets,mealTrips,addonTrips,trips,
+        combined:mode==='together'&&types.length===2
       };
     });
 
-    // Legacy safety: an undated add-on-only cart previously counted as one trip.
-    if(!resultDays.length && (Array.isArray(items)?items:[]).some(x=>x&&x.kind==='addon')){
-      return {trips:1,eligible:false,signature:'legacy-addons-only',days:[]};
-    }
-
+    const signature=days.map(x=>`${x.serviceDate}:${x.week}:${x.day}:${x.meals.join('+')}:addons=${x.addonTargets.join('+')||'none'}`).join('|')||'empty';
     return {
-      trips:totalTrips,
-      eligible,
-      signature:signatureParts.join('|')||'empty',
-      days:resultDays
+      mode,days,signature,
+      trips:days.reduce((n,x)=>n+x.trips,0),
+      eligible:days.some(x=>x.meals.length===2)
     };
   }
-
-  global.PCDelivery={plan};
-})(typeof window!=='undefined'?window:globalThis);
+  return {plan};
+});
