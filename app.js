@@ -21,9 +21,9 @@ const I18N = {
 };
 
 const DELIVERY_I18N = {
-  zh: {origin:'出餐地点',deliveryInfo:'送餐运费（单程行车距离）',distance:'实际行车距离',tripCount:'配送次数',deliveryFee:'送餐费',subtotal:'餐费',grandTotal:'应付总额',calculate:'计算送餐费',calculating:'正在查询行车距离…',needAddress:'请输入完整送餐地址，再计算运费。',confirmAddress:'请确认系统找到的送餐地点正确',tooFar:'超过 10 km：请联系客服报价，暂时不能线上结账。',quoteFail:'无法查询准确行车距离。请检查地址或联系客服；不会自动收取估算运费。',quoteFirst:'请先计算并确认送餐距离，才可以提交订单。',tripInfo:'同一天早餐、午餐可选择分别配送或一次送达；按实际配送次数收费。',chooseMode:'请选择配送方式',separate:'分别配送：早餐、午餐各送一次',together:'合并配送：同一天两餐同时送达，运费只收一次',togetherTime:'合并配送的送达时段',morning:'早餐时段一起送达',midday:'午餐时段一起送达',jointWarning:'选合并配送后，两餐将在同一时段送达；不会分别送两次。',noJoint:'购物车里没有同一天的早餐＋午餐；每个订餐日只计一次配送。',dayTrips:'配送明细',addonOnly:'只有单点加购：收一次送餐费',pickupFree:'自取免费',addressChanged:'地址或餐点已更改，请重新计算运费。',pending:'正在确认服务器是否收到订单…',unverified:'订单已送出，但暂时无法确认是否成功。请先检查订单表或联系客服，不要重复提交。'},
-  en: {origin:'Kitchen',deliveryInfo:'Delivery fee (one-way driving distance)',distance:'Driving distance',tripCount:'Delivery trips',deliveryFee:'Delivery fee',subtotal:'Food subtotal',grandTotal:'Grand total',calculate:'Calculate delivery',calculating:'Calculating route…',needAddress:'Please enter the complete delivery address.',confirmAddress:'Please verify this matched address',tooFar:'Over 10 km: contact us for a quote. Online checkout is unavailable.',quoteFail:'Could not determine a reliable driving distance. Check the address or contact us. No estimated fee will be charged.',quoteFirst:'Calculate and confirm the delivery distance before placing an order.',tripInfo:'Choose separate drop-offs or one combined drop-off for breakfast and lunch on the same day.',chooseMode:'Choose your delivery arrangement',separate:'Separate delivery: breakfast and lunch delivered separately',together:'Combined delivery: same-day breakfast and lunch delivered together, one fee',togetherTime:'Combined drop-off time',morning:'Deliver both at breakfast time',midday:'Deliver both at lunch time',jointWarning:'Both meals arrive at the same time; there will not be separate morning and midday drop-offs.',noJoint:'No breakfast-and-lunch pair on the same day. Each ordered day needs only one trip.',dayTrips:'Trip breakdown',addonOnly:'Add-ons only: one delivery trip',pickupFree:'Free pickup',addressChanged:'Address or meals changed. Please recalculate delivery.',pending:'Checking whether the server received your order…',unverified:'Order sent, but receipt could not be verified. Check the order sheet or contact us before trying again.'},
-  ms: {origin:'Dapur',deliveryInfo:'Caj penghantaran (jarak memandu sehala)',distance:'Jarak memandu',tripCount:'Bilangan penghantaran',deliveryFee:'Caj penghantaran',subtotal:'Jumlah makanan',grandTotal:'Jumlah keseluruhan',calculate:'Kira caj penghantaran',calculating:'Mengira laluan…',needAddress:'Masukkan alamat penghantaran yang lengkap.',confirmAddress:'Sila sahkan alamat yang ditemui',tooFar:'Lebih 10 km: hubungi kami untuk sebut harga. Bayaran dalam talian tidak tersedia.',quoteFail:'Jarak memandu tidak dapat ditentukan. Semak alamat atau hubungi kami. Caj anggaran tidak dikenakan.',quoteFirst:'Kira dan sahkan jarak sebelum membuat pesanan.',tripInfo:'Pilih penghantaran berasingan atau sekali hantar untuk sarapan dan makan tengah hari pada hari sama.',chooseMode:'Pilih cara penghantaran',separate:'Asing: sarapan dan makan tengah hari dihantar berasingan',together:'Gabung: kedua-dua hidangan hari sama dihantar sekali, satu caj sahaja',togetherTime:'Masa penghantaran gabungan',morning:'Hantar kedua-duanya waktu sarapan',midday:'Hantar kedua-duanya waktu makan tengah hari',jointWarning:'Kedua-dua hidangan tiba serentak; tiada penghantaran berasingan.',noJoint:'Tiada pasangan sarapan dan makan tengah hari pada hari yang sama. Satu penghantaran setiap hari.',dayTrips:'Butiran penghantaran',addonOnly:'Tambahan sahaja: satu caj penghantaran',pickupFree:'Ambil sendiri percuma',addressChanged:'Alamat atau hidangan berubah. Sila kira semula caj penghantaran.',pending:'Menyemak sama ada pelayan menerima pesanan…',unverified:'Pesanan dihantar tetapi pengesahan belum diterima. Semak rekod pesanan atau hubungi kami sebelum mencuba lagi.'}
+  zh: {origin:'出餐地点',deliveryInfo:'送餐运费（单程行车距离）',distance:'实际行车距离',tripCount:'配送次数',deliveryFee:'送餐费',subtotal:'餐费',containerFee:'餐盒费',grandTotal:'应付总额',calculate:'计算送餐费',calculating:'正在查询行车距离…',needAddress:'请输入完整送餐地址，再计算运费。',confirmAddress:'请确认系统找到的送餐地点正确',tooFar:'超过 10 km：请联系客服报价，暂时不能线上结账。',quoteFail:'无法查询准确行车距离。请检查地址或联系客服；不会自动收取估算运费。',quoteFirst:'请先计算并确认送餐距离，才可以提交订单。',tripInfo:'同一天早餐、午餐可选择分别配送或一次送达；按实际配送次数收费。',chooseMode:'请选择配送方式',separate:'分别配送：早餐、午餐各送一次',together:'合并配送：同一天两餐同时送达，运费只收一次',togetherTime:'合并配送的送达时段',morning:'早餐时段一起送达',midday:'午餐时段一起送达',jointWarning:'选合并配送后，两餐将在同一时段送达；不会分别送两次。',noJoint:'购物车里没有同一天的早餐＋午餐；每个订餐日只计一次配送。',dayTrips:'配送明细',addonOnly:'只有单点加购：收一次送餐费',pickupFree:'自取免费',addressChanged:'地址或餐点已更改，请重新计算运费。',pending:'正在确认服务器是否收到订单…',unverified:'订单已送出，但暂时无法确认是否成功。请先检查订单表或联系客服，不要重复提交。'},
+  en: {origin:'Kitchen',deliveryInfo:'Delivery fee (one-way driving distance)',distance:'Driving distance',tripCount:'Delivery trips',deliveryFee:'Delivery fee',subtotal:'Food subtotal',containerFee:'Container fee',grandTotal:'Grand total',calculate:'Calculate delivery',calculating:'Calculating route…',needAddress:'Please enter the complete delivery address.',confirmAddress:'Please verify this matched address',tooFar:'Over 10 km: contact us for a quote. Online checkout is unavailable.',quoteFail:'Could not determine a reliable driving distance. Check the address or contact us. No estimated fee will be charged.',quoteFirst:'Calculate and confirm the delivery distance before placing an order.',tripInfo:'Choose separate drop-offs or one combined drop-off for breakfast and lunch on the same day.',chooseMode:'Choose your delivery arrangement',separate:'Separate delivery: breakfast and lunch delivered separately',together:'Combined delivery: same-day breakfast and lunch delivered together, one fee',togetherTime:'Combined drop-off time',morning:'Deliver both at breakfast time',midday:'Deliver both at lunch time',jointWarning:'Both meals arrive at the same time; there will not be separate morning and midday drop-offs.',noJoint:'No breakfast-and-lunch pair on the same day. Each ordered day needs only one trip.',dayTrips:'Trip breakdown',addonOnly:'Add-ons only: one delivery trip',pickupFree:'Free pickup',addressChanged:'Address or meals changed. Please recalculate delivery.',pending:'Checking whether the server received your order…',unverified:'Order sent, but receipt could not be verified. Check the order sheet or contact us before trying again.'},
+  ms: {origin:'Dapur',deliveryInfo:'Caj penghantaran (jarak memandu sehala)',distance:'Jarak memandu',tripCount:'Bilangan penghantaran',deliveryFee:'Caj penghantaran',subtotal:'Jumlah makanan',containerFee:'Caj bekas',grandTotal:'Jumlah keseluruhan',calculate:'Kira caj penghantaran',calculating:'Mengira laluan…',needAddress:'Masukkan alamat penghantaran yang lengkap.',confirmAddress:'Sila sahkan alamat yang ditemui',tooFar:'Lebih 10 km: hubungi kami untuk sebut harga. Bayaran dalam talian tidak tersedia.',quoteFail:'Jarak memandu tidak dapat ditentukan. Semak alamat atau hubungi kami. Caj anggaran tidak dikenakan.',quoteFirst:'Kira dan sahkan jarak sebelum membuat pesanan.',tripInfo:'Pilih penghantaran berasingan atau sekali hantar untuk sarapan dan makan tengah hari pada hari sama.',chooseMode:'Pilih cara penghantaran',separate:'Asing: sarapan dan makan tengah hari dihantar berasingan',together:'Gabung: kedua-dua hidangan hari sama dihantar sekali, satu caj sahaja',togetherTime:'Masa penghantaran gabungan',morning:'Hantar kedua-duanya waktu sarapan',midday:'Hantar kedua-duanya waktu makan tengah hari',jointWarning:'Kedua-dua hidangan tiba serentak; tiada penghantaran berasingan.',noJoint:'Tiada pasangan sarapan dan makan tengah hari pada hari yang sama. Satu penghantaran setiap hari.',dayTrips:'Butiran penghantaran',addonOnly:'Tambahan sahaja: satu caj penghantaran',pickupFree:'Ambil sendiri percuma',addressChanged:'Alamat atau hidangan berubah. Sila kira semula caj penghantaran.',pending:'Menyemak sama ada pelayan menerima pesanan…',unverified:'Pesanan dihantar tetapi pengesahan belum diterima. Semak rekod pesanan atau hubungi kami sebelum mencuba lagi.'}
 };
 const dt = key => (DELIVERY_I18N[lang] || DELIVERY_I18N.zh)[key] || key;
 const WEEKLY_I18N={
@@ -47,6 +47,8 @@ let weeklyPlanId = '';
 let singleDateIso='';
 let singleDateManuallyChosen=false;
 const MAX_ORDER_QTY=500;
+let CONTAINER_FEE_PER_PORTION=1.00;
+let CONTAINER_FEE_FRIED_CHICKEN=0.50;
 const qtyLabel=()=>({zh:"数量（1–500份）",en:"Quantity (1–500)",ms:"Kuantiti (1–500)"}[lang]||"Qty");
 const readQty=v=>{const n=Number(v);return Number.isInteger(n)&&n>=1&&n<=MAX_ORDER_QTY?n:null;};
 function syncQtyLabels(){document.querySelectorAll("[data-qty-label]").forEach(el=>el.textContent=qtyLabel());}
@@ -115,6 +117,7 @@ const t = (key, vars={}) => {
 
 async function init(){
   data = await fetch("data/menu.json").then(r=>r.json());
+  loadRuntimeSettings(); // Non-blocking: Sheet CONTAINER_FEE can update the displayed RM/box.
   $("#languageSelect").value=lang;
   $("#languageSelect").onchange=e=>setLanguage(e.target.value);
   singleDateIso=nextServiceDate();
@@ -197,7 +200,7 @@ function applyLanguage(){
 /* v1.7: public merchant payment information, NOT an automatic payment gateway. */
 const PAYMENT_TEXT = {
   zh:{qrTitle:'扫描 DuitNow QR 付款',bankTitle:'银行转账资料',notReady:'商家尚未上传此付款方式，请选择其他方式或联系客服。',manual:'付款后请填写付款参考号。订单须由商家人工核对付款，网页不会自动确认已付款。',save:'保存 QR 图片',copy:'复制银行账号',copied:'已复制银行账号',bank:'银行',holder:'户口名称',account:'银行账号',amount:'订单金额（含运费）',cash:'现金付款：请在取餐／送达时付款。',choose:'请选择已配置的付款方式。'},
-  en:{qrTitle:'Scan DuitNow QR to pay',bankTitle:'Bank transfer details',notReady:'This payment method is not configured yet. Please choose another method or contact us.',manual:'After paying, enter your payment reference. We verify transfers manually; placing an order is not payment confirmation.',save:'Save QR image',copy:'Copy account number',copied:'Account number copied',bank:'Bank',holder:'Account holder',account:'Account number',amount:'Order total (including delivery)',cash:'Cash: pay when collecting or receiving your order.',choose:'Choose an available payment method.'},
+  en:{qrTitle:'Scan DuitNow QR to pay',bankTitle:'Bank transfer details',notReady:'This payment method is not configured yet. Please choose another method or contact us.',manual:'After paying, enter your payment reference. We verify transfers manually; placing an order is not payment confirmation.',save:'Save QR image',copy:'Copy account number',copied:'Account number copied',bank:'Bank',holder:'Account holder',account:'Account number',amount:'Order total (including container & delivery)',cash:'Cash: pay when collecting or receiving your order.',choose:'Choose an available payment method.'},
   ms:{qrTitle:'Imbas DuitNow QR untuk bayaran',bankTitle:'Butiran pindahan bank',notReady:'Kaedah pembayaran ini belum disediakan. Pilih kaedah lain atau hubungi kami.',manual:'Selepas bayaran, masukkan nombor rujukan. Bayaran disemak secara manual; pesanan bukan pengesahan bayaran.',save:'Simpan imej QR',copy:'Salin nombor akaun',copied:'Nombor akaun disalin',bank:'Bank',holder:'Nama pemegang akaun',account:'Nombor akaun',amount:'Jumlah pesanan (termasuk penghantaran)',cash:'Tunai: bayar semasa ambil atau menerima pesanan.',choose:'Pilih kaedah pembayaran tersedia.'}
 };
 const pt = key => PAYMENT_TEXT[lang]?.[key] || PAYMENT_TEXT.zh[key] || key;
@@ -219,7 +222,7 @@ function renderPaymentInfo(){
   if(!paymentReady(method)){empty();return;}
   const heading=document.createElement('h4');heading.textContent=pt(method==='DuitNow QR'?'qrTitle':'bankTitle');container.appendChild(heading);
   const total=document.createElement('p');total.className='payment-amount';
-  const cost=foodSubtotal()+(isDelivery()&&validQuote()?deliveryQuote.fee:0);
+  const cost=checkoutSubtotal()+(isDelivery()&&validQuote()?deliveryQuote.fee:0);
   total.textContent=pt('amount')+': '+money(cost);container.appendChild(total);
   if(method==='DuitNow QR'){
     const img=document.createElement('img');img.className='payment-qr';img.src=c.duitnowQrImage;img.alt='Premium Crest DuitNow QR';
@@ -305,11 +308,18 @@ function renderAddons(){
 }
 function persistCart(){invalidateDelivery();localStorage.setItem("pc_cart",JSON.stringify(cart));updateCart()}
 function updateCart(){
+  syncContainerFeeLabels();
   $("#cartCount").textContent=cart.length;const box=$("#cartItems"); if(!box)return;
   box.innerHTML=cart.length?cart.map((x,i)=>x.kind==='meal'?`<div class="cart-item"><div><h4>${x.serviceDate||''} · ${t('week',{n:x.week})} · ${dayName(x.day)} ${t(x.meal)}</h4><p>${x.items.map(a=>`#${a.no} ${dishPrimary(a)}`).join(' · ')}</p><p>${calculateMeal(x.items).label}</p><label>${qtyLabel()} <input class="cart-qty" type="number" min="1" max="500" step="1" value="${x.qty||1}" onchange="changeCartQty(${i},this.value)"></label></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`:`<div class="cart-item"><div><h4>${t('addonCart')}</h4><p>${addonNameFromCart(x.name)}</p><label>${qtyLabel()} <input class="cart-qty" type="number" min="1" max="500" step="1" value="${x.qty||1}" onchange="changeCartQty(${i},this.value)"></label></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`).join(""):`<p class='muted'>${t('emptyCart')}</p>`;
   const subtotal=foodSubtotal();
-  $("#cartTotal").textContent=money(subtotal+(isDelivery() && validQuote()?deliveryQuote.fee:0));
+  const pack=containerFee();
+  $("#cartTotal").textContent=money(subtotal+pack+(isDelivery() && validQuote()?deliveryQuote.fee:0));
   if($("#foodSubtotal")) $("#foodSubtotal").textContent=money(subtotal);
+  if($("#containerAmount")) $("#containerAmount").textContent=money(pack);
+  if($("#cartFoodSubtotal")) $("#cartFoodSubtotal").textContent=money(subtotal);
+  if($("#cartContainerQty")) $("#cartContainerQty").textContent=String(containerQty());
+  if($("#cartContainerAmount")) $("#cartContainerAmount").textContent=money(pack);
+  if($("#checkoutContainerQty")) $("#checkoutContainerQty").textContent=String(containerQty());
   renderDeliverySection();
   renderCalendarHints();refreshBookingNotices();
 }
@@ -333,6 +343,27 @@ window.removeCart=i=>{
 function showCart(){updateCart();$("#cartSection").classList.remove("hidden");$("#cartSection").scrollIntoView({behavior:"smooth"})}
 function isDelivery(){return $("#fulfilmentSelect").value === "Delivery / 送餐";}
 function foodSubtotal(){return Math.round(cart.reduce((sum,x)=>sum+Number(x.price||0),0)*100)/100;}
+function mealContainerQty(){return cart.filter(x=>x.kind==='meal').reduce((sum,x)=>sum+(readQty(x.qty||1)||0),0);}
+function addonContainerQty(){return cart.filter(x=>x.kind==='addon').reduce((sum,x)=>sum+(readQty(x.qty||1)||0),0);}
+// Container policy:
+// - Every Meal portion uses 1 container at the standard rate.
+// - A01-A08: 1 container per add-on portion at the standard rate.
+// - A09-A10: 1 container per add-on portion at the fried-chicken rate.
+// - Mixed orders add all container quantities and fees together.
+function containerQty(){return mealContainerQty()+addonContainerQty();}
+function addonContainerFee(){
+  return cart.filter(x=>x.kind==='addon').reduce((sum,x)=>{
+    const qty=readQty(x.qty||1)||0;
+    const id=String(x.id||'').trim().toUpperCase();
+    const unit=(id==='A09'||id==='A10')?CONTAINER_FEE_FRIED_CHICKEN:CONTAINER_FEE_PER_PORTION;
+    return sum+(qty*unit);
+  },0);
+}
+function containerFee(){
+  const fee=(mealContainerQty()*CONTAINER_FEE_PER_PORTION)+addonContainerFee();
+  return Math.round(fee*100)/100;
+}
+function checkoutSubtotal(){return Math.round((foodSubtotal()+containerFee())*100)/100;}
 function chosenMode(){return document.querySelector('input[name="deliveryMode"]:checked')?.value||'separate';}
 function chosenJointTime(){return $("#jointTime").value||'breakfast';}
 function currentPlan(){return PCDelivery.plan(cart,chosenMode());}
@@ -389,11 +420,44 @@ function renderDeliverySection(){
   $("#deliveryLine").classList.toggle('hidden',!isDelivery());
   const quoteReady=isDelivery() && validQuote();
   $("#deliveryAmount").textContent=quoteReady?money(deliveryQuote.fee):'—';
-  const fullTotal=foodSubtotal()+(quoteReady?Number(deliveryQuote.fee):0);
+  const fullTotal=checkoutSubtotal()+(quoteReady?Number(deliveryQuote.fee):0);
   $("#deliveryGrandTotal").textContent=money(fullTotal);
   $("#cartTotal").textContent=money(fullTotal);
   $("#foodSubtotal").textContent=money(foodSubtotal());
+  if($("#containerAmount")) $("#containerAmount").textContent=money(containerFee());
+  if($("#cartFoodSubtotal")) $("#cartFoodSubtotal").textContent=money(foodSubtotal());
+  if($("#cartContainerQty")) $("#cartContainerQty").textContent=String(containerQty());
+  if($("#cartContainerAmount")) $("#cartContainerAmount").textContent=money(containerFee());
+  if($("#checkoutContainerQty")) $("#checkoutContainerQty").textContent=String(containerQty());
   renderPaymentInfo();
+}
+function syncContainerFeeLabels(){
+  document.querySelectorAll('[data-container-unit]').forEach(el=>el.textContent=money(CONTAINER_FEE_PER_PORTION));
+  document.querySelectorAll('[data-container-chicken-unit]').forEach(el=>el.textContent=money(CONTAINER_FEE_FRIED_CHICKEN));
+  document.querySelectorAll('[data-container-policy]').forEach(el=>{
+    el.textContent = lang==='zh'
+      ? `Meal 与 A01–A08：每份 1 个餐盒，每盒 ${money(CONTAINER_FEE_PER_PORTION)}；A09 整鸡腿与 A10 鸡腿：每份 1 个餐盒，每盒 ${money(CONTAINER_FEE_FRIED_CHICKEN)}。`
+      : lang==='ms'
+        ? `Meal dan A01–A08: 1 bekas setiap unit pada ${money(CONTAINER_FEE_PER_PORTION)}; A09 dan A10: 1 bekas setiap unit pada ${money(CONTAINER_FEE_FRIED_CHICKEN)}.`
+        : `Meal and A01–A08: 1 container per unit at ${money(CONTAINER_FEE_PER_PORTION)}; A09 and A10: 1 container per unit at ${money(CONTAINER_FEE_FRIED_CHICKEN)}.`;
+  });
+}
+async function loadRuntimeSettings(){
+  syncContainerFeeLabels();
+  if(!CONFIG.appsScriptUrl)return;
+  try{
+    const result=await requestJsonp('settings');
+    const standard=Number(result?.settings?.CONTAINER_FEE);
+    const chicken=Number(result?.settings?.CONTAINER_FEE_FRIED_CHICKEN);
+    if(result?.ok){
+      if(Number.isFinite(standard) && standard>=0 && standard<=100) CONTAINER_FEE_PER_PORTION=Math.round(standard*100)/100;
+      if(Number.isFinite(chicken) && chicken>=0 && chicken<=100) CONTAINER_FEE_FRIED_CHICKEN=Math.round(chicken*100)/100;
+      syncContainerFeeLabels();
+      updateCart();
+    }
+  }catch(err){
+    console.warn('Using default container fees:',CONTAINER_FEE_PER_PORTION,CONTAINER_FEE_FRIED_CHICKEN,err);
+  }
 }
 function requestJsonp(action, params={}){
   return new Promise((resolve,reject)=>{
@@ -460,7 +524,7 @@ async function placeOrder(e){
   form.serviceDate=serviceDates.length>1?`${serviceDates[0]} – ${serviceDates[serviceDates.length-1]}`:(serviceDates[0]||'');
   if(cart.some(x=>!readQty(x.qty||1))){alert(qtyLabel());return;}
   const fee=isDelivery()?deliveryQuote.fee:0;
-  const order={orderId:createOrderId(),createdAt:new Date().toISOString(),customer:form,items:cart,subtotal:foodSubtotal(),deliveryFee:fee,total:foodSubtotal()+fee,deliveryMode:isDelivery()?chosenMode():'pickup',jointTime:isDelivery()&&chosenMode()==='together'?chosenJointTime():'none',deliverySignature:isDelivery()?tripSignature():null,deliveryQuoteId:isDelivery()?deliveryQuote.quoteId:null,deliveryTrips:isDelivery()?deliveryTrips():0,deliveryDistanceKm:isDelivery()?deliveryQuote.distanceKm:null};
+  const order={orderId:createOrderId(),createdAt:new Date().toISOString(),customer:form,items:cart,foodSubtotal:foodSubtotal(),containerFee:containerFee(),subtotal:checkoutSubtotal(),deliveryFee:fee,total:checkoutSubtotal()+fee,deliveryMode:isDelivery()?chosenMode():'pickup',jointTime:isDelivery()&&chosenMode()==='together'?chosenJointTime():'none',deliverySignature:isDelivery()?tripSignature():null,deliveryQuoteId:isDelivery()?deliveryQuote.quoteId:null,deliveryTrips:isDelivery()?deliveryTrips():0,deliveryDistanceKm:isDelivery()?deliveryQuote.distanceKm:null};
   try{
     if(!CONFIG.appsScriptUrl)throw new Error('Apps Script URL missing');
     // Apps Script redirects often block CORS for POST. Cross-origin no-cors sends, then JSONP polls the order receipt.

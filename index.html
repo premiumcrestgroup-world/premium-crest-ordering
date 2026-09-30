@@ -130,6 +130,11 @@
         <button id="closeCart" class="text-btn" data-i18n="close">关闭</button>
       </div>
       <div id="cartItems"></div>
+      <div class="delivery-totals cart-fee-breakdown">
+        <div><span>Food subtotal / 餐费</span><strong id="cartFoodSubtotal">RM0.00</strong></div>
+        <div><span>Container Fee / 餐盒费（共 <span id="cartContainerQty">0</span> 盒）</span><strong id="cartContainerAmount">RM0.00</strong></div>
+      </div>
+      <p class="muted" data-container-policy>Meal 与 A01–A08：每份1个餐盒，每盒 RM1.00；A09 整鸡腿与 A10 鸡腿：每份1个餐盒，每盒 RM0.50。</p>
       <div class="cart-total"><span data-i18n="total">总计</span><strong id="cartTotal">RM0.00</strong></div>
 
       <form id="checkoutForm" class="checkout-form">
@@ -167,6 +172,7 @@
         </div>
         <div class="delivery-totals wide">
           <div><span id="foodSubtotalLabel">Food subtotal / 餐费</span><strong id="foodSubtotal">RM0.00</strong></div>
+          <div id="containerLine"><span>Container Fee / 餐盒费（共 <span id="checkoutContainerQty">0</span> 盒）</span><strong id="containerAmount">RM0.00</strong></div>
           <div id="deliveryLine" class="hidden"><span>Delivery fee / 运费</span><strong id="deliveryAmount">—</strong></div>
           <div class="delivery-grand"><span>Total / 总额</span><strong id="deliveryGrandTotal">RM0.00</strong></div>
         </div>
@@ -188,6 +194,6 @@
   <script src="delivery-plan.js?v=1.6.2"></script>
   <script src="weekly-plan.js?v=1.8.0"></script>
   <script src="payment-config.js?v=1.7.2"></script>
-  <script src="app.js?v=1.9.0"></script>
+  <script src="app.js?v=2.2.0"></script>
 </body>
 </html>
