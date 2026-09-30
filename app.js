@@ -33,6 +33,38 @@ const WEEKLY_I18N={
 };
 const wt=key=>((WEEKLY_I18N[lang]||WEEKLY_I18N.zh)[key]||key);
 
+const BULK_I18N={
+  zh:{
+    qty:'订购份数',pieces:'份',notice:'大单需提前预订',
+    tier1:'1–50 份：至少提前 1 天',tier2:'51–100 份：至少提前 2 天',
+    tier3:'101–500 份：至少提前 3 天',tier4:'501–1000 份：至少提前 5 天',
+    current:'目前数量',needDays:'需至少提前 {n} 天',latest:'最迟下单',
+    passed:'这个数量已经超过最迟下单时间，请减少份数或选择更后的日期。',
+    invalid:'数量必须是 1–1000。'
+  },
+  en:{
+    qty:'Quantity',pieces:'pcs',notice:'Advance notice for bulk orders',
+    tier1:'1–50: order at least 1 day ahead',tier2:'51–100: order at least 2 days ahead',
+    tier3:'101–500: order at least 3 days ahead',tier4:'501–1000: order at least 5 days ahead',
+    current:'Current quantity',needDays:'Order at least {n} day(s) ahead',latest:'Latest order time',
+    passed:'This quantity is past its ordering deadline. Reduce the quantity or choose a later date.',
+    invalid:'Quantity must be 1–1000.'
+  },
+  ms:{
+    qty:'Kuantiti',pieces:'pek',notice:'Notis awal untuk tempahan pukal',
+    tier1:'1–50: tempah sekurang-kurangnya 1 hari awal',tier2:'51–100: tempah sekurang-kurangnya 2 hari awal',
+    tier3:'101–500: tempah sekurang-kurangnya 3 hari awal',tier4:'501–1000: tempah sekurang-kurangnya 5 hari awal',
+    current:'Kuantiti semasa',needDays:'Tempah sekurang-kurangnya {n} hari awal',latest:'Masa akhir tempahan',
+    passed:'Kuantiti ini telah melepasi masa akhir tempahan. Kurangkan kuantiti atau pilih tarikh yang lebih lewat.',
+    invalid:'Kuantiti mesti 1–1000.'
+  }
+};
+const bt=(key,vars={})=>{
+  let text=((BULK_I18N[lang]||BULK_I18N.zh)[key]||key);
+  Object.entries(vars).forEach(([k,v])=>text=text.replaceAll(`{${k}}`,v));
+  return text;
+};
+
 let lang = localStorage.getItem("pc_lang") || "zh";
 let data, state = {week:1, day:"Monday", meal:"breakfast", selected:new Set(), addons:{}};
 let cart = JSON.parse(localStorage.getItem("pc_cart") || "[]");
@@ -46,6 +78,7 @@ let weeklyDrafts = null;
 let weeklyPlanId = '';
 let singleDateIso='';
 let singleDateManuallyChosen=false;
+let mealQty=1;
 const ISO_DATE=/^\d{4}-\d{2}-\d{2}$/;
 function dateLocal(iso){
   if(!ISO_DATE.test(iso))return null;
@@ -133,7 +166,7 @@ async function init(){
 }
 
 function setLanguage(newLang){
-  lang=newLang;localStorage.setItem("pc_lang",lang);applyLanguage();fillSelectors();renderMeal();renderAddons();updateCart();applyWeeklyLanguage();renderWeeklyPlanner();renderCalendarHints();if(document.getElementById('addonDeliveryModal')&&!document.getElementById('addonDeliveryModal').classList.contains('hidden'))refreshAddonModal();
+  lang=newLang;localStorage.setItem("pc_lang",lang);applyLanguage();fillSelectors();renderMeal();renderAddons();updateCart();applyWeeklyLanguage();renderWeeklyPlanner();renderCalendarHints();updateMealQuantityUI(calculateMeal(currentItems().filter(i=>state.selected.has(i.id))));if(document.getElementById('addonDeliveryModal')&&!document.getElementById('addonDeliveryModal').classList.contains('hidden'))refreshAddonModal();
 }
 function applyLanguage(){
   document.documentElement.lang=lang==='zh'?'zh-Hans':lang;
@@ -157,6 +190,99 @@ function dayName(d){return lang==='zh'?DAY_ZH[d]:lang==='ms'?DAY_MS[d]:d}
 function currentItems(){return data.weeks.find(w=>w.week===state.week).days[state.day][state.meal]}
 function dishPrimary(item){return lang==='zh'?item.zh:item.en}
 function dishSecondary(item){return lang==='zh'?item.en:item.zh}
+
+function preorderDaysForQty(qty){
+  const n=Number(qty);
+  if(!Number.isInteger(n)||n<1||n>1000)return null;
+  if(n<=50)return 1;
+  if(n<=100)return 2;
+  if(n<=500)return 3;
+  return 5;
+}
+function bulkDeadline(serviceDate,qty){
+  const days=preorderDaysForQty(qty);
+  if(!days||!ISO_DATE.test(String(serviceDate||'')))return null;
+  const d=new Date(serviceDate+'T12:00:00+08:00');
+  if(Number.isNaN(d.getTime()))return null;
+  d.setDate(d.getDate()-days);
+  const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');
+  const iso=`${y}-${m}-${day}`;
+  return {days,date:iso,stamp:new Date(`${iso}T14:00:00+08:00`)};
+}
+function bulkDeadlineOpen(serviceDate,qty){
+  const info=bulkDeadline(serviceDate,qty);
+  return !!(info&&Date.now()<info.stamp.getTime());
+}
+function bulkDeadlineText(serviceDate,qty){
+  const info=bulkDeadline(serviceDate,qty);
+  if(!info)return bt('invalid');
+  return `${bt('current')}: ${qty} ${bt('pieces')} · ${bt('needDays',{n:info.days})} · ${bt('latest')}: ${info.date} 14:00`;
+}
+function ensureMealQuantityUI(){
+  if(document.getElementById('mealQtyBox'))return;
+  const addBtn=document.getElementById('addMealBtn');
+  if(!addBtn||!addBtn.parentNode)return;
+  const style=document.createElement('style');
+  style.id='mealQtyStyles';
+  style.textContent=`
+    .meal-qty-box{margin:14px 0;padding:14px;border:1px solid #ead8c7;border-radius:14px;background:#fffaf4}
+    .meal-qty-title{font-weight:800;margin-bottom:8px}
+    .meal-qty-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+    .meal-qty-row button{width:42px;height:42px;border:1px solid #d8c2aa;border-radius:10px;background:#fff;font-size:22px;font-weight:800;cursor:pointer}
+    .meal-qty-row input{width:110px;height:42px;border:1px solid #d8c2aa;border-radius:10px;text-align:center;font-size:17px;font-weight:800}
+    .bulk-tier-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:12px;color:#665544}
+    .bulk-tier{padding:7px 8px;border-radius:8px;background:#fff;border:1px solid #eadfd4}
+    .bulk-current{margin-top:9px;font-size:13px;font-weight:700;color:#7b4b20}
+    .bulk-current.is-past{color:#a32626;background:#fff0f0;padding:8px;border-radius:8px}
+    @media(max-width:560px){.bulk-tier-grid{grid-template-columns:1fr}.meal-qty-row input{flex:1}}
+  `;
+  document.head.appendChild(style);
+  const box=document.createElement('div');
+  box.id='mealQtyBox';
+  box.className='meal-qty-box';
+  box.innerHTML=`
+    <div class="meal-qty-title" id="mealQtyTitle"></div>
+    <div class="meal-qty-row">
+      <button type="button" id="mealQtyMinus" aria-label="minus">−</button>
+      <input id="mealQtyInput" type="number" min="1" max="1000" step="1" value="1" inputmode="numeric">
+      <button type="button" id="mealQtyPlus" aria-label="plus">＋</button>
+    </div>
+    <div id="bulkNoticeTitle" class="meal-qty-title"></div>
+    <div class="bulk-tier-grid">
+      <div class="bulk-tier" id="bulkTier1"></div><div class="bulk-tier" id="bulkTier2"></div>
+      <div class="bulk-tier" id="bulkTier3"></div><div class="bulk-tier" id="bulkTier4"></div>
+    </div>
+    <div id="bulkCurrent" class="bulk-current"></div>`;
+  addBtn.parentNode.insertBefore(box,addBtn);
+  const input=document.getElementById('mealQtyInput');
+  const commit=()=>{
+    let n=Math.floor(Number(input.value)||1);
+    n=Math.min(1000,Math.max(1,n));
+    mealQty=n;input.value=String(n);renderSummary();
+  };
+  input.addEventListener('change',commit);
+  input.addEventListener('input',()=>{const n=Number(input.value);if(Number.isInteger(n)&&n>=1&&n<=1000){mealQty=n;renderSummary();}});
+  document.getElementById('mealQtyMinus').onclick=()=>{mealQty=Math.max(1,mealQty-1);input.value=mealQty;renderSummary();};
+  document.getElementById('mealQtyPlus').onclick=()=>{mealQty=Math.min(1000,mealQty+1);input.value=mealQty;renderSummary();};
+}
+function updateMealQuantityUI(calc){
+  ensureMealQuantityUI();
+  const input=document.getElementById('mealQtyInput');
+  if(input&&document.activeElement!==input)input.value=String(mealQty);
+  const map={mealQtyTitle:'qty',bulkNoticeTitle:'notice',bulkTier1:'tier1',bulkTier2:'tier2',bulkTier3:'tier3',bulkTier4:'tier4'};
+  Object.entries(map).forEach(([id,key])=>{const el=document.getElementById(id);if(el)el.textContent=bt(key);});
+  const current=document.getElementById('bulkCurrent');
+  if(current){
+    const open=bulkDeadlineOpen(singleDateIso,mealQty);
+    current.textContent=bulkDeadlineText(singleDateIso,mealQty)+(open?'':' · '+bt('passed'));
+    current.classList.toggle('is-past',!open);
+  }
+  if(calc&&calc.valid){
+    const total=calc.total*mealQty;
+    const totalEl=document.querySelector('#priceBreakdown .price-line.total strong');
+    if(totalEl)totalEl.textContent=money(total);
+  }
+}
 function renderMeal(){
   state.week=PCCalendar.menuWeek(singleDateIso);
   state.day=PCCalendar.weekday(singleDateIso);
@@ -172,8 +298,8 @@ function renderMeal(){
 }
 function calculateMeal(items){
   const p=data.pricing, m=items.filter(i=>i.type==='meat').length, v=items.filter(i=>i.type==='veg').length;
-  if(m>=2 && v>=1){return {valid:true,label:t('set2label'),base:p.twoMeatOneVeg,extraMeat:Math.max(0,m-2),extraVeg:Math.max(0,v-1),total:p.twoMeatOneVeg+Math.max(0,m-2)*p.extraMeat+Math.max(0,v-1)*p.extraVeg,m,v}}
-  if(m>=1 && v>=2){return {valid:true,label:t('set1label'),base:p.oneMeatTwoVeg,extraMeat:Math.max(0,m-1),extraVeg:Math.max(0,v-2),total:p.oneMeatTwoVeg+Math.max(0,m-1)*p.extraMeat+Math.max(0,v-2)*p.extraVeg,m,v}}
+  if(m>=2 && v>=1){return {valid:true,setType:'2M1V',label:t('set2label'),base:p.twoMeatOneVeg,extraMeat:Math.max(0,m-2),extraVeg:Math.max(0,v-1),total:p.twoMeatOneVeg+Math.max(0,m-2)*p.extraMeat+Math.max(0,v-1)*p.extraVeg,m,v}}
+  if(m>=1 && v>=2){return {valid:true,setType:'1M2V',label:t('set1label'),base:p.oneMeatTwoVeg,extraMeat:Math.max(0,m-1),extraVeg:Math.max(0,v-2),total:p.oneMeatTwoVeg+Math.max(0,m-1)*p.extraMeat+Math.max(0,v-2)*p.extraVeg,m,v}}
   return {valid:false,total:0,m,v,label:t('needSet')};
 }
 function renderSummary(){
@@ -187,17 +313,27 @@ function renderSummary(){
     if(calc.extraVeg)html+=`<div class="price-line"><span>${t('extraVeg')} × ${calc.extraVeg}</span><strong>${money(calc.extraVeg*data.pricing.extraVeg)}</strong></div>`;
     html+=`<div class="price-line total"><span>${t('mealTotal')}</span><strong>${money(calc.total)}</strong></div>`;
   } else html=`<div class="muted">${t('selected')} ${calc.m} ${t('meatShort')} + ${calc.v} ${t('vegShort')}<br>${calc.label}</div>`;
-  $("#priceBreakdown").innerHTML=html; $("#addMealBtn").disabled=!calc.valid;
+  $("#priceBreakdown").innerHTML=html;
+  updateMealQuantityUI(calc);
+  $("#addMealBtn").disabled=!calc.valid||!bulkDeadlineOpen(singleDateIso,mealQty);
 }
 function addCurrentMeal(){
   if(!PCCalendar.mealBookable(singleDateIso,state.meal)){alert(calendarText('pastMeal'));return;}
+  if(!Number.isInteger(mealQty)||mealQty<1||mealQty>1000){alert(bt('invalid'));return;}
+  if(!bulkDeadlineOpen(singleDateIso,mealQty)){alert(bt('passed')+'\n'+bulkDeadlineText(singleDateIso,mealQty));return;}
   const items=currentItems().filter(i=>state.selected.has(i.id)), calc=calculateMeal(items); if(!calc.valid)return;
-  // Keep a cart within one calendar service week so same menu/weekdays from a different cycle cannot share a delivery quote.
   const requestedMonday=mondayFrom(singleDateIso);
   if([...orderWeeks()].some(m=>m!==requestedMonday)){
     alert(wt('singleDateDifferentWeek'));return;
   }
-  resetSubmitButton();cart.push({kind:'meal',week:state.week,day:state.day,meal:state.meal,serviceDate:singleDateIso,items,calc,price:calc.total});state.selected.clear();persistCart();renderMeal();showCart();
+  const qty=mealQty;
+  resetSubmitButton();
+  cart.push({
+    kind:'meal',week:state.week,day:state.day,meal:state.meal,serviceDate:singleDateIso,
+    qty:qty,setType:calc.setType,unitPrice:calc.total,items,calc,price:Math.round(calc.total*qty*100)/100
+  });
+  mealQty=1;
+  state.selected.clear();persistCart();renderMeal();showCart();
 }
 function addonDisplayName(a){
   const parts=a.name.split('/').map(x=>x.trim());
@@ -488,7 +624,7 @@ function addonDeliveryLabel(value){
 function updateCart(){
   $("#cartCount").textContent=cart.length;const box=$("#cartItems"); if(!box)return;
   box.innerHTML=cart.length?cart.map((x,i)=>x.kind==='meal'
-    ?`<div class="cart-item"><div><h4>${x.serviceDate||''} · ${t('week',{n:x.week})} · ${dayName(x.day)} ${t(x.meal)}</h4><p>${x.items.map(a=>`#${a.no} ${dishPrimary(a)}`).join(' · ')}</p><p>${calculateMeal(x.items).label}</p></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`
+    ?`<div class="cart-item"><div><h4>${x.serviceDate||''} · ${t('week',{n:x.week})} · ${dayName(x.day)} ${t(x.meal)}</h4><p>${x.items.map(a=>`#${a.no} ${dishPrimary(a)}`).join(' · ')}</p><p>${calculateMeal(x.items).label} · × ${Number(x.qty||1)} ${bt('pieces')}</p></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`
     :`<div class="cart-item"><div><h4>${t('addonCart')} · ${x.serviceDate||''}</h4><p>${addonNameFromCart(x.name)}</p><p>${at('deliveryLabel')}: ${addonDeliveryLabel(x.addonDelivery)}</p></div><div><strong>${money(x.price)}</strong><br><button class="text-btn" onclick="removeCart(${i})">${t('remove')}</button></div></div>`
   ).join(""):`<p class='muted'>${t('emptyCart')}</p>`;
   const subtotal=foodSubtotal();
@@ -674,7 +810,7 @@ const CALENDAR_I18N={
 function calendarText(key){return (CALENDAR_I18N[lang]||CALENDAR_I18N.zh)[key]||key;}
 function invalidCartMeal(x){
   if(x.kind!=='meal')return false;
-  try{return !x.serviceDate||PCCalendar.menuWeek(x.serviceDate)!==Number(x.week)||PCCalendar.weekday(x.serviceDate)!==x.day||!PCCalendar.mealBookable(x.serviceDate,x.meal);}catch(_e){return true;}
+  try{const q=Number(x.qty||1);return !x.serviceDate||!Number.isInteger(q)||q<1||q>1000||PCCalendar.menuWeek(x.serviceDate)!==Number(x.week)||PCCalendar.weekday(x.serviceDate)!==x.day||!PCCalendar.mealBookable(x.serviceDate,x.meal)||!bulkDeadlineOpen(x.serviceDate,q);}catch(_e){return true;}
 }
 function invalidCartItem(x){
   if(!x||!['meal','addon'].includes(String(x.kind||'')))return true;
